@@ -24,3 +24,7 @@ body {
 .container-fill-height {
   height: calc(100vh - 49px);
 }
+
+.list-show {
+  display: list-item;
+}
