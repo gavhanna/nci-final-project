@@ -28,3 +28,7 @@ body {
 .list-show {
   display: list-item;
 }
+
+.profile-header {
+  max-height: 20vh;
+}
