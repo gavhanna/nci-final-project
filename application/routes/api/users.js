@@ -39,7 +39,8 @@ router.post("/register", (req, res) => {
         const newUser = new User({
           name: req.body.name,
           email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
+          blurb: req.body.blurb
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -120,38 +121,24 @@ router.post("/add_follower", passport.authenticate("jwt", { session: false }), (
         errors.following = "Already following this user!";
         res.json(errors);
       } else {
+        // add the person you are now following's id to your "following" array
         user.following.push(req.body.user_id);
         user.save()
           .then(user => {
-            res.json(user)
+            // find the person you just followed
+            User.findById(req.body.user_id)
+              .then(userToFollow => {
+                // update their "followers" array with your id
+                userToFollow.followers.push(req.user.id);
+                userToFollow.save()
+                  // return logged in users info
+                  .then(userToFollow => res.json(user));
+              })
           })
           .catch(err => res.json(err))
       }
     })
 });
-
-// route    GET api/users/add_following 
-// desc     Add follower for current user
-// acccess  Private
-router.post("/add_following", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const errors = {};
-  User.findOne({ email: req.user.email })
-    .then(user => {
-      // check if user is already following this id
-      if (user.followers.indexOf(req.body.user_id) > -1) {
-        errors.followers = "Already following this user!";
-        res.json(errors);
-      } else {
-        user.followers.push(req.body.user_id);
-        user.save()
-          .then(user => {
-            res.json(user)
-          })
-          .catch(err => res.json(err))
-      }
-    })
-});
-
 
 
 // route    GET api/users/current 

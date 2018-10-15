@@ -13,11 +13,11 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    requried: true
+    required: true
   },
   blurb: {
     type: String,
-    requried: false
+    required: false
   },
   following: [{
     type: Schema.Types.ObjectId,
