@@ -112,11 +112,13 @@ router.post("/login", (req, res) => {
 // desc     Follow a user for current user
 // acccess  Private
 router.post("/add_follower", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const errors = {};
   User.findOne({ email: req.user.email })
     .then(user => {
       // check if user is already following this id
       if (user.following.indexOf(req.body.user_id) > -1) {
-        res.json({ msg: "Already following this user!", user })
+        errors.following = "Already following this user!";
+        res.json(errors);
       } else {
         user.following.push(req.body.user_id);
         user.save()
@@ -132,11 +134,13 @@ router.post("/add_follower", passport.authenticate("jwt", { session: false }), (
 // desc     Add follower for current user
 // acccess  Private
 router.post("/add_following", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const errors = {};
   User.findOne({ email: req.user.email })
     .then(user => {
       // check if user is already following this id
       if (user.followers.indexOf(req.body.user_id) > -1) {
-        res.json({ msg: "Already following this user!", user })
+        errors.followers = "Already following this user!";
+        res.json(errors);
       } else {
         user.followers.push(req.body.user_id);
         user.save()
