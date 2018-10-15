@@ -108,6 +108,48 @@ router.post("/login", (req, res) => {
     })
 });
 
+// route    GET api/users/add_follower 
+// desc     Follow a user for current user
+// acccess  Private
+router.post("/add_follower", passport.authenticate("jwt", { session: false }), (req, res) => {
+  User.findOne({ email: req.user.email })
+    .then(user => {
+      // check if user is already following this id
+      if (user.following.indexOf(req.body.user_id) > -1) {
+        res.json({ msg: "Already following this user!", user })
+      } else {
+        user.following.push(req.body.user_id);
+        user.save()
+          .then(user => {
+            res.json(user)
+          })
+          .catch(err => res.json(err))
+      }
+    })
+});
+
+// route    GET api/users/add_following 
+// desc     Add follower for current user
+// acccess  Private
+router.post("/add_following", passport.authenticate("jwt", { session: false }), (req, res) => {
+  User.findOne({ email: req.user.email })
+    .then(user => {
+      // check if user is already following this id
+      if (user.followers.indexOf(req.body.user_id) > -1) {
+        res.json({ msg: "Already following this user!", user })
+      } else {
+        user.followers.push(req.body.user_id);
+        user.save()
+          .then(user => {
+            res.json(user)
+          })
+          .catch(err => res.json(err))
+      }
+    })
+});
+
+
+
 // route    GET api/users/current 
 // desc     Return current user
 // acccess  Private
