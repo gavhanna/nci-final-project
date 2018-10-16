@@ -42,7 +42,7 @@ module.exports = function ValidateRecipeInput(data) {
     errors.method = "Method field is required"
   }
 
-  if (Validator.isURL(data.img_url)) {
+  if (!Validator.isURL(data.img_url)) {
     errors.img_url = "Image URL must be a valid URL";
   }
 
