@@ -44,8 +44,27 @@ router.post("/new", passport.authenticate("jwt", { session: false }), (req, res)
     .then(recipe => {
       res.json(recipe);
     }).catch(err => res.json(err));
+});
 
-})
+// route   POST api/recipes/like
+// desc    Like a recipe
+// access  Private
+router.post("/like", passport.authenticate("jwt", { session: false }), (req, res) => {
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+      if (recipe.likes.indexOf(req.user.id) > -1) {
+        recipe.likes.pull(req.user.id);
+      } else {
+        recipe.likes.push(req.user.id);
+      }
+      recipe.save()
+        .then(recipe => {
+          res.json(recipe)
+        })
+        .catch(err => res.status(400).json(err))
+    })
+});
+
 
 
 
