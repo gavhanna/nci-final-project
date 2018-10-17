@@ -46,8 +46,40 @@ router.post("/new", passport.authenticate("jwt", { session: false }), (req, res)
     }).catch(err => res.json(err));
 });
 
+// route   POST api/recipes/update
+// desc    Edit existing recipe
+// access  Private
+router.post("/update", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const { errors, isValid } = validateRecipeInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+      recipe.title = req.body.title;
+      recipe.desc = req.body.desc;
+      recipe.dietary = req.body.dietary;
+      recipe.meal = req.body.meal;
+      recipe.img_url = req.body.img_url;
+      recipe.cooktime = parseInt(req.body.cooktime);
+      recipe.preptime = parseInt(req.body.preptime);
+      recipe.ingredients = [req.body.ingredients];
+      recipe.method = [req.body.method];
+
+      recipe.save()
+        .then(recipe => {
+          res.json(recipe);
+        }).catch(err => res.json(err));
+    })
+    .catch(err => res.status(404).json({ error: "Recipe not found" }))
+});
+
+
 // route   POST api/recipes/like
-// desc    Like a recipe
+// desc    Like/unlike a recipe
 // access  Private
 router.post("/like", passport.authenticate("jwt", { session: false }), (req, res) => {
   Recipe.findById(req.body.recipe_id)
