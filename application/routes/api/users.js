@@ -37,11 +37,11 @@ router.post("/register", (req, res) => {
         return res.status(400).json(errors);
       } else {
         const newUser = new User({
-          name: req.body.name,
-          email: req.body.email,
+          name: req.body.name.trim(),
+          email: req.body.email.trim(),
           password: req.body.password,
-          blurb: req.body.blurb,
-          username: req.body.username
+          blurb: req.body.blurb.trim(),
+          username: req.body.username.trim()
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -110,17 +110,32 @@ router.post("/login", (req, res) => {
     })
 });
 
-// route    GET api/users/add_follower 
-// desc     Follow a user for current user
+// route    GET api/users/follow
+// desc     Follow/unfollow a user for current user
 // acccess  Private
-router.post("/add_follower", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.post("/follow", passport.authenticate("jwt", { session: false }), (req, res) => {
   const errors = {};
   User.findOne({ email: req.user.email })
     .then(user => {
       // check if user is already following this id
       if (user.following.indexOf(req.body.user_id) > -1) {
-        errors.following = "Already following this user!";
-        res.json(errors);
+        // if user is already following the target user
+        // remove target user from "following" array
+        user.following.pull(req.body.user_id);
+        user.save()
+          .then(user => {
+            // find the person you just unfollowed
+            User.findById(req.body.user_id)
+              .then(userToFollow => {
+                // remove your id from their array
+                userToFollow.followers.pull(req.user.id);
+                userToFollow.save()
+                  // return logged in users info
+                  .then(userToFollow => res.json(user));
+              })
+              .catch(err => res.status(400).json(err))
+          })
+          .catch(err => res.status(400).json(err));
       } else {
         // add the person you are now following's id to your "following" array
         user.following.push(req.body.user_id);
@@ -135,8 +150,9 @@ router.post("/add_follower", passport.authenticate("jwt", { session: false }), (
                   // return logged in users info
                   .then(userToFollow => res.json(user));
               })
+              .catch(err => res.status(400).json(err))
           })
-          .catch(err => res.json(err))
+          .catch(err => res.status(400).json(err))
       }
     })
 });
