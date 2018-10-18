@@ -16,10 +16,10 @@ router.get("/test", (req, res) => {
   res.json({ msg: "working" })
 })
 
-// route   POST api/recipes/new
+// route   POST api/recipes/create
 // desc    Create new recipe
 // access  Private
-router.post("/new", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.post("/create", passport.authenticate("jwt", { session: false }), (req, res) => {
   const { errors, isValid } = validateRecipeInput(req.body);
 
   // Check Validation
@@ -46,10 +46,10 @@ router.post("/new", passport.authenticate("jwt", { session: false }), (req, res)
     }).catch(err => res.json(err));
 });
 
-// route   POST api/recipes/update
+// route   POST api/recipes/edit
 // desc    Edit existing recipe
 // access  Private
-router.post("/update", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
   const { errors, isValid } = validateRecipeInput(req.body);
 
   // Check Validation
@@ -77,13 +77,12 @@ router.post("/update", passport.authenticate("jwt", { session: false }), (req, r
     .catch(err => res.status(404).json({ error: "Recipe not found" }))
 });
 
-
 // route   POST api/recipes/delete
 // desc    Delete a recipe by id
 // access  Private
 router.post("/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
   Recipe.deleteOne({ _id: req.body.recipe_id })
-    .then(data => res.json(data))
+    .then(data => res.json({ msg: "Recipe successfully deleted" }))
     .catch(err => res.json(err))
 });
 
