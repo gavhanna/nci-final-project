@@ -78,6 +78,15 @@ router.post("/update", passport.authenticate("jwt", { session: false }), (req, r
 });
 
 
+// route   POST api/recipes/delete
+// desc    Delete a recipe by id
+// access  Private
+router.post("/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
+  Recipe.deleteOne({ _id: req.body.recipe_id })
+    .then(data => res.json(data))
+    .catch(err => res.json(err))
+});
+
 // route   POST api/recipes/like
 // desc    Like/unlike a recipe
 // access  Private
