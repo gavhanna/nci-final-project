@@ -88,7 +88,8 @@ router.post("/login", (req, res) => {
             const payload = {
               id: user.id,
               name: user.name,
-              email: user.email
+              email: user.email,
+              username: user.username
             }
 
             // Sign Token
@@ -166,6 +167,7 @@ router.get("/current", passport.authenticate("jwt", { session: false }), (req, r
     id: req.user.id,
     email: req.user.email,
     name: req.user.name,
+    username: req.user.username,
     favourites: req.user.favourites
   })
 });

@@ -38,7 +38,28 @@ const RecipeSchema = new Schema({
     required: true
   },
   likes: [{ type: Schema.Types.ObjectId, ref: "users" }],
-  comments: [{ type: Schema.Types.ObjectId, ref: "comments" }],
+  comments: [
+    {
+      user_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      },
+      username: {
+        type: String
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      created_at: {
+        type: Date,
+        default: Date.now
+      },
+      edited_at: {
+        type: Date
+      }
+    }
+  ],
   created_at: {
     type: Date,
     default: Date.now

@@ -4,8 +4,9 @@ const passport = require("passport");
 
 // Load input validation
 const validateRecipeInput = require("../../validation/recipe")
+const validateCommentInput = require("../../validation/comment")
 
-// Load user model
+// Load models
 const User = require("../../models/User");
 const Recipe = require("../../models/Recipe");
 
@@ -127,12 +128,63 @@ router.get("/", (req, res) => {
     .limit(10)
     .sort([["created_at", -1]])
     .populate({ path: "likes", select: "username" })
-    //.populate("comments")
+    //.populate({ path: "comments", select: "username" })
     .then(recipes => {
       res.json(recipes);
     })
-    .catch(err => res.status(404).json({ msg: "No recipes found" }))
+    .catch(err => res.status(404).json({ msg: err.message }))
 });
+
+// Comments based routes
+
+// route   POST api/recipes/comments/create
+// desc    Create a new comment
+// access  Private
+router.post("/comments/create", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const { errors, isValid } = validateCommentInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
+  const newComment = {
+    user_id: req.user.id,
+    username: req.user.username,
+    text: req.body.text
+  }
+
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+
+      recipe.comments.push(newComment);
+
+      recipe.save()
+        .then(recipe => {
+          res.json(recipe)
+        })
+        .catch(err => res.status(400).json(err))
+    })
+});
+
+
+// route   DELETE api/recipes/comments/delete
+// desc    Delete a comment
+// access  Private
+router.delete("/comments/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+      recipe.comments.pull({ _id: req.body.comment_id })
+      //recipe.comments = recipe.comments.filter(com => com._id !== req.body.comment_id);
+      recipe.save()
+        .then(recipe => res.json(recipe))
+        .catch(err => res.status(500).json(err))
+    })
+    .catch(err => res.status(404).json(err))
+
+});
+
 
 
 
