@@ -182,7 +182,38 @@ router.delete("/comments/delete", passport.authenticate("jwt", { session: false 
         .catch(err => res.status(500).json(err))
     })
     .catch(err => res.status(404).json(err))
+});
 
+// route   post api/recipes/comments/edit
+// desc    Edit a comment
+// access  Private
+router.post("/comments/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+      let idx;
+      recipe.comments.forEach((com, i) => {
+        if (com._id == req.body.comment_id) {
+          idx = i
+        };
+      })
+      if (idx > -1) {
+        // check if the logged in user owns this comment
+        if (req.user.id != recipe.comments[idx].user_id) {
+          res.json({ msg: "Permission denied" })
+        } else {
+          recipe.comments[idx].text = req.body.text;
+          recipe.comments[idx].edited_at = Date.now();
+          recipe.save()
+            .then(recipe => res.json(recipe))
+            .catch(err => res.status(500).json(err));
+        }
+      } else {
+        res.status(404).json({ msg: "No comment Found" })
+      }
+
+    })
+    .catch(err => res.status(404).json(err))
 });
 
 
