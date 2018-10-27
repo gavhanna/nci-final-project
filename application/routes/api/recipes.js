@@ -109,8 +109,22 @@ router.post("/like", passport.authenticate("jwt", { session: false }), (req, res
 // desc    Get specific user recipes, sorted by most recent
 // access  Public
 router.get("/:user_id", (req, res) => {
-  console.log(req.params.user_id);
   Recipe.find({ user_id: req.params.user_id })
+    .sort([["created_at", -1]])
+    .populate({ path: "likes", select: "username" })
+    //.populate("comments")
+    .then(recipes => {
+      res.json(recipes);
+    })
+    .catch(err => res.status(404).json({ msg: "No recipes found" }))
+});
+
+// route   GET api/recipes/
+// desc    Get 10 most recent recipes from all users
+// access  Public
+router.get("/", (req, res) => {
+  Recipe.find()
+    .limit(10)
     .sort([["created_at", -1]])
     .populate({ path: "likes", select: "username" })
     //.populate("comments")
