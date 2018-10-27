@@ -30,7 +30,11 @@ const UserSchema = new Schema({
   followers: [{
     type: Schema.Types.ObjectId,
     ref: 'users'
-  }]
+  }],
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
