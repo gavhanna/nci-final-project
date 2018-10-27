@@ -39,6 +39,14 @@ const RecipeSchema = new Schema({
   },
   likes: [{ type: Schema.Types.ObjectId, ref: "users" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "comments" }],
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
+  edited_at: {
+    type: Date,
+    required: false
+  }
 });
 
 module.exports = Recipe = mongoose.model("recipes", RecipeSchema);
