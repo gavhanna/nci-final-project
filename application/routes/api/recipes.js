@@ -217,6 +217,38 @@ router.post("/comments/edit", passport.authenticate("jwt", { session: false }), 
 });
 
 
+// route   post api/recipes/comments/delete
+// desc    Delete a comment
+// access  Private
+router.delete("/comments/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+  Recipe.findById(req.body.recipe_id)
+    .then(recipe => {
+      let idx;
+      recipe.comments.forEach((com, i) => {
+        if (com._id == req.body.comment_id) {
+          idx = i
+        };
+      })
+      if (idx > -1) {
+        // check if the logged in user owns this comment
+        if (req.user.id != recipe.comments[idx].user_id) {
+          res.json({ msg: "Permission denied" })
+        } else {
+          recipe.comments = recipe.comments.filter(com => com._id != req.body.comment_id);
+          recipe.save()
+            .then(recipe => res.json(recipe))
+            .catch(err => res.status(500).json(err));
+        }
+      } else {
+        res.status(404).json({ msg: "No comment Found" })
+      }
+
+    })
+    .catch(err => res.status(404).json(err))
+});
+
+
 
 
 
