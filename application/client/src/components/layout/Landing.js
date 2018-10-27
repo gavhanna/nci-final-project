@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 
-const Landing = () => {
-  return (
-    <div className="container-fill-height landing-page">
-      <div className="container-content-middle text-center">
-        <h1 className="title-font" style={{ fontSize: "5rem" }}>Recipe Book</h1>
-        <p>Create and share your favourite recipes!</p>
-        <hr />
-        <Link to="/register" className="btn btn-lg btn-pill btn-primary m-1">Register</Link>
-        <Link to="/login" className="btn btn-lg btn-pill btn-info m-1">Login</Link>
+
+class Landing extends Component {
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/feed");
+    }
+  }
+
+  render() {
+    return (
+      <div className="container-fill-height landing-page">
+        <div className="container-content-middle text-center">
+          <h1 className="title-font" style={{ fontSize: "5rem" }}>Recipe Book</h1>
+          <p>Create and share your favourite recipes!</p>
+          <hr />
+          <Link to="/register" className="btn btn-lg btn-pill btn-primary m-1">Register</Link>
+          <Link to="/login" className="btn btn-lg btn-pill btn-info m-1">Login</Link>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
-export default Landing;
+
+Landing.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(Landing);

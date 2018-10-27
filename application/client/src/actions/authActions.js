@@ -49,3 +49,12 @@ export const setCurrentUser = decoded => {
   }
 }
 
+// Log user out
+export const logoutUser = () => dispatch => {
+  // Remove token from local storage
+  localStorage.removeItem("jwtToken");
+  // Remove authorisation header from axios
+  setAuthToken(false);
+  // Set current user to empty object
+  dispatch(setCurrentUser({}));
+}
