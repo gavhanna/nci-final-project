@@ -11084,3 +11084,11 @@ body {
 .profile-header {
   max-height: 20vh;
 }
+
+.is-invalid {
+  border: 2px solid red;
+}
+
+.invalid-feedback {
+  color: salmon;
+}
