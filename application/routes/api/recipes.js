@@ -105,6 +105,19 @@ router.post("/like", passport.authenticate("jwt", { session: false }), (req, res
     })
 });
 
+// route   GET api/recipes/:user_id
+// desc    Get specific user recipes
+// access  Public
+router.get("/:user_id", (req, res) => {
+  console.log(req.params.user_id);
+  Recipe.find({ user_id: req.params.user_id })
+    .populate({ path: "likes", select: "username" })
+    //.populate("comments")
+    .then(recipes => {
+      res.json(recipes)
+    })
+});
+
 
 
 
