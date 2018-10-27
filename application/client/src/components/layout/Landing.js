@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -7,8 +8,8 @@ const Landing = () => {
         <h1 className="title-font" style={{ fontSize: "5rem" }}>Recipe Book</h1>
         <p>Create and share your favourite recipes!</p>
         <hr />
-        <button type="button" className="btn btn-lg btn-pill btn-primary">Register</button>
-        <button type="button" className="btn btn-lg btn-pill btn-info">Login</button>
+        <Link to="/register" className="btn btn-lg btn-pill btn-primary m-1">Register</Link>
+        <Link to="/login" className="btn btn-lg btn-pill btn-info m-1">Login</Link>
       </div>
     </div>
   )
