@@ -17,7 +17,7 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" exact to="/">{user.username}</NavLink>
+          <NavLink activeClassName="active" className="nav-link" exact to="/profile">{user.username}</NavLink>
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" exact to="/feed">Feed</NavLink>

@@ -11092,3 +11092,8 @@ body {
 .invalid-feedback {
   color: salmon;
 }
+
+.col {
+  padding-right: 0;
+  padding-left: 0;
+}

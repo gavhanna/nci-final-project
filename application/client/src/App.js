@@ -11,6 +11,7 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Feed from "./components/user/Feed";
+import Profile from "./components/user/profile/Profile";
 
 import './App.css';
 
@@ -43,6 +44,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/feed" component={Feed} />
+            <Route path="/profile" component={Profile} />
           </div>
         </Router>
       </Provider>
