@@ -14,6 +14,7 @@ import Feed from "./components/user/Feed";
 import Profile from "./components/user/profile/Profile";
 
 import './App.css';
+import Recipe from './components/recipes/Recipe';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -45,6 +46,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/feed" component={Feed} />
             <Route path="/profile" component={Profile} />
+            <Route path="/recipe/:recipe_id" component={Recipe} />
           </div>
         </Router>
       </Provider>

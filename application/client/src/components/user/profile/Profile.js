@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route } from "react-router-dom";
 import Hero from "./Hero"
 import RecipeBook from './RecipeBook';
-import Recipes from './Recipes';
+import Recipes from './recipes/Recipes';
 import Following from './Following';
 
 class Profile extends Component {

@@ -17,13 +17,13 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" exact to="/profile">{user.username}</NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/profile" title="Profile"><i className="far fa-user"></i></NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" exact to="/feed">Feed</NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="far fa-list-alt"></i></NavLink>
         </li>
         <li className="nav-item">
-          <button className="nav-link btn btn-pill btn-primary" style={{ cursor: "pointer" }} onClick={this.onLogoutClick}>Logout</button>
+          <button className="nav-link btn btn-pill btn-primary" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}><i className="fas fa-sign-out-alt"></i></button>
         </li>
       </ul>
     );
@@ -48,7 +48,7 @@ class Navbar extends React.Component {
           </button>
 
           <NavLink className="navbar-brand" exact to="/">
-            <span className="title-font">Recipe Book</span>
+            <span className="title-font">Recipe Book <i className="fas fa-book-open"></i></span>
           </NavLink>
 
           <div className="collapse navbar-collapse" id="navbarResponsive">

@@ -120,6 +120,22 @@ router.get("/:user_id", (req, res) => {
     .catch(err => res.status(404).json({ msg: "No recipes found" }))
 });
 
+// route   GET api/recipes/:recipe_id
+// desc    Get specific recipe
+// access  Public
+router.get("/recipe/:recipe_id", (req, res) => {
+  Recipe.find({ _id: req.params.recipe_id })
+    .populate({ path: "likes", select: "username" })
+    .populate({ path: "user_id", select: "username" })
+    //.populate("comments")
+    .then(recipe => {
+      console.log(recipe);
+      res.json(recipe);
+    })
+    .catch(err => res.status(404).json({ msg: "No recipes found" }))
+});
+
+
 // route   GET api/recipes/
 // desc    Get 10 most recent recipes from all users
 // access  Public
