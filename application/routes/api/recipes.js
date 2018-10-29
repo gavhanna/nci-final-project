@@ -33,13 +33,15 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
     title: req.body.title,
     desc: req.body.desc,
     dietary: req.body.dietary,
+    serves: req.body.serves,
     meal: req.body.meal,
     img_url: req.body.img_url,
-    cooktime: parseInt(req.body.cooktime),
-    preptime: parseInt(req.body.preptime)
+    cooktime: req.body.cooktime,
+    preptime: req.body.preptime,
+    ingredients: req.body.ingredients,
+    method: req.body.method,
   })
-  newRecipe.ingredients.push(req.body.ingredients);
-  newRecipe.method.push(req.body.method);
+  console.log(newRecipe);
 
   newRecipe.save()
     .then(recipe => {
@@ -129,7 +131,6 @@ router.get("/recipe/:recipe_id", (req, res) => {
     .populate({ path: "user_id", select: "username" })
     //.populate("comments")
     .then(recipe => {
-      console.log(recipe);
       res.json(recipe);
     })
     .catch(err => res.status(404).json({ msg: "No recipes found" }))

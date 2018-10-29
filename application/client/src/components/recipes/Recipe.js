@@ -76,17 +76,22 @@ class Recipe extends Component {
           <div className="col-sm-12 col-md-6 mt-5">
             <h3>Ingredients</h3>
             <ul className="list-group">
-              <li className="list-group-item">
-                {this.props.selectedRecipe.ingredients}
-              </li>
+              {this.props.selectedRecipe.ingredients && this.props.selectedRecipe.ingredients.map(i =>
+                <li className="list-group-item">
+                  {i}
+                </li>
+              )}
+
             </ul>
           </div>
           <div className="col-sm-12 col-md-6 mt-5">
             <h3>Method</h3>
             <ol className="list-group text-left">
-              <li className="list-group-item list-show">
-                {this.props.selectedRecipe.method}
-              </li>
+              {this.props.selectedRecipe.method && this.props.selectedRecipe.method.map(m =>
+                <li className="list-group-item list-show">
+                  {m}
+                </li>
+              )}
             </ol>
           </div>
         </div>
