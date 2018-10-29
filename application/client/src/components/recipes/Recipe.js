@@ -26,7 +26,7 @@ class Recipe extends Component {
         <div className="row">
           <div className="col-md-6 col-sm-12">
             <div className="img p-3">
-              <img src="https://fillmurray.com/700/300" alt="Recipe" className="img-fluid" />
+              <img src={this.props.selectedRecipe.img_url} alt="Recipe" className="img-fluid" />
             </div>
           </div>
           <div className="col-md-6 col-sm-12 m-auto">

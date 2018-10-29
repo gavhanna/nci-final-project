@@ -31,6 +31,7 @@ export const createNewRecipe = (recipeData) => dispatch => {
   axios
     .post("/api/recipes/create", recipeData)
     .then(res => {
+      history.push('/profile');
       dispatch({
         type: CREATE_NEW_RECIPE,
         payload: res.data

@@ -23,6 +23,10 @@ const RecipeSchema = new Schema({
     type: Number,
     required: false
   },
+  serves: {
+    type: Number,
+    required: false
+  },
   ingredients: [{ type: String }],
   method: [{ type: String }],
   img_url: {

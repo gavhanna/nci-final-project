@@ -41,8 +41,6 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
     ingredients: req.body.ingredients,
     method: req.body.method,
   })
-  console.log(newRecipe);
-
   newRecipe.save()
     .then(recipe => {
       res.json(recipe);

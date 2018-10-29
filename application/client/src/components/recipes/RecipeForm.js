@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RecipeFormInput from './RecipeFormInput';
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { createNewRecipe } from "../../actions/recipesActions"
 import classnames from "classnames";
@@ -13,8 +14,8 @@ class RecipeForm extends Component {
       img_url: "",
       desc: "",
       serves: "",
-      dietary: "",
-      meal: "",
+      dietary: "Vegetarian",
+      meal: "Breakfast",
       preptime: "",
       cooktime: "",
       ingredients: [""],
@@ -75,7 +76,7 @@ class RecipeForm extends Component {
     }
 
     console.log(recipeData);
-    this.props.createNewRecipe(recipeData)
+    this.props.createNewRecipe(recipeData, this.props.history)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -300,4 +301,4 @@ const mapStateToProps = state => ({
   selectedRecipe: state.recipes.selectedRecipe
 })
 
-export default connect(mapStateToProps, { createNewRecipe })(RecipeForm);
+export default connect(mapStateToProps, { createNewRecipe })(withRouter(RecipeForm));
