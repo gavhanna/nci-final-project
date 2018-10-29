@@ -180,31 +180,37 @@ class RecipeForm extends Component {
                   </div>
                   <div className="form-group col">
                     <h3>Details</h3>
-                    <fieldset id="ingredients-fieldset" onChange={this.onChangeIngredientsArray}>
+                    <fieldset id="ingredients-fieldset" >
                       {this.state.ingredients.map((i, n) => {
-                        return <RecipeFormInput
-                          name={"ingredient-" + n}
-                          label={"Ingredient " + parseInt(n + 1)}
-                          value={this.state.ingredients[n]}
-                          helperClass="ingredients-list" />
+                        return <div key={n}>
+                          <RecipeFormInput
+                            name={"ingredient-" + n}
+                            label={"Ingredient " + parseInt(n + 1)}
+                            value={this.state.ingredients[n]}
+                            helperClass="ingredients-list"
+                            onChange={this.onChangeIngredientsArray} />
+                        </div>
                       })}
                       <button
-                        className="btn btn-primary btn-pill"
+                        className="btn btn-primary btn-pill mb-5"
                         onClick={this.addIngredient}
-                      >+</button>
+                      >Add Ingredient</button>
                     </fieldset >
-                    <fieldset id="method-fieldset" onChange={this.onChangeMethodArray}>
+                    <fieldset id="method-fieldset">
                       {this.state.method.map((i, n) => {
-                        return <RecipeFormInput
-                          name={"method-" + n}
-                          label={"method " + parseInt(n + 1)}
-                          value={this.state.method[n]}
-                          helperClass="method-list" />
+                        return <div key={n}>
+                          <RecipeFormInput
+                            name={"method-" + n}
+                            label={"method " + parseInt(n + 1)}
+                            value={this.state.method[n]}
+                            helperClass="method-list"
+                            onChange={this.onChangeMethodArray} />
+                        </div>
                       })}
                       <button
-                        className="btn btn-primary btn-pill"
+                        className="btn btn-primary btn-pill mb-5"
                         onClick={this.addMethod}
-                      >+</button>
+                      >Add Method Step</button>
                     </fieldset >
                   </div>
                 </div>

@@ -11,6 +11,7 @@ function RecipeFormInput(props) {
         id={props.name}
         placeholder="e.g. Tomato"
         value={props.value}
+        onChange={props.onChange}
       />
     </div>
   )
