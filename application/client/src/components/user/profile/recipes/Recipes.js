@@ -13,7 +13,6 @@ class Recipes extends Component {
 
     const hasRecipes = (
       this.props.recipes.recipes.map(recipe => {
-        console.log(recipe);
         return (<RecipeCard key={recipe._id} recipe={recipe} />)
       })
     )
