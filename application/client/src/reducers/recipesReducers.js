@@ -25,7 +25,6 @@ export default function (state = initialState, action) {
       }
     case DELETE_RECIPE:
       const copy = state.recipes.filter(rec => rec._id !== action.payload);
-      console.log(copy);
       return {
         ...state,
         recipes: [...copy]
