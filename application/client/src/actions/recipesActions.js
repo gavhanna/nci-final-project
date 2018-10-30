@@ -27,7 +27,7 @@ export const getSpecificRecipe = (recipe_id) => dispatch => {
 }
 
 // Create new recipe
-export const createNewRecipe = (recipeData) => dispatch => {
+export const createNewRecipe = (recipeData, history) => dispatch => {
   axios
     .post("/api/recipes/create", recipeData)
     .then(res => {

@@ -54,9 +54,20 @@ class RecipeForm extends Component {
     e.preventDefault();
     this.setState({ ingredients: [...this.state.ingredients, ""] })
   }
+
+  removeIngredientListItem = (e) => {
+    e.preventDefault();
+    this.setState({ ingredients: [...this.state.ingredients.splice(0, this.state.ingredients.length - 1)] })
+  }
+
   addMethod = (e) => {
     e.preventDefault();
     this.setState({ method: [...this.state.method, ""] })
+  }
+
+  removeMethodListItem = (e) => {
+    e.preventDefault();
+    this.setState({ method: [...this.state.method.splice(0, this.state.method.length - 1)] })
   }
 
   onSubmit = (e) => {
@@ -92,13 +103,12 @@ class RecipeForm extends Component {
       <div className="container text-center mt-5 mb-5">
         <h1 className="title-font" style={{ fontSize: "5rem" }}>Add New Recipe</h1>
         <p>Publish your new recipe!</p>
-        {errors && errors.title}
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
             <form onSubmit={this.onSubmit}>
               <div className="d-md-flex justify-content-around ">
 
-                <div className="form-group col">
+                <div className="form-group col m-3">
                   <h3>General Info</h3>
                   <div className="form-group">
                     <label htmlFor="name">Title</label>
@@ -200,11 +210,11 @@ class RecipeForm extends Component {
                     {errors.meal && (<div className="invalid-feedback">{errors.meal}</div>)}
                   </div>
                 </div>
-                <div className="form-group col">
+                <div className="form-group col m-3">
                   <h3>Time</h3>
                   <div className="form-group">
                     <label htmlFor="preptime">Preperation Time</label>
-                    <small>In minutes</small>
+                    <small> In minutes</small>
                     <input
                       name="preptime"
                       type="number"
@@ -221,7 +231,7 @@ class RecipeForm extends Component {
                   </div>
                   <div className="form-group">
                     <label htmlFor="cooktime">Cooking Time</label>
-                    <small>In minutes</small>
+                    <small> In minutes</small>
                     <input
                       name="cooktime"
                       type="number"
@@ -257,13 +267,20 @@ class RecipeForm extends Component {
                         className="btn btn-primary btn-pill mb-5"
                         onClick={this.addIngredient}
                       >Add Ingredient</button>
+                      {this.state.ingredients.length > 1 ?
+                        <button
+                          className="btn btn-warning btn-pill ml-1 mb-5"
+                          onClick={this.removeIngredientListItem}
+                        >Remove</button>
+                        : null
+                      }
                     </fieldset >
                     <fieldset id="method-fieldset">
                       {this.state.method.map((i, n) => {
                         return <div key={n}>
                           <RecipeFormInput
                             name={"method-" + n}
-                            label={"method " + parseInt(n + 1)}
+                            label={"Method " + parseInt(n + 1)}
                             value={this.state.method[n]}
                             helperClass={classnames("form-control method-list form-control-lg", {
                               "is-invalid": errors.method
@@ -276,6 +293,13 @@ class RecipeForm extends Component {
                         className="btn btn-primary btn-pill mb-5"
                         onClick={this.addMethod}
                       >Add Method Step</button>
+                      {this.state.method.length > 1 ?
+                        <button
+                          className="btn btn-warning btn-pill ml-1 mb-5"
+                          onClick={this.removeMethodListItem}
+                        >Remove</button>
+                        : null
+                      }
                     </fieldset >
                   </div>
                 </div>
