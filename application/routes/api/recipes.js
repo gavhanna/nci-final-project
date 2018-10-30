@@ -78,11 +78,11 @@ router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res
     .catch(err => res.status(404).json({ error: "Recipe not found" }))
 });
 
-// route   POST api/recipes/delete
+// route   DELETE api/recipes/delete
 // desc    Delete a recipe by id
 // access  Private
-router.post("/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
-  Recipe.deleteOne({ _id: req.body.recipe_id })
+router.delete("/delete/:recipe_id", passport.authenticate("jwt", { session: false }), (req, res) => {
+  Recipe.deleteOne({ _id: req.params.recipe_id })
     .then(data => res.json({ msg: "Recipe successfully deleted" }))
     .catch(err => res.json(err))
 });

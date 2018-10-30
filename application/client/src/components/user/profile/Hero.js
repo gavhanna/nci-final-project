@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'react-router-dom/Link';
 import NavLink from 'react-router-dom/NavLink';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";

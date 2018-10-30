@@ -8,11 +8,13 @@ class Navbar extends React.Component {
 
   onLogoutClick = (e) => {
     e.preventDefault();
-    this.props.logoutUser();
+    if (window.confirm("Really log out?")) {
+      this.props.logoutUser();
+    }
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">

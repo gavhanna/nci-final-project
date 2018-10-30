@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, GET_ERRORS } from "./types";
+import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, GET_ERRORS, DELETE_RECIPE } from "./types";
 
 
 // Get logged in user's recipes
@@ -43,4 +43,18 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
       })
     }
     )
+}
+
+// Delete Recipe
+// post api/recipes/delete
+export const deleteRecipe = (recipe_id) => dispatch => {
+  console.log(recipe_id);
+  axios.delete("api/recipes/delete/" + recipe_id)
+    .then(res => {
+      dispatch({
+        type: DELETE_RECIPE,
+        payload: recipe_id
+      })
+    })
+    .catch(err => console.log(err))
 }
