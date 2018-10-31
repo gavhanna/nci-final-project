@@ -64,31 +64,35 @@ class Recipe extends Component {
         <div className="row mr-2">
           <div className="col-md-6 col-sm-12 d-flex justify-content-between">
             <div className="creator ml-3 d-flex flex-row">
-              <img style={{ width: "auto", height: "30px" }} className="rounded-circle" src="https://fillmurray.com/300/300" alt="Creator Profile Pic" />
+              <div className="d-flex flex-column justify-content-around">
+                <img style={{ width: "auto", height: "30px" }} className="rounded-circle" src="https://fillmurray.com/300/300" alt="Creator Profile Pic" />
+              </div>
               <div className="d-flex flex-column justify-content-around">
                 <span className="ml-1"> by {this.props.selectedRecipe.user_id && this.props.selectedRecipe.user_id.username}</span>
               </div>
             </div>
-            <div className="add-to-faves d-flex flex-column justify-content-center">
-              <span className="align-middle"><i className="fas fa-heart"></i></span>
-            </div>
-            {
-              this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
-                <div className="add-to-faves d-flex flex-column justify-content-center">
-                  <Link to={"/recipe/edit/" + this.props.selectedRecipe._id}>
-                    <span className="badge badge-pill badge-info">
-
-                      <i className="far fa-edit p-2"></i>
-                    </span>
-                  </Link>
-                </div>
-                : null
-            }
-            <div className="add-to-faves d-flex flex-column justify-content-center">
-              <span className="align-middle">
-                <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
-                {/* TODO: this sends a delete request to the current URL PLUS api/recipes/delete... */}
-              </span>
+            <div className="d-flex">
+              <div className="add-to-faves d-flex flex-column justify-content-center">
+                <span title="Favourite" className="align-middle badge badge-pill badge-info p-3 m-1" style={{ cursor: "pointer" }}>
+                  <i className="fas fa-heart"></i>
+                </span>
+              </div>
+              {
+                this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
+                  <div className="add-to-faves d-flex flex-column justify-content-center">
+                    <Link title="Edit" to={"/recipe/edit/" + this.props.selectedRecipe._id}>
+                      <span className="badge badge-pill badge-info p-3 m-1">
+                        <i className="far fa-edit"></i>
+                      </span>
+                    </Link>
+                  </div>
+                  : null
+              }
+              <div className="add-to-faves d-flex flex-column justify-content-center">
+                <span title="Delete" className="align-middle m-1">
+                  <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
+                </span>
+              </div>
             </div>
           </div>
         </div>

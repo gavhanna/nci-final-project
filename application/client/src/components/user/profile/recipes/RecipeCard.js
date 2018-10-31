@@ -15,11 +15,20 @@ class RecipeCard extends React.Component {
             <h5 className="card-title">{this.props.recipe.title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
             <p className="card-text">{this.props.recipe.desc}</p>
-            <Link to={"/recipe/show/" + this.props.recipe._id} className="card-link">View</Link>
+            <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
+              <span title="View" className="badge badge-pill badge-info p-3 m-1 text-light">
+                <i className="fas fa-external-link-alt"></i>
+              </span>
+            </Link>
+
             {
               this.props.auth.user.id === this.props.recipe.user_id ?
                 <React.Fragment>
-                  <Link to={"/recipe/edit/" + this.props.recipe._id} className="card-link">Edit</Link>
+                  <Link title="Edit" to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
+                    <span className="badge badge-pill badge-info p-3 m-1 text-light">
+                      <i className="far fa-edit"></i>
+                    </span>
+                  </Link>
                   <span style={{ position: "absolute", bottom: "10px", right: "10px" }}>
                     <DeleteRecipeButton recipe_id={this.props.recipe._id} />
                   </span>
