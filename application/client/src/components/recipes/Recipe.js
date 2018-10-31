@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { getSpecificRecipe } from "../../actions/recipesActions"
+import DeleteRecipeButton from './DeleteRecipeButton';
 
 class Recipe extends Component {
   componentDidMount() {
@@ -67,7 +68,10 @@ class Recipe extends Component {
               <span className="align-middle">Add to favourites</span>
             </div>
             <div className="add-to-faves d-flex flex-column justify-content-center">
-              <span className="align-middle">Print Recipe</span>
+              <span className="align-middle">
+                <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
+                {/* TODO: this sends a delete request to the current URL PLUS api/recipes/delete... */}
+              </span>
             </div>
           </div>
         </div>

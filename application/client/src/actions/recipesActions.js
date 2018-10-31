@@ -47,10 +47,14 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
 
 // Delete Recipe
 // post api/recipes/delete
-export const deleteRecipe = (recipe_id) => dispatch => {
+export const deleteRecipe = (recipe_id, routeHistory) => dispatch => {
   console.log(recipe_id);
-  axios.delete("api/recipes/delete/" + recipe_id)
+  axios.delete(window.location.origin + "/api/recipes/delete/" + recipe_id)
     .then(res => {
+      if (routeHistory) {
+        console.log(routeHistory);
+        routeHistory.push("/profile")
+      }
       dispatch({
         type: DELETE_RECIPE,
         payload: recipe_id

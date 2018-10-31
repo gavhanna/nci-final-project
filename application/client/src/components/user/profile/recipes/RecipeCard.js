@@ -3,7 +3,6 @@ import Link from 'react-router-dom/Link';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import DeleteRecipeButton from '../../../recipes/DeleteRecipeButton';
-import { timingSafeEqual } from 'crypto';
 
 class RecipeCard extends React.Component {
   render() {
@@ -19,7 +18,9 @@ class RecipeCard extends React.Component {
             <Link to={"/recipe/show/" + this.props.recipe._id} className="card-link">View</Link>
             {
               this.props.auth.user.id === this.props.recipe.user_id ?
-                <DeleteRecipeButton recipe_id={this.props.recipe._id} />
+                <span style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+                  <DeleteRecipeButton recipe_id={this.props.recipe._id} />
+                </span>
                 : null
             }
           </div>
