@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import { getSpecificRecipe } from "../../actions/recipesActions"
+import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesActions"
 import DeleteRecipeButton from './DeleteRecipeButton';
 
 class Recipe extends Component {
   componentDidMount() {
     this.props.getSpecificRecipe(this.props.match.params.recipe_id);
+  }
+
+  componentWillUnmount() {
+    this.props.clearSelectedRecipe();
   }
 
   render() {
@@ -65,8 +70,15 @@ class Recipe extends Component {
               </div>
             </div>
             <div className="add-to-faves d-flex flex-column justify-content-center">
-              <span className="align-middle">Add to favourites</span>
+              <span className="align-middle"><i className="fas fa-heart"></i></span>
             </div>
+            {
+              this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
+                <div className="add-to-faves d-flex flex-column justify-content-center">
+                  <Link to={"/recipes/show/" + this.props.selectedRecipe._id}>Edit</Link>
+                </div>
+                : null
+            }
             <div className="add-to-faves d-flex flex-column justify-content-center">
               <span className="align-middle">
                 <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
@@ -112,6 +124,7 @@ class Recipe extends Component {
 
 Recipe.propTypes = {
   getSpecificRecipe: PropTypes.func.isRequired,
+  clearSelectedRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   selectedRecipe: PropTypes.object.isRequired
 }
@@ -121,4 +134,4 @@ const mapStateToProps = state => ({
   selectedRecipe: state.recipes.selectedRecipe
 })
 
-export default connect(mapStateToProps, { getSpecificRecipe })(Recipe);
+export default connect(mapStateToProps, { getSpecificRecipe, clearSelectedRecipe })(Recipe);

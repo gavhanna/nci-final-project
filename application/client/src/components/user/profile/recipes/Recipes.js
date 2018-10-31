@@ -22,7 +22,10 @@ class Recipes extends Component {
     return (
       <div className="profile-recipes container mt-3">
         <div className="row">
-          {this.props.recipes.recipes ? hasRecipes : null}
+          {this.props.recipes.recipes ? <h2 className="m-auto">Recipes</h2> : null}
+          <div className="row">
+            {this.props.recipes.recipes ? hasRecipes : null}
+          </div>
         </div>
       </div>
     )

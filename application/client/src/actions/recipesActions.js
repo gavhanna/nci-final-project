@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, GET_ERRORS, DELETE_RECIPE } from "./types";
+import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, GET_ERRORS, DELETE_RECIPE, CLEAR_SELECTED_RECIPE, EDIT_RECIPE } from "./types";
 
 
 // Get logged in user's recipes
@@ -61,4 +61,32 @@ export const deleteRecipe = (recipe_id, routeHistory) => dispatch => {
       })
     })
     .catch(err => console.log(err))
+}
+
+export const clearSelectedRecipe = () => dispatch => {
+  dispatch({
+    type: CLEAR_SELECTED_RECIPE,
+    payload: null
+  })
+}
+
+export const editRecipe = (recipeData, routeHistory) => dispatch => {
+  axios.post(window.location.origin + "/api/recipes/edit", recipeData)
+    .then(res => {
+      console.log(res);
+      routeHistory.push("/recipe/show/" + res.data._id)
+      dispatch({
+        type: EDIT_RECIPE,
+        payload: res.data
+      })
+      routeHistory.push("/api/recipe/show/" + res.data._id);
+    }).catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      }
+    }
+    )
 }

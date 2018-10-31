@@ -21,6 +21,7 @@ router.get("/test", (req, res) => {
 // desc    Create new recipe
 // access  Private
 router.post("/create", passport.authenticate("jwt", { session: false }), (req, res) => {
+
   const { errors, isValid } = validateRecipeInput(req.body);
 
   // Check Validation
@@ -47,35 +48,37 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
     }).catch(err => res.json(err));
 });
 
-// route   POST api/recipes/edit
+// route   PUT api/recipes/edit
 // desc    Edit existing recipe
 // access  Private
 router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
+  console.log(req.body);
   const { errors, isValid } = validateRecipeInput(req.body);
-
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors)
   }
 
-  Recipe.findById(req.body.recipe_id)
+  Recipe.findById(req.body.id)
     .then(recipe => {
       recipe.title = req.body.title;
       recipe.desc = req.body.desc;
       recipe.dietary = req.body.dietary;
+      recipe.serves = req.body.serves;
       recipe.meal = req.body.meal;
       recipe.img_url = req.body.img_url;
-      recipe.cooktime = parseInt(req.body.cooktime);
-      recipe.preptime = parseInt(req.body.preptime);
-      recipe.ingredients = [req.body.ingredients];
-      recipe.method = [req.body.method];
+      recipe.cooktime = req.body.cooktime;
+      recipe.preptime = req.body.preptime;
+      recipe.ingredients = req.body.ingredients;
+      recipe.method = req.body.method;
 
       recipe.save()
         .then(recipe => {
+          console.log(recipe);
           res.json(recipe);
         }).catch(err => res.json(err));
     })
-    .catch(err => res.status(404).json({ error: "Recipe not found" }))
+    .catch(err => res.status(404).json({ msg: err }))
 });
 
 // route   DELETE api/recipes/delete

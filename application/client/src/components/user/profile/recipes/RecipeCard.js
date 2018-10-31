@@ -18,9 +18,12 @@ class RecipeCard extends React.Component {
             <Link to={"/recipe/show/" + this.props.recipe._id} className="card-link">View</Link>
             {
               this.props.auth.user.id === this.props.recipe.user_id ?
-                <span style={{ position: "absolute", bottom: "10px", right: "10px" }}>
-                  <DeleteRecipeButton recipe_id={this.props.recipe._id} />
-                </span>
+                <React.Fragment>
+                  <Link to={"/recipe/edit/" + this.props.recipe._id} className="card-link">Edit</Link>
+                  <span style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+                    <DeleteRecipeButton recipe_id={this.props.recipe._id} />
+                  </span>
+                </React.Fragment>
                 : null
             }
           </div>
