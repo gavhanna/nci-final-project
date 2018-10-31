@@ -11101,3 +11101,7 @@ body {
 .btn {
   cursor: pointer;
 }
+
+i {
+  font-size: 15px;
+}
