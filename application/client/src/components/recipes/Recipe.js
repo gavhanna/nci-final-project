@@ -75,7 +75,12 @@ class Recipe extends Component {
             {
               this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
                 <div className="add-to-faves d-flex flex-column justify-content-center">
-                  <Link to={"/recipe/edit/" + this.props.selectedRecipe._id}>Edit</Link>
+                  <Link to={"/recipe/edit/" + this.props.selectedRecipe._id}>
+                    <span className="badge badge-pill badge-info">
+
+                      <i className="far fa-edit p-2"></i>
+                    </span>
+                  </Link>
                 </div>
                 : null
             }
