@@ -48,11 +48,9 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
 // Delete Recipe
 // post api/recipes/delete
 export const deleteRecipe = (recipe_id, routeHistory) => dispatch => {
-  console.log(recipe_id);
   axios.delete(window.location.origin + "/api/recipes/delete/" + recipe_id)
     .then(res => {
       if (routeHistory) {
-        console.log(routeHistory);
         routeHistory.push("/profile")
       }
       dispatch({
@@ -73,7 +71,6 @@ export const clearSelectedRecipe = () => dispatch => {
 export const editRecipe = (recipeData, routeHistory) => dispatch => {
   axios.post(window.location.origin + "/api/recipes/edit", recipeData)
     .then(res => {
-      console.log(res);
       routeHistory.push("/recipe/show/" + res.data._id)
       dispatch({
         type: EDIT_RECIPE,

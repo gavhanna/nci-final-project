@@ -52,7 +52,6 @@ router.post("/create", passport.authenticate("jwt", { session: false }), (req, r
 // desc    Edit existing recipe
 // access  Private
 router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
-  console.log(req.body);
   const { errors, isValid } = validateRecipeInput(req.body);
   // Check Validation
   if (!isValid) {
@@ -74,7 +73,6 @@ router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res
 
       recipe.save()
         .then(recipe => {
-          console.log(recipe);
           res.json(recipe);
         }).catch(err => res.json(err));
     })

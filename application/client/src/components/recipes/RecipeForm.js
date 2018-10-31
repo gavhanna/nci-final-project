@@ -34,7 +34,6 @@ class RecipeForm extends Component {
     ingredients.forEach(i => {
       arr.push(i.value)
     })
-    console.log(arr);
 
     this.setState({ ingredients: [...arr] })
   }
@@ -45,7 +44,6 @@ class RecipeForm extends Component {
     method.forEach(i => {
       arr.push(i.value)
     })
-    console.log(arr);
 
     this.setState({ method: [...arr] })
   }
@@ -86,7 +84,6 @@ class RecipeForm extends Component {
       method: this.state.method,
     }
 
-    console.log(recipeData);
     this.props.createNewRecipe(recipeData, this.props.history)
   }
 
