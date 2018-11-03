@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const RecipeBookSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
+    required: true
   },
   recipes: [{
     type: Schema.Types.ObjectId,

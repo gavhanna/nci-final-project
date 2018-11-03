@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getUserRecipes } from "../../../../actions/recipesActions"
 import RecipeCard from './RecipeCard';
+import Spinner from "../../../common/Spinner"
 
 class Recipes extends Component {
   componentDidMount() {
@@ -10,24 +11,31 @@ class Recipes extends Component {
   }
 
   render() {
-
     const hasRecipes = (
       this.props.recipes.recipes.map(recipe => {
         return (<RecipeCard key={recipe._id} recipe={recipe} />)
       })
     )
 
-
-
-    return (
+    const loaded = (
       <div className="profile-recipes container mt-3">
         <div className="row">
-          {this.props.recipes.recipes ? <h2 className="m-auto">Recipes</h2> : null}
+          {this.props.recipes.recipes ? <h2 className="m-auto title-font">{this.props.auth.user.name && this.props.auth.user.name.split(" ")[0]}'s Recipes</h2> : null}
           <div className="row">
             {this.props.recipes.recipes ? hasRecipes : null}
           </div>
         </div>
       </div>
+    )
+
+    const loading = (
+      <Spinner />
+    )
+
+    return (
+      <React.Fragment>
+        {this.props.recipes.loading ? loading : loaded}
+      </React.Fragment>
     )
   }
 }

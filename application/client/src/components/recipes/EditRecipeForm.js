@@ -5,6 +5,7 @@ import { PropTypes } from "prop-types";
 import { withRouter } from 'react-router-dom';
 import { editRecipe } from "../../actions/recipesActions";
 import classnames from "classnames";
+import Spinner from '../common/Spinner';
 
 class EditRecipeForm extends Component {
   constructor(props) {
@@ -329,7 +330,7 @@ class EditRecipeForm extends Component {
 
     return (
       <React.Fragment>
-        {recipe.title ? form : <p>Loading...</p>}
+        {recipe.loading ? <Spinner /> : form}
       </React.Fragment>
     )
   }

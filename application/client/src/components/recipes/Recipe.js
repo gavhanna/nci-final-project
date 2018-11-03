@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesActions"
 import DeleteRecipeButton from './DeleteRecipeButton';
+import Spinner from "../common/Spinner";
+import AddToRecipeBookButton from "./AddToRecipeBookButton";
 
 class Recipe extends Component {
   componentDidMount() {
@@ -72,27 +74,42 @@ class Recipe extends Component {
               </div>
             </div>
             <div className="d-flex">
-              <div className="add-to-faves d-flex flex-column justify-content-center">
-                <span title="Favourite" className="align-middle badge badge-pill badge-info p-3 m-1" style={{ cursor: "pointer" }}>
-                  <i className="fas fa-heart"></i>
-                </span>
-              </div>
+              {
+                this.props.auth.isAuthenticated ?
+                  <React.Fragment>
+                    <div className="add-to-faves d-flex flex-column justify-content-center">
+                      <span title="Favourite" className="align-middle badge badge-pill badge-info p-3 m-1" style={{ cursor: "pointer" }}>
+                        <i className="fas fa-heart"></i>
+                      </span>
+                    </div>
+                    <div className="add-to-faves d-flex flex-column justify-content-center">
+                      <span title="Add to your Recipe Book">
+                        <AddToRecipeBookButton recipe_id={this.props.selectedRecipe._id} />
+                      </span>
+                    </div>
+                  </React.Fragment>
+                  : null
+
+              }
               {
                 this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
-                  <div className="add-to-faves d-flex flex-column justify-content-center">
-                    <Link title="Edit" to={"/recipe/edit/" + this.props.selectedRecipe._id}>
-                      <span className="badge badge-pill badge-info p-3 m-1">
-                        <i className="far fa-edit"></i>
+                  <React.Fragment>
+
+                    <div className="add-to-faves d-flex flex-column justify-content-center">
+                      <Link title="Edit" to={"/recipe/edit/" + this.props.selectedRecipe._id}>
+                        <span className="badge badge-pill badge-info p-3 m-1">
+                          <i className="far fa-edit"></i>
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="add-to-faves d-flex flex-column justify-content-center">
+                      <span title="Delete" className="align-middle m-1">
+                        <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
                       </span>
-                    </Link>
-                  </div>
+                    </div>
+                  </React.Fragment>
                   : null
               }
-              <div className="add-to-faves d-flex flex-column justify-content-center">
-                <span title="Delete" className="align-middle m-1">
-                  <DeleteRecipeButton recipe_id={this.props.selectedRecipe._id} />
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -124,7 +141,7 @@ class Recipe extends Component {
     )
     return (
       <div>
-        {this.props.selectedRecipe.title ? recipe : loading}
+        {this.props.loading ? <Spinner /> : recipe}
       </div>
     )
   }
@@ -140,7 +157,8 @@ Recipe.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  selectedRecipe: state.recipes.selectedRecipe
+  selectedRecipe: state.recipes.selectedRecipe,
+  loading: state.recipes.loading
 })
 
 export default connect(mapStateToProps, { getSpecificRecipe, clearSelectedRecipe })(Recipe);

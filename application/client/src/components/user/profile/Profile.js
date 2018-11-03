@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from "react-router-dom";
 import Hero from "./Hero"
-import RecipeBook from './RecipeBook';
+import RecipeBook from './recipeBook/RecipeBook';
 import Recipes from './recipes/Recipes';
 import Following from './Following';
 
@@ -14,7 +14,6 @@ class Profile extends Component {
         <Route path="/profile/recipes" component={Recipes} />
         <Route path="/profile/recipebook" component={RecipeBook} />
         <Route path="/profile/following" component={Following} />
-
       </React.Fragment>
     )
   }

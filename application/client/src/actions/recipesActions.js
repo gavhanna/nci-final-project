@@ -1,10 +1,20 @@
 import axios from "axios";
 
-import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, GET_ERRORS, DELETE_RECIPE, CLEAR_SELECTED_RECIPE, EDIT_RECIPE } from "./types";
+import {
+  GET_CURRENT_USER_RECIPES,
+  GET_SPECIFIC_RECIPE,
+  CREATE_NEW_RECIPE,
+  GET_ERRORS,
+  DELETE_RECIPE,
+  CLEAR_SELECTED_RECIPE,
+  EDIT_RECIPE,
+  SET_RECIPES_LOADING
+} from "./types";
 
 
 // Get logged in user's recipes
 export const getUserRecipes = (user_id) => dispatch => {
+  dispatch(setRecipesLoading());
   axios
     .get("/api/recipes/" + user_id)
     .then(res =>
@@ -16,6 +26,7 @@ export const getUserRecipes = (user_id) => dispatch => {
 
 // Get specific recipe
 export const getSpecificRecipe = (recipe_id) => dispatch => {
+  dispatch(setRecipesLoading());
   axios
     .get("/api/recipes/recipe/" + recipe_id)
     .then(res => {
@@ -28,6 +39,7 @@ export const getSpecificRecipe = (recipe_id) => dispatch => {
 
 // Create new recipe
 export const createNewRecipe = (recipeData, history) => dispatch => {
+  dispatch(setRecipesLoading());
   axios
     .post("/api/recipes/create", recipeData)
     .then(res => {
@@ -48,6 +60,7 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
 // Delete Recipe
 // post api/recipes/delete
 export const deleteRecipe = (recipe_id, routeHistory) => dispatch => {
+  dispatch(setRecipesLoading());
   axios.delete(window.location.origin + "/api/recipes/delete/" + recipe_id)
     .then(res => {
       if (routeHistory) {
@@ -61,14 +74,18 @@ export const deleteRecipe = (recipe_id, routeHistory) => dispatch => {
     .catch(err => console.log(err))
 }
 
+// Clear selectedRecipe from store
 export const clearSelectedRecipe = () => dispatch => {
+  dispatch(setRecipesLoading());
   dispatch({
     type: CLEAR_SELECTED_RECIPE,
     payload: null
   })
 }
 
+// Edit specific recipe
 export const editRecipe = (recipeData, routeHistory) => dispatch => {
+  dispatch(setRecipesLoading());
   axios.post(window.location.origin + "/api/recipes/edit", recipeData)
     .then(res => {
       routeHistory.push("/recipe/show/" + res.data._id)
@@ -87,3 +104,10 @@ export const editRecipe = (recipeData, routeHistory) => dispatch => {
     }
     )
 }
+
+// Recipe loading
+export const setRecipesLoading = () => {
+  return {
+    type: SET_RECIPES_LOADING
+  };
+};

@@ -1,4 +1,13 @@
-import { GET_CURRENT_USER_RECIPES, GET_SPECIFIC_RECIPE, CREATE_NEW_RECIPE, DELETE_RECIPE, CLEAR_SELECTED_RECIPE, EDIT_RECIPE } from "../actions/types";
+import {
+  GET_CURRENT_USER_RECIPES,
+  GET_SPECIFIC_RECIPE,
+  CREATE_NEW_RECIPE,
+  DELETE_RECIPE,
+  CLEAR_SELECTED_RECIPE,
+  EDIT_RECIPE,
+  SET_RECIPES_LOADING
+}
+  from "../actions/types";
 
 const initialState = {
   recipes: [],
@@ -8,31 +17,41 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SET_RECIPES_LOADING:
+      return {
+        ...state,
+        loading: true
+      }
     case GET_CURRENT_USER_RECIPES:
       return {
         ...state,
-        recipes: action.payload
+        recipes: action.payload,
+        loading: false
       };
     case GET_SPECIFIC_RECIPE:
       return {
         ...state,
-        selectedRecipe: action.payload[0]
+        selectedRecipe: action.payload[0],
+        loading: false
       }
     case CREATE_NEW_RECIPE:
       return {
         ...state,
-        recipes: [...state.recipes, action.payload]
+        recipes: [...state.recipes, action.payload],
+        loading: false
       }
     case DELETE_RECIPE:
       const copy = state.recipes.filter(rec => rec._id !== action.payload);
       return {
         ...state,
-        recipes: [...copy]
+        recipes: [...copy],
+        loading: false
       }
     case CLEAR_SELECTED_RECIPE:
       return {
         ...state,
-        selectedRecipe: {}
+        selectedRecipe: {},
+        loading: false
       }
     case EDIT_RECIPE:
       const recipesCopy = state.recipe.map(recipe => {
@@ -44,7 +63,8 @@ export default function (state = initialState, action) {
       })
       return {
         ...state,
-        recipes: recipesCopy
+        recipes: recipesCopy,
+        loading: false
       }
     default:
       return state;

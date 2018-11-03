@@ -3,13 +3,18 @@ import setAuthToken from "../utils/setAuthToken"
 import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { createRecipeBook } from "./recipebookActions";
 
 
 // Register user
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
-    .then(res => history.push("/login"))
+    .then(res => {
+      console.log(res.data._id);
+      dispatch(createRecipeBook(res.data._id))
+      history.push("/login")
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
