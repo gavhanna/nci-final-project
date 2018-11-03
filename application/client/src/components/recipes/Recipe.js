@@ -17,11 +17,6 @@ class Recipe extends Component {
   }
 
   render() {
-
-    const loading = (
-      <p>Loading</p>
-    )
-
     const recipe = (
       <div className="container text-center mb-5">
         <div className="row">

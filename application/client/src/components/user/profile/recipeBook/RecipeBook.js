@@ -32,7 +32,7 @@ class RecipeBook extends Component {
       <React.Fragment>
         <h2 className="m-3 text-center title-font">{this.props.auth.user.name.split(" ")[0]}'s Recipe Book</h2>
         {
-          this.props.recipebook.recipes.map(recipe => (
+          this.props.recipebook.selected.map(recipe => (
             <RecipeBookCard recipe={recipe} />
           ))
         }

@@ -35,7 +35,6 @@ router.get("/:user_id", passport.authenticate("jwt", { session: false }), (req, 
   RecipeBook.findOne({ user_id: req.params.user_id })
     .populate({ path: "recipes", populate: { path: "user_id", select: "username" } })
     .then(recipebook => {
-      console.log(recipebook);
       res.json(recipebook);
     }).catch(err => res.status(404).json({ msg: "No RecipeBook found" }))
 })
@@ -65,7 +64,6 @@ router.post("/create", (req, res) => {
 // desc    Add recipe to recipebook
 // access  Private
 router.post("/add", passport.authenticate("jwt", { session: false }), (req, res) => {
-  console.log(req.body.recipe_id);
   RecipeBook.findOne({ user_id: req.user.id })
     .then(recipebook => {
       if (recipebook.recipes.indexOf(req.body.recipe_id) > -1) {

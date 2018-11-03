@@ -6,7 +6,7 @@ import {
   from "../actions/types";
 
 const initialState = {
-  recipes: [],
+  selected: [],
   loading: false
 }
 
@@ -20,13 +20,13 @@ export default function (state = initialState, action) {
     case GET_USER_RECIPE_BOOK:
       return {
         ...state,
-        recipes: action.payload,
+        selected: action.payload,
         loading: false
       }
     case ADD_TO_RECIPE_BOOK:
       return {
         ...state,
-        recipes: [...state.recipes, action.payload],
+        selected: [...state.selected, action.payload],
         loading: false
       }
     default:

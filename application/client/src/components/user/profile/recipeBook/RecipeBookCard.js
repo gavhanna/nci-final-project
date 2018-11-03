@@ -19,6 +19,7 @@ function RecipeBookCard(props) {
             <p>{props.recipe.desc}</p>
             <p>{props.recipe.ingredients.length} ingredients</p>
             <p>{props.recipe.method.length} step(s)</p>
+            <p>{props.recipe.likes.length} likes</p>
           </div>
         </div>
       </div>
