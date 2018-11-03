@@ -15,7 +15,8 @@ class DeleteRecipeButton extends Component {
   render() {
     return (
       <button
-        className="btn btn-pill btn-warning"
+        className="btn btn-pill btn-warning p-3"
+        style={{ maxHeight: "44px" }}
         title="Delete Recipe"
         onClick={this.onRecipeDelete}>
         <i className="far fa-trash-alt" style={{ pointerEvents: "none" }}></i>
