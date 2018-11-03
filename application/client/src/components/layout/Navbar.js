@@ -10,7 +10,7 @@ class Navbar extends React.Component {
     e.preventDefault();
     if (window.confirm("Really log out?")) {
       this.props.logoutUser();
-      this.props.history.push("/");
+      window.location.href = "/";
     }
   }
 

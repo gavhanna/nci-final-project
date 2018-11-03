@@ -30,6 +30,14 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors)
   }
 
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (user.username === req.body.username) {
+        errors.username = "Username already exists"
+        return res.status(400).json(errors);
+      }
+    });
+
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
@@ -54,6 +62,9 @@ router.post("/register", (req, res) => {
           })
         })
       }
+    }).catch(err => {
+      errors.username = "Username already taken";
+      res.status(500).json(errors);
     });
 });
 
