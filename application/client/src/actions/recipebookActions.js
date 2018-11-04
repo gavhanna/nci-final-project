@@ -26,7 +26,7 @@ export const getUserRecipeBook = (user_id) => dispatch => {
     .then(res => {
       dispatch({
         type: GET_USER_RECIPE_BOOK,
-        payload: res.data.recipes
+        payload: res.data
       })
     }).catch(err => console.log(err))
 }

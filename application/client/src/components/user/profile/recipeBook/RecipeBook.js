@@ -3,23 +3,9 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { getUserRecipeBook } from "../../../../actions/recipebookActions";
 import Spinner from "../../../common/Spinner"
-import RecipeCard from '../recipes/RecipeCard';
+import RecipeBookCard from './RecipeBookCard';
 
 class RecipeBook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {}
-    }
-
-  }
-
-  componentDidMount() {
-    // this.props.getUserRecipeBook(this.props.auth.user.id);
-    // this.setState({
-    //   user: this.props.auth.user
-    // })
-  }
 
   render() {
     const loading = (<Spinner />);
@@ -30,9 +16,9 @@ class RecipeBook extends Component {
           <h3 className="title-font text-center">Breakfast</h3>
           <div className="card-deck justify-content-around">
             {
-              this.props.recipebook.selected.length > 0 ?
-                this.props.recipebook.selected.map(recipe => (
-                  recipe.meal === "Breakfast" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+              this.props.recipebook.selected.recipes.length > 0 ?
+                this.props.recipebook.selected.recipes.map(recipe => (
+                  recipe.meal === "Breakfast" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                 ))
                 : <p className="text-center">No recipes yet!</p>
             }
@@ -41,9 +27,9 @@ class RecipeBook extends Component {
             <h3 className="title-font text-center">Brunch</h3>
             <div className="card-deck justify-content-around">
               {
-                this.props.recipebook.selected.length > 0 ?
-                  this.props.recipebook.selected.map(recipe => (
-                    recipe.meal === "Brunch" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+                this.props.recipebook.selected.recipes.length > 0 ?
+                  this.props.recipebook.selected.recipes.map(recipe => (
+                    recipe.meal === "Brunch" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                   ))
                   : <p className="text-center">No recipes yet!</p>
               }
@@ -53,9 +39,9 @@ class RecipeBook extends Component {
             <h3 className="title-font text-center">Lunch</h3>
             <div className="card-deck justify-content-around">
               {
-                this.props.recipebook.selected.length > 0 ?
-                  this.props.recipebook.selected.map(recipe => (
-                    recipe.meal === "Lunch" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+                this.props.recipebook.selected.recipes.length > 0 ?
+                  this.props.recipebook.selected.recipes.map(recipe => (
+                    recipe.meal === "Lunch" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                   ))
                   : <p className="text-center">No recipes yet!</p>
               }
@@ -65,9 +51,9 @@ class RecipeBook extends Component {
             <h3 className="title-font text-center">Dinner</h3>
             <div className="card-deck justify-content-around">
               {
-                this.props.recipebook.selected.length > 0 ?
-                  this.props.recipebook.selected.map(recipe => (
-                    recipe.meal === "Dinner" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+                this.props.recipebook.selected.recipes.length > 0 ?
+                  this.props.recipebook.selected.recipes.map(recipe => (
+                    recipe.meal === "Dinner" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                   ))
                   : <p className="text-center">No recipes yet!</p>
               }
@@ -77,9 +63,9 @@ class RecipeBook extends Component {
             <h3 className="title-font text-center">Supper</h3>
             <div className="card-deck justify-content-around">
               {
-                this.props.recipebook.selected.length > 0 ?
-                  this.props.recipebook.selected.map(recipe => (
-                    recipe.meal === "Supper" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+                this.props.recipebook.selected.recipes.length > 0 ?
+                  this.props.recipebook.selected.recipes.map(recipe => (
+                    recipe.meal === "Supper" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                   ))
                   : <p className="text-center">No recipes yet!</p>
               }
@@ -89,9 +75,9 @@ class RecipeBook extends Component {
             <h3 className="title-font text-center">Snacks</h3>
             <div className="card-deck justify-content-around">
               {
-                this.props.recipebook.selected.length > 0 ?
-                  this.props.recipebook.selected.map(recipe => (
-                    recipe.meal === "Snack" ? <RecipeCard key={recipe._id} recipe={recipe} /> : null
+                this.props.recipebook.selected.recipes.length > 0 ?
+                  this.props.recipebook.selected.recipes.map(recipe => (
+                    recipe.meal === "Snack" ? <RecipeBookCard key={recipe._id} recipe={recipe} /> : null
                   ))
                   : <p className="text-center">No recipes yet!</p>
               }

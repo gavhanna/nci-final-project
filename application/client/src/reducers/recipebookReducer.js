@@ -6,7 +6,7 @@ import {
   from "../actions/types";
 
 const initialState = {
-  selected: [],
+  selected: {},
   loading: false
 }
 
@@ -26,7 +26,10 @@ export default function (state = initialState, action) {
     case ADD_TO_RECIPE_BOOK:
       return {
         ...state,
-        selected: [...state.selected, action.payload],
+        selected: {
+          ...state.selected,
+          recipes: [...state.selected.recipes, action.payload]
+        },
         loading: false
       }
     default:

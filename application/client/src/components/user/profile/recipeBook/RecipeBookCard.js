@@ -1,30 +1,57 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import Link from 'react-router-dom/Link';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import DeleteRecipeButton from '../../../recipes/DeleteRecipeButton';
 
-function RecipeBookCard(props) {
-  return (
-    <Link to={`/recipe/show/${props.recipe._id}`} style={{ color: "#333", textDecoration: "none" }}>
-      <div class="row bg-light p-4 m-2" style={{ border: "1px solid grey" }}>
-        <div class="col-md-10 col-sm-12 m-auto d-flex flex-column flex-md-row flex-sm-column flex-xs-column">
-          <div class="col-md-2 col-sm-12">
-            <img class="rounded img-fluid" src={props.recipe.img_url} alt="Card cap" />
-          </div>
-          <div class="col-md-4 col-sm-12 recipe-book-info d-flex flex-column">
-            <h2>{props.recipe.title}</h2>
-            <p>by {props.recipe.user_id.username}</p>
-            <p class="d-flex justify-content-around"><span>Cook time: {props.recipe.cooktime}min </span> <span>Prep Time: {props.recipe.preptime}min</span></p>
+class RecipeBookCard extends React.Component {
+  render() {
+    // const isUsersRecipe = this.props.auth.user.id === this.props.recipe.user_id._id;
+    return (
 
+      <div className="card mt-3" style={{ maxWidth: "300px" }}>
+        <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
+        <div className="card-body">
+          <h5 className="card-title">{this.props.recipe.title}</h5>
+          <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
+          <p className="card-text">{this.props.recipe.desc}</p>
+        </div>
+        <div className="card-footer d-flex justify-content-between">
+          <div className="left">
+            <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
+              <span title="View" className="badge badge-pill badge-info p-3 m-1 text-light">
+                <i className="fas fa-expand-arrows-alt"></i>
+              </span>
+            </Link>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <p>{props.recipe.desc}</p>
-            <p>{props.recipe.ingredients.length} ingredients</p>
-            <p>{props.recipe.method.length} step(s)</p>
-            <p>{props.recipe.likes.length} likes</p>
-          </div>
+          {
+            (this.props.auth.user.id === this.props.recipe.user_id) ||
+              (this.props.auth.user.id === this.props.recipe.user_id._id) ?
+              <div className="right d-flex">
+                <Link title="Edit" to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
+                  <span className="badge badge-pill badge-success p-3 m-1 text-light">
+                    <i className="far fa-edit"></i>
+                  </span>
+                </Link>
+                <span className="align-self-center">
+                  <DeleteRecipeButton recipe_id={this.props.recipe._id} />
+                </span>
+              </div>
+              : null
+          }
         </div>
       </div>
-    </Link>
-  )
+
+    )
+  }
 }
 
-export default RecipeBookCard;
+RecipeBookCard.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(RecipeBookCard);

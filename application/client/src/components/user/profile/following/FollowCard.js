@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 
 export default class FollowCard extends Component {
   render() {
-    console.log(this.props);
     return (
       <li className="list-group-item">
         <div className="media w-100">

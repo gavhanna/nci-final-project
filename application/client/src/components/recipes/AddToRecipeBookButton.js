@@ -30,7 +30,8 @@ AddToRecipeBookButton.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  recipeBook: state.recipebook
 })
 
 export default connect(mapStateToProps, { addToRecipeBook })(AddToRecipeBookButton);
