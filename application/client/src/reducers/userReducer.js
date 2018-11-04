@@ -48,7 +48,8 @@ export default function (state = initialState, action) {
         info: {
           ...state.info,
           followers: followerList
-        }
+        },
+        loading: false
       }
     default:
       return state;
