@@ -4,7 +4,8 @@ import {
   ADD_TO_RECIPE_BOOK,
   SET_RECIPEBOOK_LOADING,
   GET_USER_RECIPE_BOOK,
-  CREATE_RECIPE_BOOK
+  CREATE_RECIPE_BOOK,
+  REMOVE_RECIPE_FROM_RECIPEBOOK
 } from "./types"
 
 // Create recipe book
@@ -39,6 +40,19 @@ export const addToRecipeBook = (recipe_id) => dispatch => {
       dispatch({
         type: ADD_TO_RECIPE_BOOK,
         payload: res.response.data
+      })
+    }).catch(err => console.log(err))
+}
+
+// Remove recipe from recipebook
+export const removeRecipeFromRecipebook = recipe_id => dispatch => {
+  dispatch(setRecipebookLoading());
+  axios.post(window.location.origin + "/api/recipebooks/remove", { recipe_id })
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: REMOVE_RECIPE_FROM_RECIPEBOOK,
+        payload: res.data
       })
     }).catch(err => console.log(err))
 }

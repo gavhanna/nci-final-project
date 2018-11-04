@@ -1,7 +1,8 @@
 import {
   ADD_TO_RECIPE_BOOK,
   GET_USER_RECIPE_BOOK,
-  CREATE_RECIPE_BOOK
+  CREATE_RECIPE_BOOK,
+  REMOVE_RECIPE_FROM_RECIPEBOOK
 }
   from "../actions/types";
 
@@ -31,6 +32,14 @@ export default function (state = initialState, action) {
           recipes: [...state.selected.recipes, action.payload]
         },
         loading: false
+      }
+    case REMOVE_RECIPE_FROM_RECIPEBOOK:
+      return {
+        ...state,
+        selected: {
+          ...state.selected,
+          recipes: [...action.payload.recipes]
+        }
       }
     default:
       return state;

@@ -83,17 +83,18 @@ router.post("/add", passport.authenticate("jwt", { session: false }), (req, res)
 // access  Private
 router.post("/remove", passport.authenticate("jwt", { session: false }), (req, res) => {
   RecipeBook.findOne({ user_id: req.user.id })
+    .populate({ path: "recipes", populate: { path: "user_id", select: "username" } })
     .then(recipebook => {
-      if (recipebook.recipes.indexOf(req.body.recipe_id) > -1) {
-        recipebook.recipes.pull(req.body.recipe_id);
-        recipebook.save()
-          .then(recipebook => {
-            res.json(recipebook)
-          })
-      } else {
-        res.state(404).json({ msg: "Recipe not found" })
-      }
-    }).catch(err => res.status(404).json({ msg: err.message }))
+      recipebook.recipes.forEach((recipe, i) => {
+        if (recipe._id == req.body.recipe_id) {
+          recipebook.recipes.pull(recipebook.recipes[i]);
+          recipebook.save()
+            .then(recipebook => {
+              res.json(recipebook)
+            })
+        }
+      })
+    }).catch(err => res.status(400).json(err))
 })
 
 

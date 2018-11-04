@@ -2,11 +2,18 @@ import React from 'react'
 import Link from 'react-router-dom/Link';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import DeleteRecipeButton from '../../../recipes/DeleteRecipeButton';
+import { removeRecipeFromRecipebook } from "../../../../actions/recipebookActions"
 
 class RecipeBookCard extends React.Component {
+  onRemoveFromRecipebook = () => {
+    if (window.confirm("Remove from Recipe Book?")) {
+      this.props.removeRecipeFromRecipebook(this.props.recipe._id);
+    }
+  }
+
+
   render() {
-    // const isUsersRecipe = this.props.auth.user.id === this.props.recipe.user_id._id;
+    const isUsersRecipeBook = this.props.auth.user.id === this.props.recipebook.selected.user_id;
     return (
 
       <div className="card mt-3" style={{ maxWidth: "300px" }}>
@@ -25,6 +32,21 @@ class RecipeBookCard extends React.Component {
             </Link>
           </div>
           {
+            isUsersRecipeBook ?
+              <div className="right d-flex">
+                <span className="align-self-center">
+                  <button
+                    className="btn btn-pill btn-warning p-3"
+                    style={{ maxHeight: "44px" }}
+                    title="Remove"
+                    onClick={this.onRemoveFromRecipebook}>
+                    <i className="far fa-trash-alt" style={{ pointerEvents: "none" }}></i>
+                  </button>
+                </span>
+              </div>
+              : null
+          }
+          {/* {
             (this.props.auth.user.id === this.props.recipe.user_id) ||
               (this.props.auth.user.id === this.props.recipe.user_id._id) ?
               <div className="right d-flex">
@@ -38,7 +60,7 @@ class RecipeBookCard extends React.Component {
                 </span>
               </div>
               : null
-          }
+          } */}
         </div>
       </div>
 
@@ -47,11 +69,13 @@ class RecipeBookCard extends React.Component {
 }
 
 RecipeBookCard.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  recipebook: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  recipebook: state.recipebook
 })
 
-export default connect(mapStateToProps)(RecipeBookCard);
+export default connect(mapStateToProps, { removeRecipeFromRecipebook })(RecipeBookCard);
