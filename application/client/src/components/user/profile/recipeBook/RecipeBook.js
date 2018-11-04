@@ -15,10 +15,10 @@ class RecipeBook extends Component {
   }
 
   componentDidMount() {
-    this.props.getUserRecipeBook(this.props.auth.user.id);
-    this.setState({
-      user: this.props.auth.user
-    })
+    // this.props.getUserRecipeBook(this.props.auth.user.id);
+    // this.setState({
+    //   user: this.props.auth.user
+    // })
   }
 
   render() {
@@ -111,12 +111,14 @@ class RecipeBook extends Component {
 RecipeBook.propTypes = {
   getUserRecipeBook: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   recipebook: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  recipebook: state.recipebook
+  recipebook: state.recipebook,
+  user: state.user
 })
 
 export default connect(mapStateToProps, { getUserRecipeBook })(RecipeBook);

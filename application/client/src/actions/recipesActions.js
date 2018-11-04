@@ -8,7 +8,8 @@ import {
   DELETE_RECIPE,
   CLEAR_SELECTED_RECIPE,
   EDIT_RECIPE,
-  SET_RECIPES_LOADING
+  SET_RECIPES_LOADING,
+  GET_USER_RECIPES
 } from "./types";
 
 
@@ -22,6 +23,21 @@ export const getUserRecipes = (user_id) => dispatch => {
         type: GET_CURRENT_USER_RECIPES,
         payload: res.data
       }))
+}
+
+// Get logged in user's recipes
+export const getRecipesByUsername = (username) => dispatch => {
+  dispatch(setRecipesLoading());
+  axios
+    .get("/api/recipes/user/" + username)
+    .then(res => {
+      dispatch({
+        type: GET_USER_RECIPES,
+        payload: res.data
+      })
+    }
+
+    )
 }
 
 // Get specific recipe

@@ -5,7 +5,8 @@ import {
   DELETE_RECIPE,
   CLEAR_SELECTED_RECIPE,
   EDIT_RECIPE,
-  SET_RECIPES_LOADING
+  SET_RECIPES_LOADING,
+  GET_USER_RECIPES
 }
   from "../actions/types";
 
@@ -21,6 +22,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true
+      }
+    case GET_USER_RECIPES:
+      return {
+        ...state,
+        recipes: action.payload,
+        loading: false
       }
     case GET_CURRENT_USER_RECIPES:
       return {

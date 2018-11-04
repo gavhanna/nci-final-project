@@ -169,6 +169,25 @@ router.post("/follow", passport.authenticate("jwt", { session: false }), (req, r
     })
 });
 
+// route    GET api/users/username/:username
+// desc     Get user info by username
+// access   Public
+router.get("/username/:username", (req, res) => {
+  User.findOne({ username: req.params.username })
+    .populate("followers").populate("following")
+    .then(user => {
+      const userData = {
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        followers: user.followers,
+        following: user.following,
+      }
+      res.json(userData)
+    }).catch(err => res.status(400).json(err));
+})
+
 
 // route    GET api/users/current 
 // desc     Return current user

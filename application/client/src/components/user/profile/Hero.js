@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 class Hero extends Component {
   render() {
-    const { user } = this.props.auth;
+    const user = this.props.user.info;
     return (
       <div className="col">
         <div className="profile-header text-center" style={{ background: "#3097d1" }}>
@@ -20,13 +20,13 @@ class Hero extends Component {
           <nav className="profile-header-nav">
             <ul className="nav nav-tabs justify-content-center">
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" exact to="/profile" title="Recipes"><i className="fas fa-list-ul"></i></NavLink>
+                <NavLink activeClassName="active" className="nav-link" exact to={`/profile/${this.props.user.info.username}`} title="Recipes"><i className="fas fa-list-ul"></i></NavLink>
               </li>
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" to="/profile/recipebook" title="Recipe Book"><i className="fas fa-book-open"></i></NavLink>
+                <NavLink activeClassName="active" className="nav-link" to={`/profile/${this.props.user.info.username}/recipebook`} title="Recipe Book"><i className="fas fa-book-open"></i></NavLink>
               </li>
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" to="/profile/following" title="Following"><i className="fas fa-users"></i></NavLink>
+                <NavLink activeClassName="active" className="nav-link" to={`/profile/${this.props.user.info.username}/following`} title="Following"><i className="fas fa-users"></i></NavLink>
               </li>
             </ul>
           </nav>
@@ -37,11 +37,13 @@ class Hero extends Component {
 }
 
 Hero.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
 })
 
 export default connect(mapStateToProps)(Hero);

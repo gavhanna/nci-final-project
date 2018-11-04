@@ -23,7 +23,7 @@ class Navbar extends React.Component {
           <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe"><i className="far fa-plus-square"></i></NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/profile" title="Profile"><i className="far fa-user"></i></NavLink>
+          <NavLink activeClassName="active" className="nav-link" to={`/profile/${this.props.auth.user.username}`} title="Profile"><i className="far fa-user"></i></NavLink>
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="far fa-list-alt"></i></NavLink>

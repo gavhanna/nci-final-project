@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getUserRecipes } from "../../../../actions/recipesActions"
+import { getRecipesByUsername } from "../../../../actions/recipesActions"
+import { getUserInfo } from "../../../../actions/userActions"
 import RecipeCard from './RecipeCard';
 import Spinner from "../../../common/Spinner"
 
 class Recipes extends Component {
   componentDidMount() {
-    this.props.getUserRecipes(this.props.auth.user.id)
+    this.props.getUserInfo(this.props.match.params.username)
+    this.props.getRecipesByUsername(this.props.match.params.username)
   }
 
   render() {
@@ -20,7 +22,7 @@ class Recipes extends Component {
     const loaded = (
       <div className="profile-recipes container mt-3">
         <div className="row">
-          {this.props.recipes.recipes ? <h2 className="m-auto title-font">{this.props.auth.user.name && this.props.auth.user.name.split(" ")[0]}'s Recipes</h2> : null}
+          {this.props.user.loading ? null : <h2 className="m-auto title-font">{this.props.user.info.name && this.props.user.info.name.split(" ")[0]}'s Recipes</h2>}
           <div className="row">
             {this.props.recipes.recipes ? hasRecipes : null}
           </div>
@@ -41,13 +43,16 @@ class Recipes extends Component {
 }
 
 Recipes.propTypes = {
-  getUserRecipes: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  getRecipesByUsername: PropTypes.func.isRequired,
+  getUserInfo: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  recipes: state.recipes
+  recipes: state.recipes,
+  user: state.user
 })
 
-export default connect(mapStateToProps, { getUserRecipes })(Recipes);
+export default connect(mapStateToProps, { getRecipesByUsername, getUserInfo })(Recipes);
