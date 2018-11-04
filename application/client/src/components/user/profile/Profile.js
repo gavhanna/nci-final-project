@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Hero from "./Hero"
 import RecipeBook from './recipeBook/RecipeBook';
 import Recipes from './recipes/Recipes';
-import Following from './Following';
+import Following from './following/Following';
 import { getUserInfo } from "../../../actions/userActions"
 import { getUserRecipeBook } from "../../../actions/recipebookActions"
 

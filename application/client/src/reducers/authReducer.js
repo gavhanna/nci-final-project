@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../actions/types";
+import { SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING } from "../actions/types";
 import isEmpty from "../validation/isEmpty"
 
 const initialState = {
@@ -14,6 +14,27 @@ export default function (state = initialState, action) {
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload
       }
+    case ADD_FOLLOWING:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          following: [...state.user.following, action.payload]
+        }
+      }
+    case REMOVE_FOLLOWING:
+      console.log(action.payload);
+      const followingList = state.user.following.filter(item => {
+        return item._id !== action.payload._id
+      })
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          following: followingList
+        }
+      }
+
     default:
       return state;
   }

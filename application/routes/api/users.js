@@ -84,7 +84,10 @@ router.post("/login", (req, res) => {
 
   // find user by email
   User.findOne({ email })
+    .populate({ path: "followers", select: "username" })
+    .populate({ path: "following", select: "username" })
     .then(user => {
+      console.log(user);
       if (!user) {
         errors.email = "User not found";
         return res.status(404).json(errors)
@@ -100,7 +103,9 @@ router.post("/login", (req, res) => {
               id: user.id,
               name: user.name,
               email: user.email,
-              username: user.username
+              username: user.username,
+              followers: user.followers,
+              following: user.following
             }
 
             // Sign Token
@@ -174,7 +179,8 @@ router.post("/follow", passport.authenticate("jwt", { session: false }), (req, r
 // access   Public
 router.get("/username/:username", (req, res) => {
   User.findOne({ username: req.params.username })
-    .populate("followers").populate("following")
+    .populate({ path: "followers", select: "username" })
+    .populate({ path: "following", select: "username" })
     .then(user => {
       const userData = {
         id: user._id,
@@ -193,13 +199,25 @@ router.get("/username/:username", (req, res) => {
 // desc     Return current user
 // acccess  Private
 router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
-  res.json({
-    id: req.user.id,
-    email: req.user.email,
-    name: req.user.name,
-    username: req.user.username,
-    favourites: req.user.favourites
-  })
+  // res.json({
+  //   id: req.user.id,
+  //   name: req.user.name,
+  //   email: req.user.email,
+  //   username: req.user.username,
+  //   favourites: req.user.favourites
+  // })
+  User.findOne({ username: req.user.username })
+    .then(user => {
+      const userData = {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        follower: user.followers,
+        following: user.following
+      }
+      res.json(userData);
+    }).catch(err => res.status(400).json(err));
 });
 
 

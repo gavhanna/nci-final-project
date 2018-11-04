@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken"
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING } from "./types";
 import { createRecipeBook } from "./recipebookActions";
 
 
@@ -45,6 +45,22 @@ export const loginUser = userData => dispatch => {
     }
     )
 };
+
+// Add follower
+export const addFollowing = (user) => dispatch => {
+  dispatch({
+    type: ADD_FOLLOWING,
+    payload: user
+  })
+}
+
+// Add follower
+export const removeFollowing = (user_id, ) => dispatch => {
+  dispatch({
+    type: REMOVE_FOLLOWING,
+    payload: user_id
+  })
+}
 
 // Set logged in user
 export const setCurrentUser = decoded => {

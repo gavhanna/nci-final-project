@@ -2,10 +2,33 @@ import React, { Component } from 'react'
 import NavLink from 'react-router-dom/NavLink';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { followUser, unfollowUser } from "../../../actions/userActions"
+import { removeFollowing, addFollowing } from "../../../actions/authActions"
 
 class Hero extends Component {
+  onFollowClick = (e) => {
+    e.preventDefault();
+    this.props.followUser(this.props.user.info.id);
+    this.props.addFollowing({ _id: this.props.user.info.id, username: this.props.user.info.username });
+  }
+
+  onUnfollowClick = (e) => {
+    e.preventDefault();
+    this.props.unfollowUser(this.props.user.info.id);
+    this.props.removeFollowing(this.props.user.info.id);
+  }
+
   render() {
     const user = this.props.user.info;
+    let isFollowing = false;
+    if (user.username) {
+      user.followers.forEach(follower => {
+        if (follower.username === this.props.auth.user.username) {
+          isFollowing = true;
+        }
+      })
+    }
+
     return (
       <div className="col">
         <div className="profile-header text-center" style={{ background: "#3097d1" }}>
@@ -15,6 +38,13 @@ class Hero extends Component {
               <h3 className="profile-header-user">{user.name}</h3>
               <p className="small text-white">@{user.username}</p>
               <p className="profile-header-bio">{user.blurb}</p>
+              {
+                user.username !== this.props.auth.user.username ?
+                  isFollowing
+                    ? <button className="btn btn-pill btn-warning mb-2" onClick={this.onUnfollowClick}>Unfollow</button>
+                    : <button className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}>Follow</button>
+                  : null
+              }
             </div>
           </div>
           <nav className="profile-header-nav">
@@ -46,4 +76,4 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps)(Hero);
+export default connect(mapStateToProps, { followUser, addFollowing, unfollowUser, removeFollowing })(Hero);
