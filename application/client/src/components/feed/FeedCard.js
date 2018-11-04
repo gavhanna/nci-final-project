@@ -24,7 +24,7 @@ class FeedCard extends React.Component {
             <p className="card-text">Meal: {recipe.meal}</p>
           </div>
         </div>
-        <div className="card-footer">
+        <div className="card-footer justify-content-center d-flex">
           <Link to={`/recipe/show/${recipe._id}`} className="btn btn-pill btn-primary">View</Link>
         </div>
       </div>

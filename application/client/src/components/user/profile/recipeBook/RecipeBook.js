@@ -25,10 +25,10 @@ class RecipeBook extends Component {
     const loading = (<Spinner />);
     const loaded = (
       <React.Fragment>
-        <h2 className="m-3 text-center title-font">{this.props.auth.user.name.split(" ")[0]}'s Recipe Book</h2>
+        <h2 className="m-3 text-center title-font">{this.props.user.info.name && this.props.user.info.name.split(" ")[0]}'s Recipe Book</h2>
         <div className="meal-group mt-5 mb-5">
           <h3 className="title-font text-center">Breakfast</h3>
-          <div className="card-deck">
+          <div className="card-deck justify-content-around">
             {
               this.props.recipebook.selected.length > 0 ?
                 this.props.recipebook.selected.map(recipe => (
@@ -39,7 +39,7 @@ class RecipeBook extends Component {
           </div>
           <div className="meal-group mt-5 mb-5">
             <h3 className="title-font text-center">Brunch</h3>
-            <div className="card-deck">
+            <div className="card-deck justify-content-around">
               {
                 this.props.recipebook.selected.length > 0 ?
                   this.props.recipebook.selected.map(recipe => (
@@ -51,7 +51,7 @@ class RecipeBook extends Component {
           </div>
           <div className="meal-group mt-5 mb-5">
             <h3 className="title-font text-center">Lunch</h3>
-            <div className="card-deck">
+            <div className="card-deck justify-content-around">
               {
                 this.props.recipebook.selected.length > 0 ?
                   this.props.recipebook.selected.map(recipe => (
@@ -63,7 +63,7 @@ class RecipeBook extends Component {
           </div>
           <div className="meal-group mt-5 mb-5">
             <h3 className="title-font text-center">Dinner</h3>
-            <div className="card-deck">
+            <div className="card-deck justify-content-around">
               {
                 this.props.recipebook.selected.length > 0 ?
                   this.props.recipebook.selected.map(recipe => (
@@ -75,7 +75,7 @@ class RecipeBook extends Component {
           </div>
           <div className="meal-group mt-5 mb-5">
             <h3 className="title-font text-center">Supper</h3>
-            <div className="card-deck">
+            <div className="card-deck justify-content-around">
               {
                 this.props.recipebook.selected.length > 0 ?
                   this.props.recipebook.selected.map(recipe => (
@@ -87,7 +87,7 @@ class RecipeBook extends Component {
           </div>
           <div className="meal-group mt-5 mb-5">
             <h3 className="title-font text-center">Snacks</h3>
-            <div className="row">
+            <div className="card-deck justify-content-around">
               {
                 this.props.recipebook.selected.length > 0 ?
                   this.props.recipebook.selected.map(recipe => (
