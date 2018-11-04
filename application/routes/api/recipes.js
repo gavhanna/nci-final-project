@@ -154,12 +154,13 @@ router.get("/recipe/:recipe_id", (req, res) => {
 
 
 // route   GET api/recipes/
-// desc    Get 10 most recent recipes from all users
+// desc    Get 50 most recent recipes from all users
 // access  Public
 router.get("/", (req, res) => {
   Recipe.find()
-    .limit(10)
+    .limit(50)
     .sort([["created_at", -1]])
+    .populate({ path: "user_id", select: "username" })
     .populate({ path: "likes", select: "username" })
     //.populate({ path: "comments", select: "username" })
     .then(recipes => {

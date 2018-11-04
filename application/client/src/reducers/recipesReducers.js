@@ -6,14 +6,16 @@ import {
   CLEAR_SELECTED_RECIPE,
   EDIT_RECIPE,
   SET_RECIPES_LOADING,
-  GET_USER_RECIPES
+  GET_USER_RECIPES,
+  GET_RECENT_RECIPES
 }
   from "../actions/types";
 
 const initialState = {
   recipes: [],
   selectedRecipe: {},
-  loading: false
+  loading: false,
+  recentRecipes: []
 }
 
 export default function (state = initialState, action) {
@@ -35,6 +37,12 @@ export default function (state = initialState, action) {
         recipes: action.payload,
         loading: false
       };
+    case GET_RECENT_RECIPES:
+      return {
+        ...state,
+        loading: false,
+        recentRecipes: action.payload
+      }
     case GET_SPECIFIC_RECIPE:
       return {
         ...state,

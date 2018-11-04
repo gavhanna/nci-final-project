@@ -21,9 +21,9 @@ class Recipes extends Component {
 
     const loaded = (
       <div className="profile-recipes container mt-3">
-        <div className="row">
-          {this.props.user.loading ? null : <h2 className="m-auto title-font">{this.props.user.info.name && this.props.user.info.name.split(" ")[0]}'s Recipes</h2>}
-          <div className="row">
+        <div className="row justify-content-around">
+          {this.props.user.loading ? null : <h2 className="m-auto title-font text-center w-100">{this.props.user.info.name && this.props.user.info.name.split(" ")[0]}'s Recipes</h2>}
+          <div className="card-deck">
             {this.props.recipes.recipes ? hasRecipes : null}
           </div>
         </div>

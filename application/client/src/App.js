@@ -10,7 +10,7 @@ import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Feed from "./components/user/Feed";
+import Feed from "./components/feed/Feed";
 import Profile from "./components/user/profile/Profile";
 
 import './App.css';

@@ -65,7 +65,7 @@ class Recipe extends Component {
                 <img style={{ width: "auto", height: "30px" }} className="rounded-circle" src="https://fillmurray.com/300/300" alt="Creator Profile Pic" />
               </div>
               <div className="d-flex flex-column justify-content-around">
-                <span className="ml-1"> by {this.props.selectedRecipe.user_id && this.props.selectedRecipe.user_id.username}</span>
+                <span className="ml-1"> by {this.props.selectedRecipe.user_id && <Link to={`/profile/${this.props.selectedRecipe.user_id.username}`}>{this.props.selectedRecipe.user_id.username}</Link>}</span>
               </div>
             </div>
             <div className="d-flex">

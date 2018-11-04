@@ -9,7 +9,8 @@ import {
   CLEAR_SELECTED_RECIPE,
   EDIT_RECIPE,
   SET_RECIPES_LOADING,
-  GET_USER_RECIPES
+  GET_USER_RECIPES,
+  GET_RECENT_RECIPES
 } from "./types";
 
 
@@ -36,9 +37,21 @@ export const getRecipesByUsername = (username) => dispatch => {
         payload: res.data
       })
     }
-
     )
 }
+
+// Get recent recipes (50)
+export const getRecentRecipes = () => dispatch => {
+  dispatch(setRecipesLoading());
+  axios.get("/api/recipes/")
+    .then(res => {
+      dispatch({
+        type: GET_RECENT_RECIPES,
+        payload: res.data
+      })
+    }).catch(err => console.log(err));
+}
+
 
 // Get specific recipe
 export const getSpecificRecipe = (recipe_id) => dispatch => {
@@ -59,7 +72,7 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
   axios
     .post("/api/recipes/create", recipeData)
     .then(res => {
-      history.push('/profile');
+      history.push('/');
       dispatch({
         type: CREATE_NEW_RECIPE,
         payload: res.data
