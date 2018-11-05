@@ -48,7 +48,7 @@ class Navbar extends React.Component {
     return (
       <React.Fragment>
         <nav className="navbar navbar-toggleable-sm fixed-top navbar-inverse bg-primary app-navbar">
-          <div className="container">
+
             <button className="navbar-toggler navbar-toggler-right hidden-md-up" type="button" data-toggle="collapse" data-target="#navbarResponsive"
               aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -61,7 +61,6 @@ class Navbar extends React.Component {
             <div className="collapse navbar-collapse" id="navbarResponsive">
               {isAuthenticated ? authLinks : guestLinks}
             </div>
-          </div>
         </nav>
       </React.Fragment>
     )
