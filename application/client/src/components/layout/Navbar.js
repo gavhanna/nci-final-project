@@ -20,13 +20,13 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe"><i className="far fa-plus-square"></i></NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe"><i className="fas fa-folder-plus"></i></NavLink>
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to={`/`} title="Profile"><i className="far fa-user"></i></NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="far fa-list-alt"></i></NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="fas fa-globe-africa"></i></NavLink>
         </li>
         <li className="nav-item">
           <button className="nav-link btn btn-pill btn-primary" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}><i className="fas fa-sign-out-alt"></i></button>
@@ -49,18 +49,18 @@ class Navbar extends React.Component {
       <React.Fragment>
         <nav className="navbar navbar-toggleable-sm fixed-top navbar-inverse bg-primary app-navbar">
 
-            <button className="navbar-toggler navbar-toggler-right hidden-md-up" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-              aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
+          <button className="navbar-toggler navbar-toggler-right hidden-md-up" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
-            <NavLink className="navbar-brand" exact to="/">
-              <span className="title-font">Recipe Book <i className="fas fa-book-open"></i></span>
-            </NavLink>
+          <NavLink className="navbar-brand" exact to="/">
+            <span className="title-font">Recipe Book <i className="fas fa-book-open"></i></span>
+          </NavLink>
 
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              {isAuthenticated ? authLinks : guestLinks}
-            </div>
+          <div className="collapse navbar-collapse" id="navbarResponsive">
+            {isAuthenticated ? authLinks : guestLinks}
+          </div>
         </nav>
       </React.Fragment>
     )

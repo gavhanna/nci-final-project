@@ -98,7 +98,7 @@ class RecipeForm extends Component {
 
     return (
       <div className="container text-center mt-5 mb-5">
-        <h1 className="title-font" style={{ fontSize: "5rem" }}>Add New Recipe</h1>
+        <h1 className="title-font" style={{ fontSize: "5rem" }}>Create New Recipe</h1>
         <p>Publish your new recipe!</p>
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
