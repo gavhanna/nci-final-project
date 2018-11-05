@@ -144,7 +144,7 @@ router.get("/user/:username", (req, res) => {
 router.get("/recipe/:recipe_id", (req, res) => {
   Recipe.find({ _id: req.params.recipe_id })
     .populate({ path: "likes", select: "username" })
-    .populate({ path: "user_id", select: "username" })
+    .populate({ path: "user_id", select: "username img_url" })
     //.populate("comments")
     .then(recipe => {
       res.json(recipe);
@@ -160,7 +160,7 @@ router.get("/", (req, res) => {
   Recipe.find()
     .limit(50)
     .sort([["created_at", -1]])
-    .populate({ path: "user_id", select: "username" })
+    .populate({ path: "user_id", select: "username img_url" })
     .populate({ path: "likes", select: "username" })
     //.populate({ path: "comments", select: "username" })
     .then(recipes => {
