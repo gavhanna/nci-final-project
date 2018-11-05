@@ -49,7 +49,8 @@ router.post("/register", (req, res) => {
           email: req.body.email,
           password: req.body.password,
           blurb: req.body.blurb,
-          username: req.body.username
+          username: req.body.username,
+          img_url: req.body.img_url
         });
 
         bcrypt.genSalt(10, (err, salt) => {
@@ -105,7 +106,8 @@ router.post("/login", (req, res) => {
               email: user.email,
               username: user.username,
               followers: user.followers,
-              following: user.following
+              following: user.following,
+              img_url: user.img_url
             }
 
             // Sign Token
@@ -189,6 +191,7 @@ router.get("/username/:username", (req, res) => {
         email: user.email,
         followers: user.followers,
         following: user.following,
+        img_url: user.img_url
       }
       res.json(userData)
     }).catch(err => res.status(400).json(err));

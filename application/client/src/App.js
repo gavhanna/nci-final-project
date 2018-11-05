@@ -17,6 +17,7 @@ import './App.css';
 import Recipe from './components/recipes/Recipe';
 import RecipeForm from './components/recipes/RecipeForm';
 import EditRecipe from './components/recipes/EditRecipe';
+import EditProfile from './components/user/profile/editProfile/EditProfile';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/feed" component={Feed} />
             <Route path="/profile/:username" component={Profile} />
+            <Route exact path="/edit/:username" component={EditProfile} />
             <Route exact path="/recipe/create" component={RecipeForm} />
             <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
             <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />

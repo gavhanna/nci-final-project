@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import { storage } from "../../utils/firebase";
 
 class Register extends Component {
   constructor() {
@@ -15,7 +16,8 @@ class Register extends Component {
       blurb: "",
       password: "",
       password2: "",
-      errors: {}
+      errors: {},
+      image: null
     }
   }
 
@@ -35,6 +37,12 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  onFileSelected = (e) => {
+    if (e.target.files[0]) {
+      this.setState({ image: e.target.files[0] })
+    }
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
     const newUser = {
@@ -45,8 +53,27 @@ class Register extends Component {
       password2: this.state.password2
     }
 
-    this.props.registerUser(newUser, this.props.history);
+    const { image } = this.state;
+    const uploadTask = storage.ref(`profile_images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // progress function
+      },
+      (err) => { console.log(err) },
+      () => {
+        // complete function
+        storage.ref("profile_images").child(image.name).getDownloadURL().then(url => {
+          // console.log(url);
+          // this.setState({ url })
+          newUser.img_url = url;
+          console.log(newUser);
+          this.props.registerUser(newUser, this.props.history);
+        })
+      });
+
   }
+
 
   render() {
     const { errors } = this.state;
@@ -127,6 +154,15 @@ class Register extends Component {
                       value={this.state.password2}
                       onChange={this.onChange} />
                     {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
+                  </div>
+                  <div className="form-group">
+                    <label>Profile Pic</label>
+                    <input
+                      type="file"
+                      className="form-control-file"
+                      accept="image/*"
+                      onChange={this.onFileSelected}
+                    />
                   </div>
                   <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
                 </form>

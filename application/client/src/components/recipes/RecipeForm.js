@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { createNewRecipe } from "../../actions/recipesActions"
 import classnames from "classnames";
+import { storage } from "../../utils/firebase";
+
 
 class RecipeForm extends Component {
   constructor() {
@@ -20,12 +22,19 @@ class RecipeForm extends Component {
       cooktime: "",
       ingredients: [""],
       method: [""],
-      errors: {}
+      errors: {},
+      image: null
     }
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onFileSelected = (e) => {
+    if (e.target.files[0]) {
+      this.setState({ image: e.target.files[0] })
+    }
   }
 
   onChangeIngredientsArray = (e) => {
@@ -84,7 +93,26 @@ class RecipeForm extends Component {
       method: this.state.method,
     }
 
-    this.props.createNewRecipe(recipeData, this.props.history)
+    const { image } = this.state;
+    const uploadTask = storage.ref(`recipe_images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // progress function
+      },
+      (err) => { console.log(err) },
+      () => {
+        // complete function
+        storage.ref("recipe_images").child(image.name).getDownloadURL().then(url => {
+          // console.log(url);
+          // this.setState({ url })
+          recipeData.img_url = url;
+          console.log(recipeData);
+          this.props.createNewRecipe(recipeData, this.props.history);
+        })
+      });
+
+    // this.props.createNewRecipe(recipeData, this.props.history)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,8 +131,18 @@ class RecipeForm extends Component {
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
             <form onSubmit={this.onSubmit}>
+              <div className="row justify-content-center">
+                <div className="form-group justify-content-center">
+                  <label>Recipe Image</label>
+                  <input
+                    type="file"
+                    className="form-control-file"
+                    accept="image/*"
+                    onChange={this.onFileSelected}
+                  />
+                </div>
+              </div>
               <div className="d-md-flex justify-content-around ">
-
                 <div className="form-group col m-3">
                   <h3>General Info</h3>
                   <div className="form-group">
@@ -122,7 +160,7 @@ class RecipeForm extends Component {
                     />
                     {errors.title && (<div className="invalid-feedback">{errors.title}</div>)}
                   </div>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label htmlFor="image">Image URL</label>
                     <input
                       name="img_url"
@@ -136,7 +174,7 @@ class RecipeForm extends Component {
                       onChange={this.onChange}
                     />
                     {errors.img_url && (<div className="invalid-feedback">{errors.img_url}</div>)}
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <label htmlFor="short-desc">Short Description</label>
                     <input
