@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NavLink from 'react-router-dom/NavLink';
+import { NavLink, Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { followUser, unfollowUser } from "../../../actions/userActions"
@@ -36,14 +36,14 @@ class Hero extends Component {
             <div className="container-inner">
               <img className="rounded-circle media-object" src={user.img_url ? user.img_url : "https://fillmurray.com/200/200"} alt="Profile" />
               <h3 className="profile-header-user">{user.name}</h3>
-              <p className="small text-white">@{user.username}</p>
-              <p className="profile-header-bio">{user.blurb}</p>
+              <p className="small text-white">{user.username && `@${user.username}`}</p>
+              <p className="profile-header-bio">{user.blurb && `"${user.blurb}"`}</p>
               {
                 user.username !== this.props.auth.user.username ?
                   isFollowing
                     ? <button className="btn btn-pill btn-warning mb-2" onClick={this.onUnfollowClick}>Unfollow</button>
                     : <button className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}>Follow</button>
-                  : null
+                  : <Link to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
               }
             </div>
           </div>

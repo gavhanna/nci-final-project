@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken"
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING, EDIT_USER } from "./types";
 import { createRecipeBook } from "./recipebookActions";
 
 
@@ -45,6 +45,28 @@ export const loginUser = userData => dispatch => {
     }
     )
 };
+
+// Edit current user
+export const editUser = (userData, routeHistory) => dispatch => {
+  axios.post("/api/users/edit", userData)
+    .then(res => {
+
+      const userData = res.data;
+      delete userData.password;
+      if (routeHistory) {
+        routeHistory.push("/")
+      }
+      dispatch({
+        type: EDIT_USER,
+        payload: userData
+      })
+    }).catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
 
 // Add follower
 export const addFollowing = (user) => dispatch => {

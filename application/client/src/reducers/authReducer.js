@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING } from "../actions/types";
+import { SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING, EDIT_USER } from "../actions/types";
 import isEmpty from "../validation/isEmpty"
 
 const initialState = {
@@ -33,6 +33,11 @@ export default function (state = initialState, action) {
           ...state.user,
           following: followingList
         }
+      }
+    case EDIT_USER:
+      return {
+        ...state,
+        user: action.payload
       }
 
     default:

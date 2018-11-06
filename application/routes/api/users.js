@@ -8,6 +8,7 @@ const passport = require("passport");
 // Load input validation
 const validateRegisterInput = require("../../validation/register")
 const validateLoginInput = require("../../validation/login")
+const validateEditUserInput = require("../../validation/editUser")
 
 // Load user model
 const User = require("../../models/User");
@@ -69,6 +70,40 @@ router.post("/register", (req, res) => {
     });
 });
 
+// route   POST api/users/edit
+// desc    Edit current user info
+// access  Private
+router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const { errors, isValid } = validateEditUserInput(req.body);
+  // Check Vaidation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+  if (req.body.username !== req.body.oldUsername) {
+    User.findOne({ username: req.body.username })
+      .then(user => {
+        if (user.username === req.body.username) {
+          errors.username = "Username already exists"
+          return res.status(400).json(errors);
+        }
+      }).catch(err => console.log(err))
+  } else {
+    console.log(req.body);
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        user.name = req.body.name;
+        user.username = req.body.username;
+        user.blurb = req.body.blurb;
+
+        user.save()
+          .then(user => {
+            res.json(user)
+          }).catch(err => console.log(err))
+      })
+  }
+
+})
+
 // route   POST api/users/login
 // desc    Log user in
 // access  Public
@@ -107,7 +142,8 @@ router.post("/login", (req, res) => {
               username: user.username,
               followers: user.followers,
               following: user.following,
-              img_url: user.img_url
+              img_url: user.img_url,
+              blurb: user.blurb
             }
 
             // Sign Token
@@ -191,7 +227,8 @@ router.get("/username/:username", (req, res) => {
         email: user.email,
         followers: user.followers,
         following: user.following,
-        img_url: user.img_url
+        img_url: user.img_url,
+        blurb: user.blurb
       }
       res.json(userData)
     }).catch(err => res.status(400).json(err));
@@ -217,7 +254,8 @@ router.get("/current", passport.authenticate("jwt", { session: false }), (req, r
         email: user.email,
         username: user.username,
         follower: user.followers,
-        following: user.following
+        following: user.following,
+        blurb: user.blurb
       }
       res.json(userData);
     }).catch(err => res.status(400).json(err));

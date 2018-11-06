@@ -31,7 +31,7 @@ export const followUser = user_id => dispatch => {
     }).catch(err => console.log(err))
 }
 
-// Follow a user
+// Unfollow a user
 export const unfollowUser = user_id => dispatch => {
   dispatch(setUserInfoLoading());
   axios.post("/api/users/follow", { user_id })
@@ -42,7 +42,6 @@ export const unfollowUser = user_id => dispatch => {
       })
     }).catch(err => console.log(err))
 }
-
 
 // Recipe loading
 export const setUserInfoLoading = () => {
