@@ -48,6 +48,11 @@ class Following extends Component {
   }
 }
 
+Following.propTypes = {
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user
