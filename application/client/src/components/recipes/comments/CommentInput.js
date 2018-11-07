@@ -30,6 +30,7 @@ class CommentInput extends Component {
       recipe_id: this.props.recipe_id
     }
     this.props.createComment(commentData);
+    this.setState({ text: "" });
   }
 
   render() {

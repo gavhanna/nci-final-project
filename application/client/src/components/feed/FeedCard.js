@@ -22,6 +22,7 @@ class FeedCard extends React.Component {
           <div className="p-3 col-md-4 col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left" >
             <p className="card-text">Dietary: {recipe.dietary}</p>
             <p className="card-text">Meal: {recipe.meal}</p>
+            <p className="card-text">Comments: {recipe.comments.length}</p>
           </div>
         </div>
         <div className="card-footer justify-content-center d-flex">

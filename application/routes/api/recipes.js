@@ -144,6 +144,7 @@ router.get("/user/:username", (req, res) => {
 router.get("/recipe/:recipe_id", (req, res) => {
   Recipe.find({ _id: req.params.recipe_id })
     //.populate({ path: "likes", select: "username" })
+    .populate({ path: "user_id", select: "username img_url" })
     .populate({ path: "comments.user", select: "username img_url" })
     //.populate("comments")
     .then(recipe => {
@@ -176,7 +177,7 @@ router.get("/", (req, res) => {
 // access  Private
 router.post("/comments/create", passport.authenticate("jwt", { session: false }), (req, res) => {
   const { errors, isValid } = validateCommentInput(req.body);
-  console.log(req.body);
+
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors)
@@ -191,15 +192,21 @@ router.post("/comments/create", passport.authenticate("jwt", { session: false })
   }
 
   Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
     .then(recipe => {
-
       recipe.comments.push(newComment);
+      // Recipe is now populated AFTER pushing the comment
+      // in order to return a fully functional comment array with the user details populated
+      Recipe.populate(recipe, { path: "comments.user", select: "username img_url" }, (err, populatedRecipe) => {
 
-      recipe.save()
-        .then(recipe => {
-          res.json(recipe)
-        })
-        .catch(err => res.status(400).json(err))
+        populatedRecipe.save()
+          .then(recipe => {
+            res.json(recipe)
+          })
+          .catch(err => res.status(400).json(err))
+      })
+
     })
 });
 
@@ -207,9 +214,11 @@ router.post("/comments/create", passport.authenticate("jwt", { session: false })
 // route   DELETE api/recipes/comments/delete
 // desc    Delete a comment
 // access  Private
-router.delete("/comments/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.post("/comments/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
 
   Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
     .then(recipe => {
       recipe.comments.pull({ _id: req.body.comment_id })
       //recipe.comments = recipe.comments.filter(com => com._id !== req.body.comment_id);

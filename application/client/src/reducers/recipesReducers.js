@@ -8,7 +8,8 @@ import {
   SET_RECIPES_LOADING,
   GET_USER_RECIPES,
   GET_RECENT_RECIPES,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  DELETE_COMMENT
 }
   from "../actions/types";
 
@@ -84,6 +85,12 @@ export default function (state = initialState, action) {
         loading: false
       }
     case CREATE_COMMENT:
+      return {
+        ...state,
+        selectedRecipe: action.payload,
+        loading: false
+      }
+    case DELETE_COMMENT:
       return {
         ...state,
         selectedRecipe: action.payload,

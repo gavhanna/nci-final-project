@@ -11,7 +11,8 @@ import {
   SET_RECIPES_LOADING,
   GET_USER_RECIPES,
   GET_RECENT_RECIPES,
-  CREATE_COMMENT
+  CREATE_COMMENT,
+  DELETE_COMMENT
 } from "./types";
 
 
@@ -137,7 +138,6 @@ export const editRecipe = (recipeData, routeHistory) => dispatch => {
 
 // Add Comment to Recipe
 export const createComment = commentData => dispatch => {
-  //dispatch(setRecipesLoading());
   axios.post("/api/recipes/comments/create", commentData)
     .then(res => {
       dispatch({
@@ -152,6 +152,17 @@ export const createComment = commentData => dispatch => {
         })
       }
     })
+}
+
+// Delete comment
+export const deleteComment = commentData => dispatch => {
+  axios.post(`/api/recipes/comments/delete/`, commentData)
+    .then(res => {
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: res.data
+      })
+    }).catch(err => console.log(err))
 }
 
 
