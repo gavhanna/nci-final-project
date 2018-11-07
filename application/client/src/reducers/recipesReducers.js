@@ -7,7 +7,8 @@ import {
   EDIT_RECIPE,
   SET_RECIPES_LOADING,
   GET_USER_RECIPES,
-  GET_RECENT_RECIPES
+  GET_RECENT_RECIPES,
+  CREATE_COMMENT
 }
   from "../actions/types";
 
@@ -44,6 +45,7 @@ export default function (state = initialState, action) {
         recentRecipes: action.payload
       }
     case GET_SPECIFIC_RECIPE:
+      console.log(action.payload);
       return {
         ...state,
         selectedRecipe: action.payload[0],
@@ -79,6 +81,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         recipes: recipesCopy,
+        loading: false
+      }
+    case CREATE_COMMENT:
+      return {
+        ...state,
+        selectedRecipe: action.payload,
         loading: false
       }
     default:

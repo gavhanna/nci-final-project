@@ -10,7 +10,8 @@ import {
   EDIT_RECIPE,
   SET_RECIPES_LOADING,
   GET_USER_RECIPES,
-  GET_RECENT_RECIPES
+  GET_RECENT_RECIPES,
+  CREATE_COMMENT
 } from "./types";
 
 
@@ -133,6 +134,26 @@ export const editRecipe = (recipeData, routeHistory) => dispatch => {
     }
     )
 }
+
+// Add Comment to Recipe
+export const createComment = commentData => dispatch => {
+  //dispatch(setRecipesLoading());
+  axios.post("/api/recipes/comments/create", commentData)
+    .then(res => {
+      dispatch({
+        type: CREATE_COMMENT,
+        payload: res.data
+      })
+    }).catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      }
+    })
+}
+
 
 // Recipe loading
 export const setRecipesLoading = () => {

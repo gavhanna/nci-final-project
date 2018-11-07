@@ -6,6 +6,7 @@ import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesAct
 import DeleteRecipeButton from './DeleteRecipeButton';
 import Spinner from "../common/Spinner";
 import AddToRecipeBookButton from "./AddToRecipeBookButton";
+import CommentSection from "./comments/CommentSection";
 
 class Recipe extends Component {
   componentDidMount() {
@@ -132,6 +133,8 @@ class Recipe extends Component {
             </ol>
           </div>
         </div>
+        <hr />
+        <CommentSection comments={this.props.selectedRecipe.comments} recipe_id={this.props.selectedRecipe._id} />
       </div>
     )
     return (

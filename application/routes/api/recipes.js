@@ -143,8 +143,8 @@ router.get("/user/:username", (req, res) => {
 // access  Public
 router.get("/recipe/:recipe_id", (req, res) => {
   Recipe.find({ _id: req.params.recipe_id })
-    .populate({ path: "likes", select: "username" })
-    .populate({ path: "user_id", select: "username img_url" })
+    //.populate({ path: "likes", select: "username" })
+    .populate({ path: "comments.user", select: "username img_url" })
     //.populate("comments")
     .then(recipe => {
       res.json(recipe);
@@ -176,16 +176,18 @@ router.get("/", (req, res) => {
 // access  Private
 router.post("/comments/create", passport.authenticate("jwt", { session: false }), (req, res) => {
   const { errors, isValid } = validateCommentInput(req.body);
-
+  console.log(req.body);
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors)
   }
 
   const newComment = {
-    user_id: req.user.id,
-    username: req.user.username,
+    user: req.user.id,
     text: req.body.text
+  }
+  if (req.body.edited_at) {
+    newComment.edited_at = req.body.edited_at;
   }
 
   Recipe.findById(req.body.recipe_id)
