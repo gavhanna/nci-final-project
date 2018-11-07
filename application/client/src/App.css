@@ -11105,3 +11105,6 @@ body {
 i {
   font-size: 15px;
 }
+.btn-pill {
+  padding: 5px;
+}

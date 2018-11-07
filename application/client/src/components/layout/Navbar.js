@@ -20,13 +20,13 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe"><i className="fas fa-folder-plus"></i></NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="fas fa-globe-africa"></i></NavLink>
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to={`/`} title="Profile"><i className="far fa-user"></i></NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="fas fa-globe-africa"></i></NavLink>
+          <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe"><i className="fas fa-folder-plus"></i></NavLink>
         </li>
         <li className="nav-item">
           <button className="nav-link btn btn-pill btn-primary" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}><i className="fas fa-sign-out-alt"></i></button>

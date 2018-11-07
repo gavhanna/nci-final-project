@@ -43,7 +43,7 @@ class Hero extends Component {
                   isFollowing
                     ? <button className="btn btn-pill btn-warning mb-2" onClick={this.onUnfollowClick}>Unfollow</button>
                     : <button className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}>Follow</button>
-                  : <Link to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
+                  : <Link title="Edit User Info" to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
               }
             </div>
           </div>

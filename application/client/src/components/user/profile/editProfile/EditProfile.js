@@ -24,7 +24,7 @@ class editProfile extends Component {
   }
 
   componentDidMount() {
-    const { user } = this.props.auth;
+    const  user  = this.props.user.info;
     this.setState({
       name: user.name,
       username: user.username,
@@ -47,15 +47,15 @@ class editProfile extends Component {
     const userData = {
       name: this.state.name,
       username: this.state.username,
-      oldUsername: this.props.auth.user.username,
+      oldUsername: this.props.user.info.username,
       blurb: this.state.blurb,
-      email: this.props.auth.user.email
+      email: this.props.user.info.email
     }
 
     if (this.state.image) {
 
       const { image } = this.state;
-      const uploadTask = storage.ref(`profile_images/${this.props.auth.user.username}`).put(image);
+      const uploadTask = storage.ref(`profile_images/${this.props.user.info.username}`).put(image);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -84,7 +84,7 @@ class editProfile extends Component {
       <React.Fragment>
         <div className="container-fill-height landing-page">
           <div className="container-content-middle text-center">
-            <h1 className="title-font" style={{ fontSize: "5rem" }}>{this.props.auth.user.name}</h1>
+            <h1 className="title-font" style={{ fontSize: "5rem" }}>{this.state.name}</h1>
             <p>Edit your account information</p>
             <div className="row">
               <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
@@ -152,7 +152,8 @@ class editProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user
 })
 
 export default connect(mapStateToProps, { editUser })(withRouter(editProfile));
