@@ -94,7 +94,8 @@ router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res
         user.name = req.body.name;
         user.username = req.body.username;
         user.blurb = req.body.blurb;
-
+        user.img_url = req.body.img_url;
+        
         user.save()
           .then(user => {
             res.json(user)

@@ -68,7 +68,7 @@ class editProfile extends Component {
         (err) => { console.log(err) },
         () => {
           // complete function
-          storage.ref("profile_images").child(image.name).getDownloadURL().then(url => {
+          storage.ref("profile_images").child(this.props.user.info.username).getDownloadURL().then(url => {
             // console.log(url);
             // this.setState({ url })
             userData.img_url = url;

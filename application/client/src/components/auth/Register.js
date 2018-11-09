@@ -58,7 +58,7 @@ class Register extends Component {
     }
 
     const { image } = this.state;
-    const uploadTask = storage.ref(`profile_images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`profile_images/${this.state.username}`).put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -67,7 +67,7 @@ class Register extends Component {
       (err) => { console.log(err) },
       () => {
         // complete function
-        storage.ref("profile_images").child(image.name).getDownloadURL().then(url => {
+        storage.ref("profile_images").child(this.state.username).getDownloadURL().then(url => {
           // console.log(url);
           // this.setState({ url })
           newUser.img_url = url;
