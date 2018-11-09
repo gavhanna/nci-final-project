@@ -98,7 +98,7 @@ class RecipeForm extends Component {
     }
 
     const { image } = this.state;
-    const uploadTask = storage.ref(`recipe_images/${image.name}`).put(image);
+    const uploadTask = storage.ref(`recipe_images/${this.state.title}`).put(image);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -107,7 +107,7 @@ class RecipeForm extends Component {
       (err) => { console.log(err) },
       () => {
         // complete function
-        storage.ref("recipe_images").child(image.name).getDownloadURL().then(url => {
+        storage.ref("recipe_images").child(this.state.title).getDownloadURL().then(url => {
           // console.log(url);
           // this.setState({ url })
           recipeData.img_url = url;
