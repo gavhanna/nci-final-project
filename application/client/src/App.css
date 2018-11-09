@@ -11105,6 +11105,16 @@ body {
 i {
   font-size: 15px;
 }
+
 .btn-pill {
   padding: 5px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }

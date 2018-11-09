@@ -23,7 +23,8 @@ class RecipeForm extends Component {
       ingredients: [""],
       method: [""],
       errors: {},
-      image: null
+      image: null,
+      file: null
     }
   }
 
@@ -33,7 +34,10 @@ class RecipeForm extends Component {
 
   onFileSelected = (e) => {
     if (e.target.files[0]) {
-      this.setState({ image: e.target.files[0] })
+      this.setState({
+        image: e.target.files[0],
+        file: URL.createObjectURL(e.target.files[0])
+      })
     }
   }
 
@@ -128,15 +132,34 @@ class RecipeForm extends Component {
       <div className="container text-center mt-5 mb-5">
         <h1 className="title-font" style={{ fontSize: "5rem" }}>Create New Recipe</h1>
         <p>Publish your new recipe!</p>
+        <hr />
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
             <form onSubmit={this.onSubmit}>
               <div className="row justify-content-center">
                 <div className="form-group justify-content-center">
-                  <label>Recipe Image</label>
+                  {
+                    this.state.file ?
+                      <div>
+                        <div>
+                          <h4 className="text-center">Image Preview</h4>
+                          <small>Preview, not actual size</small>
+                        </div>
+                        <img src={this.state.file} alt="Preview" class="m-3" style={{ width: "100px", height: "auto" }} />
+                      </div>
+                      : null
+                  }
+                  <label
+                    htmlFor="fileinput"
+                    className="btn btn-pill btn-primary p-2"
+                    className={classnames("btn btn-pill btn-primary p-2", {
+                      "btn-secondary": this.state.file
+                    })}
+                  ><i className="fas fa-upload"></i> {this.state.file ? "Change Image" : "Upload Image"}</label>
                   <input
                     type="file"
-                    className="form-control-file"
+                    id="fileinput"
+                    className="form-control-file inputfile"
                     accept="image/*"
                     onChange={this.onFileSelected}
                   />
