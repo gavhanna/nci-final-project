@@ -123,7 +123,6 @@ router.post("/login", (req, res) => {
     .populate({ path: "followers", select: "username" })
     .populate({ path: "following", select: "username" })
     .then(user => {
-      console.log(user);
       if (!user) {
         errors.email = "User not found";
         return res.status(404).json(errors)
