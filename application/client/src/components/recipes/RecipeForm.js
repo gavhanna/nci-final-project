@@ -151,7 +151,6 @@ class RecipeForm extends Component {
                   }
                   <label
                     htmlFor="fileinput"
-                    className="btn btn-pill btn-primary p-2"
                     className={classnames("btn btn-pill btn-primary p-2", {
                       "btn-secondary": this.state.file
                     })}

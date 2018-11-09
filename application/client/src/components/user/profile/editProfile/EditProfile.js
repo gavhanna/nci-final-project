@@ -14,12 +14,16 @@ class editProfile extends Component {
       username: "",
       blurb: "",
       errors: {},
-      image: null
+      image: null,
+      file: null
     }
   }
   onFileSelected = (e) => {
     if (e.target.files[0]) {
-      this.setState({ image: e.target.files[0] })
+      this.setState({ 
+        image: e.target.files[0],
+        file: URL.createObjectURL(e.target.files[0])
+       })
     }
   }
 
@@ -86,10 +90,36 @@ class editProfile extends Component {
           <div className="container-content-middle text-center">
             <h1 className="title-font" style={{ fontSize: "5rem" }}>{this.state.name}</h1>
             <p>Edit your account information</p>
+            <hr />
             <div className="row">
               <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
                 <form noValidate onSubmit={this.onSubmit}>
                   <div className="form-group">
+                  <div className="form-group">
+                    {
+                      this.state.file ?
+                        <div>
+                          <div>
+                            <h4 className="text-center">Preview</h4>
+                          </div>
+                          <img src={this.state.file} alt="Preview" class="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
+                        </div>
+                        : null
+                    }
+                    <label
+                      htmlFor="fileinput"
+                      className={classnames("btn btn-pill btn-info p-2", {
+                        "btn-primary": this.state.file
+                      })}
+                    ><i className="fas fa-upload"></i> {this.state.file ? "Change Profile Pic" : "Profile Pic"}</label>
+                    <input
+                      type="file"
+                      id="fileinput"
+                      className="form-control-file inputfile"
+                      accept="image/*"
+                      onChange={this.onFileSelected}
+                    />
+                  </div>
                     <label>Name</label>
                     <input
                       name="name"
@@ -130,15 +160,6 @@ class editProfile extends Component {
                       value={this.state.blurb}
                       onChange={this.onChange} />
                     {errors.blurb && (<div className="invalid-feedback">{errors.blurb}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label>Profile Pic</label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      accept="image/*"
-                      onChange={this.onFileSelected}
-                    />
                   </div>
                   <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
                 </form>

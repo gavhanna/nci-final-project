@@ -17,7 +17,8 @@ class Register extends Component {
       password: "",
       password2: "",
       errors: {},
-      image: null
+      image: null,
+      file: null
     }
   }
 
@@ -39,7 +40,10 @@ class Register extends Component {
 
   onFileSelected = (e) => {
     if (e.target.files[0]) {
-      this.setState({ image: e.target.files[0] })
+      this.setState({
+        image: e.target.files[0],
+        file: URL.createObjectURL(e.target.files[0])
+      })
     }
   }
 
@@ -87,6 +91,31 @@ class Register extends Component {
             <div className="row">
               <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
                 <form noValidate onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                    {
+                      this.state.file ?
+                        <div>
+                          <div>
+                            <h4 className="text-center">Preview</h4>
+                          </div>
+                          <img src={this.state.file} alt="Preview" class="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
+                        </div>
+                        : null
+                    }
+                    <label
+                      htmlFor="fileinput"
+                      className={classnames("btn btn-pill btn-info p-2", {
+                        "btn-primary": this.state.file
+                      })}
+                    ><i className="fas fa-upload"></i> {this.state.file ? "Change Profile Pic" : "Profile Pic"}</label>
+                    <input
+                      type="file"
+                      id="fileinput"
+                      className="form-control-file inputfile"
+                      accept="image/*"
+                      onChange={this.onFileSelected}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Name</label>
                     <input
@@ -155,15 +184,7 @@ class Register extends Component {
                       onChange={this.onChange} />
                     {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
                   </div>
-                  <div className="form-group">
-                    <label>Profile Pic</label>
-                    <input
-                      type="file"
-                      className="form-control-file"
-                      accept="image/*"
-                      onChange={this.onFileSelected}
-                    />
-                  </div>
+
                   <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
                 </form>
               </div>
