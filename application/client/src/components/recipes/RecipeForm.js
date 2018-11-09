@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { createNewRecipe } from "../../actions/recipesActions"
+import { setErrors } from "../../actions/errorsReducer"
 import classnames from "classnames";
 import { storage } from "../../utils/firebase";
 
@@ -97,25 +98,34 @@ class RecipeForm extends Component {
       method: this.state.method,
     }
 
-    const { image } = this.state;
-    const uploadTask = storage.ref(`recipe_images/${this.state.title}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function
-      },
-      (err) => { console.log(err) },
-      () => {
-        // complete function
-        storage.ref("recipe_images").child(this.state.title).getDownloadURL().then(url => {
-          // console.log(url);
-          // this.setState({ url })
-          recipeData.img_url = url;
-          console.log(recipeData);
-          this.props.createNewRecipe(recipeData, this.props.history);
-        })
-      });
+    if (!this.state.file) {
+      console.log("there is no file");
+      this.props.setErrors({ profile_pic: "Profile pic is required" })
 
+    } else if (!this.state.title || this.state.title.length < 3) {
+      this.props.setErrors({ title: "Title must be between 3 and 30 characters" })
+
+    } else {
+      const { image } = this.state;
+      console.log(image);
+      const uploadTask = storage.ref(`recipe_images/${this.state.title}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function
+        },
+        (err) => { console.log(err) },
+        () => {
+          // complete function
+          storage.ref("recipe_images").child(this.state.title).getDownloadURL().then(url => {
+            // console.log(url);
+            // this.setState({ url })
+            recipeData.img_url = url;
+            console.log(recipeData);
+            this.props.createNewRecipe(recipeData, this.props.history);
+          })
+        });
+    }
     // this.props.createNewRecipe(recipeData, this.props.history)
   }
 
@@ -145,14 +155,15 @@ class RecipeForm extends Component {
                           <h4 className="text-center">Image Preview</h4>
                           <small>Preview, not actual size</small>
                         </div>
-                        <img src={this.state.file} alt="Preview" class="m-3" style={{ width: "100px", height: "auto" }} />
+                        <img src={this.state.file} alt="Preview" className="m-3" style={{ width: "100px", height: "auto" }} />
                       </div>
                       : null
                   }
                   <label
                     htmlFor="fileinput"
                     className={classnames("btn btn-pill btn-primary p-2", {
-                      "btn-secondary": this.state.file
+                      "btn-secondary": this.state.file,
+                      "is-invalid": errors.profile_pic
                     })}
                   ><i className="fas fa-upload"></i> {this.state.file ? "Change Image" : "Upload Image"}</label>
                   <input
@@ -164,6 +175,7 @@ class RecipeForm extends Component {
                   />
                 </div>
               </div>
+              {errors.profile_pic && (<div className="invalid-feedback">{errors.profile_pic}</div>)}
               <div className="d-md-flex justify-content-around ">
                 <div className="form-group col m-3">
                   <h3>General Info</h3>
@@ -382,4 +394,4 @@ const mapStateToProps = state => ({
   selectedRecipe: state.recipes.selectedRecipe
 })
 
-export default connect(mapStateToProps, { createNewRecipe })(withRouter(RecipeForm));
+export default connect(mapStateToProps, { createNewRecipe, setErrors })(withRouter(RecipeForm));
