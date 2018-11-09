@@ -100,7 +100,7 @@ class RecipeForm extends Component {
 
     if (!this.state.file) {
       console.log("there is no file");
-      this.props.setErrors({ profile_pic: "Profile pic is required" })
+      this.props.setErrors({ profile_pic: "Recipe image is required" })
 
     } else if (!this.state.title || this.state.title.length < 3) {
       this.props.setErrors({ title: "Title must be between 3 and 30 characters" })
@@ -113,6 +113,7 @@ class RecipeForm extends Component {
         "state_changed",
         (snapshot) => {
           // progress function
+          // could use this to implement a loading bar?
         },
         (err) => { console.log(err) },
         () => {
