@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import { setErrors } from "../../actions/errorsActions"
 import { storage } from "../../utils/firebase";
 
 class Register extends Component {
@@ -57,24 +58,34 @@ class Register extends Component {
       password2: this.state.password2
     }
 
-    const { image } = this.state;
-    const uploadTask = storage.ref(`profile_images/${this.state.username}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function
-      },
-      (err) => { console.log(err) },
-      () => {
-        // complete function
-        storage.ref("profile_images").child(this.state.username).getDownloadURL().then(url => {
-          // console.log(url);
-          // this.setState({ url })
-          newUser.img_url = url;
-          console.log(newUser);
-          this.props.registerUser(newUser, this.props.history);
-        })
-      });
+    if (!this.state.file) {
+      console.log("No file found");
+      this.props.setErrors({ profile_pic: "Profile pic is required" })
+
+    } else if (!this.state.username || this.state.username.length < 3) {
+      this.props.setErrors({ username: "Username must be between 3 and 30 characters" });
+
+    } else {
+      const { image } = this.state;
+      const uploadTask = storage.ref(`profile_images/${this.state.username}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function
+        },
+        (err) => { console.log(err) },
+        () => {
+          // complete function
+          storage.ref("profile_images").child(this.state.username).getDownloadURL().then(url => {
+            // console.log(url);
+            // this.setState({ url })
+            newUser.img_url = url;
+            console.log(newUser);
+            this.props.registerUser(newUser, this.props.history);
+          })
+        });
+    }
+
 
   }
 
@@ -105,7 +116,8 @@ class Register extends Component {
                     <label
                       htmlFor="fileinput"
                       className={classnames("btn btn-pill btn-info p-2", {
-                        "btn-primary": this.state.file
+                        "btn-primary": this.state.file,
+                        "is-invalid": errors.profile_pic
                       })}
                     ><i className="fas fa-upload"></i> {this.state.file ? "Change Profile Pic" : "Profile Pic"}</label>
                     <input
@@ -116,6 +128,7 @@ class Register extends Component {
                       onChange={this.onFileSelected}
                     />
                   </div>
+                  {errors.profile_pic && (<div className="invalid-feedback">{errors.profile_pic}</div>)}
                   <div className="form-group">
                     <label>Name</label>
                     <input
@@ -207,4 +220,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(mapStateToProps, { registerUser, setErrors })(withRouter(Register));

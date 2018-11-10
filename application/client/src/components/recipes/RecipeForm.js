@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { createNewRecipe } from "../../actions/recipesActions"
-import { setErrors } from "../../actions/errorsReducer"
+import { setErrors } from "../../actions/errorsActions"
 import classnames from "classnames";
 import { storage } from "../../utils/firebase";
 
@@ -107,7 +107,6 @@ class RecipeForm extends Component {
 
     } else {
       const { image } = this.state;
-      console.log(image);
       const uploadTask = storage.ref(`recipe_images/${this.state.title}`).put(image);
       uploadTask.on(
         "state_changed",

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { editRecipe } from "../../actions/recipesActions";
 import classnames from "classnames";
 import Spinner from '../common/Spinner';
+import { storage } from "../../utils/firebase";
 
 class EditRecipeForm extends Component {
   constructor(props) {
@@ -21,7 +22,9 @@ class EditRecipeForm extends Component {
       cooktime: "",
       ingredients: [""],
       method: [""],
-      errors: {}
+      errors: {},
+      image: null,
+      file: null
     }
   }
 
@@ -43,6 +46,15 @@ class EditRecipeForm extends Component {
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onFileSelected = (e) => {
+    if (e.target.files[0]) {
+      this.setState({
+        image: e.target.files[0],
+        file: URL.createObjectURL(e.target.files[0])
+      })
+    }
   }
 
   onChangeIngredientsArray = (e) => {
@@ -102,7 +114,35 @@ class EditRecipeForm extends Component {
       id: this.props.recipe._id
     }
 
-    this.props.editRecipe(recipeData, this.props.history)
+    if (!this.state.file) {
+      console.log("there is no file");
+      this.props.editRecipe(recipeData, this.props.history);
+
+    } else if (!this.state.title || this.state.title.length < 3) {
+      this.props.setErrors({ title: "Title must be between 3 and 30 characters" })
+
+    } else {
+      const { image } = this.state;
+      const uploadTask = storage.ref(`recipe_images/${this.state.title}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function
+          // could use this to implement a loading bar?
+        },
+        (err) => { console.log(err) },
+        () => {
+          // complete function
+          storage.ref("recipe_images").child(this.state.title).getDownloadURL().then(url => {
+            // console.log(url);
+            // this.setState({ url })
+            recipeData.img_url = url;
+            console.log(recipeData);
+            this.props.editRecipe(recipeData, this.props.history);
+          })
+        });
+    }
+    // this.props.editRecipe(recipeData, this.props.history)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -123,6 +163,33 @@ class EditRecipeForm extends Component {
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
             <form onSubmit={this.onSubmit}>
+              <div className="form-group justify-content-center">
+                {
+                  this.state.img_url ?
+                    <div>
+                      <div>
+                        <h4 className="text-center">Image Preview</h4>
+                        <small>Preview, not actual size</small>
+                      </div>
+                      <img src={this.state.file ? this.state.file : this.state.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto" }} />
+                    </div>
+                    : null
+                }
+                <label
+                  htmlFor="fileinput"
+                  className={classnames("btn btn-pill btn-primary p-2", {
+                    "btn-secondary": this.state.file,
+                    "is-invalid": errors.profile_pic
+                  })}
+                ><i className="fas fa-upload"></i> {this.state.file ? "Change Image" : "Upload Image"}</label>
+                <input
+                  type="file"
+                  id="fileinput"
+                  className="form-control-file inputfile"
+                  accept="image/*"
+                  onChange={this.onFileSelected}
+                />
+              </div>
               <div className="d-md-flex justify-content-around ">
 
                 <div className="form-group col m-3">
@@ -141,21 +208,6 @@ class EditRecipeForm extends Component {
                       onChange={this.onChange}
                     />
                     {errors.title && (<div className="invalid-feedback">{errors.title}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="image">Image URL</label>
-                    <input
-                      name="img_url"
-                      type="text"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.img_url
-                      })}
-                      id="img_url"
-                      placeholder="e.g. https://pics.com/pic"
-                      value={this.state.img_url}
-                      onChange={this.onChange}
-                    />
-                    {errors.img_url && (<div className="invalid-feedback">{errors.img_url}</div>)}
                   </div>
                   <div className="form-group">
                     <label htmlFor="short-desc">Short Description</label>
