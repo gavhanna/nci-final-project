@@ -1,0 +1,2 @@
+// To deploy the "application" folder to heroku
+git subtree push --prefix application heroku master
