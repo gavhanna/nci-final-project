@@ -16,7 +16,7 @@ class RecipeBookCard extends React.Component {
     const isUsersRecipeBook = this.props.auth.user.id === this.props.recipebook.selected.user_id;
     return (
 
-      <div className="card mt-3" style={{ maxWidth: "300px" }}>
+      <div className="card mt-3 ml-auto mr-auto" style={{ maxWidth: "300px" }}>
         <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
         <div className="card-body">
           <h5 className="card-title">{this.props.recipe.title}</h5>

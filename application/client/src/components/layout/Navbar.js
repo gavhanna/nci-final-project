@@ -18,7 +18,7 @@ class Navbar extends React.Component {
     const { isAuthenticated } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto" data-toggle="collapse" data-target="#navbarResponsive">
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed"><i className="fas fa-globe-africa"></i></NavLink>
         </li>
@@ -35,7 +35,7 @@ class Navbar extends React.Component {
     );
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto" data-toggle="collapse" data-target="#navbarResponsive">
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" exact to="/register">Register</NavLink>
         </li>

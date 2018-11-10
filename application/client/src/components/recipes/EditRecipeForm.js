@@ -157,10 +157,10 @@ class EditRecipeForm extends Component {
 
     const form = (
       <div className="container text-center mb-5">
-      <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
-        <h1 className="title-font" style={{ fontSize: "5rem" }}>Edit {recipe.title}</h1>
-        <p>Make changes to your recipe!</p>
-      </div>
+        <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
+          <h1 className="title-font" style={{ fontSize: "5rem" }}>Edit {recipe.title}</h1>
+          <p>Make changes to your recipe!</p>
+        </div>
         <div className="row">
           <div className="col-md-8 col-sm-12 m-auto">
             <form onSubmit={this.onSubmit}>
@@ -193,7 +193,7 @@ class EditRecipeForm extends Component {
               </div>
               <div className="d-md-flex justify-content-around ">
 
-                <div className="form-group col m-3">
+                <div className="form-group col m-md-3 m-auto">
                   <h3>General Info</h3>
                   <div className="form-group">
                     <label htmlFor="name">Title</label>
@@ -280,7 +280,7 @@ class EditRecipeForm extends Component {
                     {errors.meal && (<div className="invalid-feedback">{errors.meal}</div>)}
                   </div>
                 </div>
-                <div className="form-group col m-3">
+                <div className="form-group col m-md-3 m-auto">
                   <h3>Time</h3>
                   <div className="form-group">
                     <label htmlFor="preptime">Preperation Time</label>
