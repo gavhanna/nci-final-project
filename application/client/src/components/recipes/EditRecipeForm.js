@@ -156,229 +156,231 @@ class EditRecipeForm extends Component {
     const { recipe } = this.props;
 
     const form = (
-      <div className="container text-center mb-5">
-        <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
+      <React.Fragment>
+        <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4 ml-0 mr-0">
           <h1 className="title-font" style={{ fontSize: "5rem" }}>Edit {recipe.title}</h1>
           <p>Make changes to your recipe!</p>
         </div>
-        <div className="row">
-          <div className="col-md-8 col-sm-12 m-auto">
-            <form onSubmit={this.onSubmit}>
-              <div className="form-group justify-content-center">
-                {
-                  this.state.img_url ?
-                    <div>
+        <div className="container text-center mb-5">
+          <div className="row">
+            <div className="col-md-8 col-sm-12 m-auto">
+              <form onSubmit={this.onSubmit}>
+                <div className="form-group justify-content-center">
+                  {
+                    this.state.img_url ?
                       <div>
-                        <h4 className="text-center">Image Preview</h4>
-                        <small>Preview, not actual size</small>
+                        <div>
+                          <h4 className="text-center">Image Preview</h4>
+                          <small>Preview, not actual size</small>
+                        </div>
+                        <img src={this.state.file ? this.state.file : this.state.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto" }} />
                       </div>
-                      <img src={this.state.file ? this.state.file : this.state.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto" }} />
-                    </div>
-                    : null
-                }
-                <label
-                  htmlFor="fileinput"
-                  className={classnames("btn btn-pill btn-primary p-2", {
-                    "btn-secondary": this.state.file,
-                    "is-invalid": errors.profile_pic
-                  })}
-                ><i className="fas fa-upload"></i> {this.state.file ? "Change Image" : "Upload Image"}</label>
-                <input
-                  type="file"
-                  id="fileinput"
-                  className="form-control-file inputfile"
-                  accept="image/*"
-                  onChange={this.onFileSelected}
-                />
-              </div>
-              <div className="d-md-flex justify-content-around ">
+                      : null
+                  }
+                  <label
+                    htmlFor="fileinput"
+                    className={classnames("btn btn-pill btn-primary p-2", {
+                      "btn-secondary": this.state.file,
+                      "is-invalid": errors.profile_pic
+                    })}
+                  ><i className="fas fa-upload"></i> {this.state.file ? "Change Image" : "Upload Image"}</label>
+                  <input
+                    type="file"
+                    id="fileinput"
+                    className="form-control-file inputfile"
+                    accept="image/*"
+                    onChange={this.onFileSelected}
+                  />
+                </div>
+                <div className="d-md-flex justify-content-around ">
 
-                <div className="form-group col m-md-3 m-auto">
-                  <h3>General Info</h3>
-                  <div className="form-group">
-                    <label htmlFor="name">Title</label>
-                    <input
-                      name="title"
-                      type="text"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.title
-                      })}
-                      id="title"
-                      placeholder="e.g. Tasty Stew"
-                      value={this.state.title}
-                      onChange={this.onChange}
-                    />
-                    {errors.title && (<div className="invalid-feedback">{errors.title}</div>)}
+                  <div className="form-group col m-md-3 m-auto">
+                    <h3>General Info</h3>
+                    <div className="form-group">
+                      <label htmlFor="name">Title</label>
+                      <input
+                        name="title"
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.title
+                        })}
+                        id="title"
+                        placeholder="e.g. Tasty Stew"
+                        value={this.state.title}
+                        onChange={this.onChange}
+                      />
+                      {errors.title && (<div className="invalid-feedback">{errors.title}</div>)}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="short-desc">Short Description</label>
+                      <input
+                        name="desc"
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.desc
+                        })}
+                        id="desc"
+                        placeholder="e.g. Everything you ever wanted!"
+                        value={this.state.desc}
+                        onChange={this.onChange}
+                      />
+                      {errors.desc && (<div className="invalid-feedback">{errors.desc}</div>)}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="serves">Serves</label>
+                      <input
+                        name="serves"
+                        type="number"
+                        min="1"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.serves
+                        })}
+                        id="serves"
+                        placeholder="1"
+                        value={this.state.serves}
+                        onChange={this.onChange}
+                      />
+                      {errors.serves && (<div className="invalid-feedback">{errors.serves}</div>)}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="dietary">Dietary</label>
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.dietary
+                        })}
+                        id="dietaryselect"
+                        name="dietary"
+                        value={this.state.dietary}
+                        onChange={this.onChange}
+                      >
+                        <option>Vegetarian</option>
+                        <option>Pescetarian</option>
+                        <option>Vegan</option>
+                        <option>Carnivore</option>
+                      </select>
+                      {errors.dietary && (<div className="invalid-feedback">{errors.dietary}</div>)}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="meal">Meal</label>
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.meal
+                        })}
+                        id="mealselect"
+                        name="meal"
+                        value={this.state.meal}
+                        onChange={this.onChange}
+                      >
+                        <option>Breakfast</option>
+                        <option>Brunch</option>
+                        <option>Lunch</option>
+                        <option>Dinner</option>
+                        <option>Supper</option>
+                        <option>Snack</option>
+                      </select>
+                      {errors.meal && (<div className="invalid-feedback">{errors.meal}</div>)}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="short-desc">Short Description</label>
-                    <input
-                      name="desc"
-                      type="text"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.desc
-                      })}
-                      id="desc"
-                      placeholder="e.g. Everything you ever wanted!"
-                      value={this.state.desc}
-                      onChange={this.onChange}
-                    />
-                    {errors.desc && (<div className="invalid-feedback">{errors.desc}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="serves">Serves</label>
-                    <input
-                      name="serves"
-                      type="number"
-                      min="1"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.serves
-                      })}
-                      id="serves"
-                      placeholder="1"
-                      value={this.state.serves}
-                      onChange={this.onChange}
-                    />
-                    {errors.serves && (<div className="invalid-feedback">{errors.serves}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="dietary">Dietary</label>
-                    <select
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.dietary
-                      })}
-                      id="dietaryselect"
-                      name="dietary"
-                      value={this.state.dietary}
-                      onChange={this.onChange}
-                    >
-                      <option>Vegetarian</option>
-                      <option>Pescetarian</option>
-                      <option>Vegan</option>
-                      <option>Carnivore</option>
-                    </select>
-                    {errors.dietary && (<div className="invalid-feedback">{errors.dietary}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="meal">Meal</label>
-                    <select
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.meal
-                      })}
-                      id="mealselect"
-                      name="meal"
-                      value={this.state.meal}
-                      onChange={this.onChange}
-                    >
-                      <option>Breakfast</option>
-                      <option>Brunch</option>
-                      <option>Lunch</option>
-                      <option>Dinner</option>
-                      <option>Supper</option>
-                      <option>Snack</option>
-                    </select>
-                    {errors.meal && (<div className="invalid-feedback">{errors.meal}</div>)}
+                  <div className="form-group col m-md-3 m-auto">
+                    <h3>Time</h3>
+                    <div className="form-group">
+                      <label htmlFor="preptime">Preperation Time</label>
+                      <small> In minutes</small>
+                      <input
+                        name="preptime"
+                        type="number"
+                        min="1"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.preptime
+                        })}
+                        id="preptime"
+                        placeholder="30"
+                        value={this.state.preptime}
+                        onChange={this.onChange}
+                      />
+                      {errors.preptime && (<div className="invalid-feedback">{errors.preptime}</div>)}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="cooktime">Cooking Time</label>
+                      <small> In minutes</small>
+                      <input
+                        name="cooktime"
+                        type="number"
+                        min="1"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.preptime
+                        })}
+                        id="cooktime"
+                        placeholder="10"
+                        value={this.state.cooktime}
+                        onChange={this.onChange}
+                      />
+                      {errors.cooktime && (<div className="invalid-feedback">{errors.cooktime}
+                      </div>)}
+                    </div>
+                    <div className="form-group col">
+                      <h3>Details</h3>
+                      <fieldset id="ingredients-fieldset" >
+                        {this.state.ingredients.map((i, n) => {
+                          return <div key={n}>
+                            <RecipeFormInput
+                              name={"ingredient-" + n}
+                              label={"Ingredient " + parseInt(n + 1)}
+                              value={this.state.ingredients[n]}
+                              helperClass={classnames("form-control ingredients-list form-control-lg", {
+                                "is-invalid": errors.ingredients
+                              })}
+                              onChange={this.onChangeIngredientsArray} />
+                          </div>
+                        })}
+                        {errors.ingredients && (<div className="invalid-feedback">{errors.ingredients}</div>)}
+                        <button
+                          className="btn btn-primary btn-pill mb-5"
+                          onClick={this.addIngredient}
+                        >Add Ingredient</button>
+                        {this.state.ingredients.length > 1 ?
+                          <button
+                            className="btn btn-warning btn-pill ml-1 mb-5"
+                            onClick={this.removeIngredientListItem}
+                          >Remove</button>
+                          : null
+                        }
+                      </fieldset >
+                      <fieldset id="method-fieldset">
+                        {this.state.method.map((i, n) => {
+                          return <div key={n}>
+                            <RecipeFormInput
+                              name={"method-" + n}
+                              label={"Method " + parseInt(n + 1)}
+                              value={this.state.method[n]}
+                              helperClass={classnames("form-control method-list form-control-lg", {
+                                "is-invalid": errors.method
+                              })}
+                              onChange={this.onChangeMethodArray} />
+                          </div>
+                        })}
+                        {errors.method && (<div className="invalid-feedback">{errors.method}</div>)}
+                        <button
+                          className="btn btn-primary btn-pill mb-5"
+                          onClick={this.addMethod}
+                        >Add Method Step</button>
+                        {this.state.method.length > 1 ?
+                          <button
+                            className="btn btn-warning btn-pill ml-1 mb-5"
+                            onClick={this.removeMethodListItem}
+                          >Remove</button>
+                          : null
+                        }
+                      </fieldset >
+                    </div>
                   </div>
                 </div>
-                <div className="form-group col m-md-3 m-auto">
-                  <h3>Time</h3>
-                  <div className="form-group">
-                    <label htmlFor="preptime">Preperation Time</label>
-                    <small> In minutes</small>
-                    <input
-                      name="preptime"
-                      type="number"
-                      min="1"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.preptime
-                      })}
-                      id="preptime"
-                      placeholder="30"
-                      value={this.state.preptime}
-                      onChange={this.onChange}
-                    />
-                    {errors.preptime && (<div className="invalid-feedback">{errors.preptime}</div>)}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="cooktime">Cooking Time</label>
-                    <small> In minutes</small>
-                    <input
-                      name="cooktime"
-                      type="number"
-                      min="1"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.preptime
-                      })}
-                      id="cooktime"
-                      placeholder="10"
-                      value={this.state.cooktime}
-                      onChange={this.onChange}
-                    />
-                    {errors.cooktime && (<div className="invalid-feedback">{errors.cooktime}
-                    </div>)}
-                  </div>
-                  <div className="form-group col">
-                    <h3>Details</h3>
-                    <fieldset id="ingredients-fieldset" >
-                      {this.state.ingredients.map((i, n) => {
-                        return <div key={n}>
-                          <RecipeFormInput
-                            name={"ingredient-" + n}
-                            label={"Ingredient " + parseInt(n + 1)}
-                            value={this.state.ingredients[n]}
-                            helperClass={classnames("form-control ingredients-list form-control-lg", {
-                              "is-invalid": errors.ingredients
-                            })}
-                            onChange={this.onChangeIngredientsArray} />
-                        </div>
-                      })}
-                      {errors.ingredients && (<div className="invalid-feedback">{errors.ingredients}</div>)}
-                      <button
-                        className="btn btn-primary btn-pill mb-5"
-                        onClick={this.addIngredient}
-                      >Add Ingredient</button>
-                      {this.state.ingredients.length > 1 ?
-                        <button
-                          className="btn btn-warning btn-pill ml-1 mb-5"
-                          onClick={this.removeIngredientListItem}
-                        >Remove</button>
-                        : null
-                      }
-                    </fieldset >
-                    <fieldset id="method-fieldset">
-                      {this.state.method.map((i, n) => {
-                        return <div key={n}>
-                          <RecipeFormInput
-                            name={"method-" + n}
-                            label={"Method " + parseInt(n + 1)}
-                            value={this.state.method[n]}
-                            helperClass={classnames("form-control method-list form-control-lg", {
-                              "is-invalid": errors.method
-                            })}
-                            onChange={this.onChangeMethodArray} />
-                        </div>
-                      })}
-                      {errors.method && (<div className="invalid-feedback">{errors.method}</div>)}
-                      <button
-                        className="btn btn-primary btn-pill mb-5"
-                        onClick={this.addMethod}
-                      >Add Method Step</button>
-                      {this.state.method.length > 1 ?
-                        <button
-                          className="btn btn-warning btn-pill ml-1 mb-5"
-                          onClick={this.removeMethodListItem}
-                        >Remove</button>
-                        : null
-                      }
-                    </fieldset >
-                  </div>
-                </div>
-              </div>
-              <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
-            </form>
+                <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
 
     return (

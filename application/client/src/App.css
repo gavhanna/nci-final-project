@@ -11136,3 +11136,8 @@ i {
 .no-pointer-events {
   pointer-events: none;
 }
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
