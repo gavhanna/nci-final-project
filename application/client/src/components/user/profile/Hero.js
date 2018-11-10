@@ -2,10 +2,41 @@ import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import classnames from "classnames";
 import { followUser, unfollowUser } from "../../../actions/userActions"
 import { removeFollowing, addFollowing } from "../../../actions/authActions"
 
 class Hero extends Component {
+  constructor() {
+    super();
+    this.state = {
+      active: "recipes"
+    }
+  }
+
+  componentDidMount() {
+    const locationArray = window.location.pathname.split("/");
+    const currentSelectedLink = locationArray[locationArray.length - 1];
+    console.log(currentSelectedLink);
+    this.setState({ active: currentSelectedLink })
+  }
+
+  navClick = e => {
+    if (e.target.href) {
+      const current = e.target.href.split("/").pop();
+      console.log(current);
+
+      if (current === "recipebook") {
+        this.setState({ active: "recipebook" });
+      } else if (current === "following") {
+        this.setState({ active: "following" });
+      } else {
+        this.setState({ active: "recipes" });
+      }
+    }
+
+  }
+
   onFollowClick = (e) => {
     e.preventDefault();
     this.props.followUser(this.props.user.info.id);
@@ -48,15 +79,38 @@ class Hero extends Component {
             </div>
           </div>
           <nav className="profile-header-nav">
-            <ul className="nav nav-tabs justify-content-center">
+            <ul className="nav nav-tabs justify-content-center" onClick={this.navClick}>
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" exact to={`/profile/${this.props.user.info.username}`} title="Recipes"><i className="fas fa-list-ul"></i></NavLink>
+                <Link
+                  className={classnames("nav-link", {
+                    "active": this.state.active === "recipes",
+                  })}
+                  exact to={`/profile/${this.props.user.info.username}`}
+                  title="Recipes"
+                >
+                  <i className="fas fa-list-ul no-pointer-events"></i>
+                </Link>
               </li>
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" to={`/profile/${this.props.user.info.username}/recipebook`} title="Recipe Book"><i className="fas fa-book-open"></i></NavLink>
+                <Link
+                  className={classnames("nav-link", {
+                    "active": this.state.active === "recipebook"
+                  })}
+                  to={`/profile/${this.props.user.info.username}/recipebook`}
+                  title="Recipe Book"
+                >
+                  <i className="fas fa-book-open no-pointer-events"></i>
+                </Link>
               </li>
               <li className="nav-item">
-                <NavLink activeClassName="active" className="nav-link" to={`/profile/${this.props.user.info.username}/following`} title="Following"><i className="fas fa-users"></i></NavLink>
+                <Link
+                  className={classnames("nav-link", {
+                    "active": this.state.active === "following"
+                  })}
+                  to={`/profile/${this.props.user.info.username}/following`}
+                  title="Following">
+                  <i className="fas fa-users no-pointer-events"></i>
+                </Link>
               </li>
             </ul>
           </nav>
