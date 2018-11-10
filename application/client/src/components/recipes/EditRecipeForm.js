@@ -156,7 +156,6 @@ class EditRecipeForm extends Component {
     const { recipe } = this.props;
 
     const form = (
-
       <div className="container text-center mb-5">
       <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
         <h1 className="title-font" style={{ fontSize: "5rem" }}>Edit {recipe.title}</h1>
