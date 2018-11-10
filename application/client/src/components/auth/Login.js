@@ -49,7 +49,7 @@ class Login extends Component {
         <div className="container-content-middle text-center">
           <h1 className="title-font" style={{ fontSize: "5rem" }}>Login</h1>
           <p>Please enter your details</p>
-          <div className="row">
+          <div className="row m-0">
             <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
@@ -79,7 +79,7 @@ class Login extends Component {
                     onChange={this.onChange} />
                   {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                 </div>
-                <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
+                <button type="submit" className="btn btn-lg btn-pill btn-info p-2">Submit</button>
               </form>
             </div>
           </div>

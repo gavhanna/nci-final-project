@@ -99,7 +99,7 @@ class Register extends Component {
           <div className="container-content-middle text-center">
             <h1 className="title-font" style={{ fontSize: "5rem" }}>Create an account</h1>
             <p>Please enter your details</p>
-            <div className="row">
+            <div className="row m-0 mb-5">
               <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
                 <form noValidate onSubmit={this.onSubmit}>
                   <div className="form-group">
@@ -198,7 +198,7 @@ class Register extends Component {
                     {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
                   </div>
 
-                  <button type="submit" className="btn btn-lg btn-pill btn-info">Submit</button>
+                  <button type="submit" className="btn btn-lg btn-pill btn-info p-2">Submit</button>
                 </form>
               </div>
             </div>

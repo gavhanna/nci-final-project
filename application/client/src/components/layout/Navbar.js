@@ -25,7 +25,7 @@ class Navbar extends React.Component {
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to={`/`} title="Profile">
+          <NavLink activeClassName="active" className="nav-link" to="/" title="Profile">
             <i className="far fa-user"></i><span className="d-inline d-sm-none"> Profile</span>
           </NavLink>
         </li>
