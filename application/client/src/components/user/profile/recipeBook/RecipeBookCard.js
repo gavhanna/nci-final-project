@@ -16,12 +16,16 @@ class RecipeBookCard extends React.Component {
     const isUsersRecipeBook = this.props.auth.user.id === this.props.recipebook.selected.user_id;
     return (
 
-      <div className="card mt-3 ml-auto mr-auto" style={{ maxWidth: "300px" }}>
-        <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
-        <div className="card-body">
-          <h5 className="card-title">{this.props.recipe.title}</h5>
-          <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
-          <p className="card-text">{this.props.recipe.desc}</p>
+      <div className="card mt-3 ml-auto mr-auto justify-content-between" style={{ maxWidth: "300px" }}>
+        <div className="card-body d-flex flex-column justify-content-between h-100">
+          <div>
+            <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
+          </div>
+          <div className="p-3">
+            <h5 className="card-title">{this.props.recipe.title}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
+            <p className="card-text">{this.props.recipe.desc}</p>
+          </div>
         </div>
         <div className="card-footer d-flex justify-content-between">
           <div className="left">

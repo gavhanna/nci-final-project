@@ -1,2 +1,5 @@
 // To deploy the "application" folder to heroku
 git subtree push --prefix application heroku master
+
+// i used this to set up automatic deployment from a sub-directory
+https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder

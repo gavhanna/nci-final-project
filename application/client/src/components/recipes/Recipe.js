@@ -25,7 +25,7 @@ class Recipe extends Component {
             <h2 className="title-font" style={{ fontSize: "4rem" }}>{this.props.selectedRecipe.title}</h2>
           </div>
         </div>
-            <p>{this.props.selectedRecipe.desc}</p>
+        <p className="mt-3">"{this.props.selectedRecipe.desc}"</p>
         <div className="row">
           <div className="col-md-6 col-sm-12">
             <div className="img p-3">
