@@ -17,7 +17,9 @@ class Feed extends Component {
     })
     return (
       <div>
-        <h1 className="title-font text-center mt-5">Recent Recipes</h1>
+        <div className="row bg-primary text-white pl-0 pr-0 ml-0 mr-0 text-center">
+          <h1 className="title-font text-center mt-5 mb-5 ml-auto mr-auto">Recent Recipes</h1>
+        </div>
         {this.props.loading ? <Spinner /> : recipes}
       </div>
     )

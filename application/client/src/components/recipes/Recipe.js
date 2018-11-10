@@ -20,13 +20,12 @@ class Recipe extends Component {
   render() {
     const recipe = (
       <div className="container text-center mb-5">
-        <div className="row">
+        <div className="row bg-primary text-white">
           <div className="col-sm-12">
             <h2 className="title-font" style={{ fontSize: "4rem" }}>{this.props.selectedRecipe.title}</h2>
-            <p>{this.props.selectedRecipe.desc}</p>
-            <hr />
           </div>
         </div>
+            <p>{this.props.selectedRecipe.desc}</p>
         <div className="row">
           <div className="col-md-6 col-sm-12">
             <div className="img p-3">
