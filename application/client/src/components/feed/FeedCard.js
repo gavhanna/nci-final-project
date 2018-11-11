@@ -5,7 +5,7 @@ class FeedCard extends React.Component {
   render() {
     const { recipe } = this.props;
     return (
-      <div className="card m-4 bg-dark">
+      <div className="card m-5 bg-dark">
         <div className="card-header d-flex justify-content-center flex-wrap">
           <h2 className="title-font">{recipe.title}</h2>
           <span className="p-2 ml-2">
