@@ -18,7 +18,10 @@ class Feed extends Component {
     return (
       <div>
         <div className="row bg-primary text-white pl-0 pr-0 ml-0 mr-0 text-center">
-          <h1 className="title-font text-center mt-5 mb-5 ml-auto mr-auto">Recent Recipes</h1>
+          <div className="m-auto">
+            <i className="fas fa-book-open m-auto" style={{ fontSize: "35px" }}></i>
+            <h1 className="title-font text-center mt-1 mb-5 ml-auto mr-auto">Recent Recipes</h1>
+          </div>
         </div>
         {this.props.loading ? <Spinner /> : recipes}
       </div>
