@@ -102,7 +102,7 @@ class editProfile extends Component {
                           <div>
                             <h4 className="text-center">Preview</h4>
                           </div>
-                          <img src={this.state.file ? this.state.file : this.props.user.info.img_url} alt="Preview" class="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
+                          <img src={this.state.file ? this.state.file : this.props.user.info.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
                         </div>
                         : null
                     }

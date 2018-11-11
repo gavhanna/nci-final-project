@@ -85,7 +85,7 @@ class Hero extends Component {
                   className={classnames("nav-link", {
                     "active": this.state.active === "recipes",
                   })}
-                  exact to={`/profile/${this.props.user.info.username}`}
+                  to={`/profile/${this.props.user.info.username}`}
                   title="Recipes"
                 >
                   <i className="fas fa-list-ul no-pointer-events"></i>
