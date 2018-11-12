@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { followUser, unfollowUser } from "../../../actions/userActions"
 import { removeFollowing, addFollowing } from "../../../actions/authActions"
+import Spinner from "../../common/Spinner"
 
 class Hero extends Component {
   constructor() {
@@ -60,7 +61,16 @@ class Hero extends Component {
       })
     }
 
-    return (
+    const loading = (
+      <div className="col">
+        <div className="profile-header text-center h-100 d-flex justify-content-center" style={{ background: "#3097d1", minHeight: "310px" }}>
+          <Spinner color="white" />
+        </div>
+      </div>
+    );
+
+    const loaded = (
+
       <div className="col">
         <div className="profile-header text-center" style={{ background: "#3097d1" }}>
           <div className="container-fluid">
@@ -116,6 +126,12 @@ class Hero extends Component {
           </nav>
         </div>
       </div>
+    )
+
+    return (
+      <React.Fragment>
+        {this.props.user.loading ? loading : loaded}
+      </React.Fragment>
     )
   }
 }
