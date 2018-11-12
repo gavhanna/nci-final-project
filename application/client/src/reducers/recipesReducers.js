@@ -9,7 +9,9 @@ import {
   GET_USER_RECIPES,
   GET_RECENT_RECIPES,
   CREATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  LIKE_RECIPE,
+  UNLIKE_RECIPE
 }
   from "../actions/types";
 
@@ -46,7 +48,6 @@ export default function (state = initialState, action) {
         recentRecipes: action.payload
       }
     case GET_SPECIFIC_RECIPE:
-      console.log(action.payload);
       return {
         ...state,
         selectedRecipe: action.payload[0],
@@ -63,6 +64,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         recipes: [...copy],
+        loading: false
+      }
+
+    case LIKE_RECIPE:
+      return {
+        ...state,
+        selectedRecipe: action.payload,
+        loading: false
+      }
+    case UNLIKE_RECIPE:
+      return {
+        ...state,
+        selectedRecipe: action.payload,
         loading: false
       }
     case CLEAR_SELECTED_RECIPE:

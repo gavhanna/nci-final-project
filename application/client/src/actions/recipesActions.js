@@ -12,7 +12,9 @@ import {
   GET_USER_RECIPES,
   GET_RECENT_RECIPES,
   CREATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  LIKE_RECIPE,
+  UNLIKE_RECIPE
 } from "./types";
 
 
@@ -135,6 +137,42 @@ export const editRecipe = (recipeData, routeHistory) => dispatch => {
     }
     )
 }
+
+// Like recipe
+export const likeRecipe = recipe_id => dispatch => {
+  axios.post("/api/recipes/like", { recipe_id })
+    .then(res => {
+      dispatch({
+        type: LIKE_RECIPE,
+        payload: res.data
+      })
+    }).catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      }
+    })
+}
+// Unlike recipe
+export const unlikeRecipe = recipe_id => dispatch => {
+  axios.post("/api/recipes/unlike", { recipe_id })
+    .then(res => {
+      dispatch({
+        type: UNLIKE_RECIPE,
+        payload: res.data
+      })
+    }).catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      }
+    })
+}
+
 
 // Add Comment to Recipe
 export const createComment = commentData => dispatch => {

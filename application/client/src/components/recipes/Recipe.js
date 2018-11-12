@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesActions"
 import DeleteRecipeButton from './DeleteRecipeButton';
+import LikeRecipeButton from './LikeRecipeButton';
+import UnlikeRecipeButton from './UnlikeRecipeButton';
 import Spinner from "../common/Spinner";
 import AddToRecipeBookButton from "./AddToRecipeBookButton";
 import CommentSection from "./comments/CommentSection";
@@ -17,7 +19,22 @@ class Recipe extends Component {
     this.props.clearSelectedRecipe();
   }
 
+  isFavouriteRecipe = (likes) => {
+    if (likes && likes.length > 0) {
+      let there = false;
+      likes.forEach(like => {
+        if (like.username === this.props.auth.user.username) {
+          there = true;
+        }
+      })
+      return there;
+    } else {
+      return false;
+    }
+  }
+
   render() {
+
     const recipe = (
       <React.Fragment>
         <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
@@ -74,8 +91,14 @@ class Recipe extends Component {
                   this.props.auth.isAuthenticated ?
                     <React.Fragment>
                       <div className="add-to-faves d-flex flex-column justify-content-center">
-                        <span title="Favourite" className="align-middle badge badge-pill badge-info p-3 m-1" style={{ cursor: "pointer" }}>
-                          <i className="fas fa-heart"></i>
+                        <span title="Like Recipe">
+                          {
+                            // Show a like button if the recipe is not already liked and vice versa
+                            this.isFavouriteRecipe(this.props.selectedRecipe.likes) ?
+                              <UnlikeRecipeButton recipe_id={this.props.selectedRecipe._id} /> :
+                              <LikeRecipeButton recipe_id={this.props.selectedRecipe._id} />
+
+                          }
                         </span>
                       </div>
                       <div className="add-to-faves d-flex flex-column justify-content-center">
@@ -107,6 +130,12 @@ class Recipe extends Component {
                     : null
                 }
               </div>
+            </div>
+            <div className="col-md-6 col-sm-12 text-right">
+              <span className="mr-2 mt-5 badge badge-pill badge-info p-2">
+                {this.props.selectedRecipe.likes && this.props.selectedRecipe.likes.length}&nbsp;
+                <i className="fas fa-heart" style={{ color: "salmon" }}></i>
+              </span>
             </div>
           </div>
           <hr />

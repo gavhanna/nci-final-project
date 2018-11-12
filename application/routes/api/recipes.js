@@ -93,17 +93,46 @@ router.delete("/delete/:recipe_id", passport.authenticate("jwt", { session: fals
 // access  Private
 router.post("/like", passport.authenticate("jwt", { session: false }), (req, res) => {
   Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
+    .then(recipe => {
+      if (recipe.likes.indexOf(req.user.id) > -1) {
+        res.status(400).json({ err: "User already likes this recipe" })
+      } else {
+        recipe.likes.push(req.user.id);
+        recipe.save()
+          .then(recipe => {
+            Recipe.populate(recipe, { path: "likes", select: "username img_url" }, (err, populatedRecipe) => {
+
+              res.json(populatedRecipe)
+            })
+          })
+          .catch(err => res.status(400).json(err))
+      }
+    })
+});
+
+// route   POST api/recipes/unlike
+// desc    Unlike a recipe
+// access  Private
+router.post("/unlike", passport.authenticate("jwt", { session: false }), (req, res) => {
+  Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
     .then(recipe => {
       if (recipe.likes.indexOf(req.user.id) > -1) {
         recipe.likes.pull(req.user.id);
+        recipe.save()
+          .then(recipe => {
+            Recipe.populate(recipe, { path: "likes", select: "username img_url" }, (err, populatedRecipe) => {
+
+              res.json(populatedRecipe)
+            })
+          })
+          .catch(err => res.status(400).json(err))
       } else {
-        recipe.likes.push(req.user.id);
+        res.status(400).json({ err: "User does not like recipe" })
       }
-      recipe.save()
-        .then(recipe => {
-          res.json(recipe)
-        })
-        .catch(err => res.status(400).json(err))
     })
 });
 
@@ -146,6 +175,7 @@ router.get("/recipe/:recipe_id", (req, res) => {
     //.populate({ path: "likes", select: "username" })
     .populate({ path: "user_id", select: "username img_url" })
     .populate({ path: "comments.user", select: "username img_url" })
+    .populate({ path: "likes", select: "username img_url" })
     //.populate("comments")
     .then(recipe => {
       res.json(recipe);

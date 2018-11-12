@@ -11,6 +11,13 @@ class FeedCard extends React.Component {
           <span className="p-2 ml-2">
             by <Link to={`/profile/${recipe.user_id.username}`}>{recipe.user_id.username}</Link>
           </span>
+          <span
+            className="badge badge-pill badge-info p-2 align-self-center"
+            style={{ position: "absolute", right: "10px" }}
+          >
+            {recipe.likes && recipe.likes.length}&nbsp;
+                <i className="fas fa-heart" style={{ color: "salmon" }}></i>
+          </span>
         </div>
         <div className="card-body d-flex flex-md-row flex-column">
           <div className="col-md-4 col-12" style={{ maxWidth: "300px", margin: "auto" }}>
@@ -59,6 +66,7 @@ class FeedCard extends React.Component {
         </div>
         <div className="card-footer justify-content-center d-flex">
           <Link to={`/recipe/show/${recipe._id}`} className="btn btn-pill btn-primary">View</Link>
+
         </div>
       </div>
     )
