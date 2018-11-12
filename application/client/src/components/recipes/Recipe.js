@@ -9,6 +9,7 @@ import UnlikeRecipeButton from './UnlikeRecipeButton';
 import Spinner from "../common/Spinner";
 import AddToRecipeBookButton from "./AddToRecipeBookButton";
 import CommentSection from "./comments/CommentSection";
+import Modal from '../common/Modal';
 
 class Recipe extends Component {
   componentDidMount() {
@@ -132,7 +133,7 @@ class Recipe extends Component {
               </div>
             </div>
             <div className="col-md-6 col-sm-12 text-right">
-              <span className="mr-2 mt-5 badge badge-pill badge-info p-2">
+              <span className="mr-2 mt-5 badge badge-pill badge-info p-2" data-toggle="modal" data-target="#modal" style={{ cursor: "pointer" }}>
                 {this.props.selectedRecipe.likes && this.props.selectedRecipe.likes.length}&nbsp;
                 <i className="fas fa-heart" style={{ color: "salmon" }}></i>
               </span>
@@ -165,6 +166,7 @@ class Recipe extends Component {
           <hr />
           <CommentSection comments={this.props.selectedRecipe.comments} recipe_id={this.props.selectedRecipe._id} />
         </div>
+        <Modal title="Liked by" likes={this.props.selectedRecipe.likes} />
       </React.Fragment>
     )
     return (
