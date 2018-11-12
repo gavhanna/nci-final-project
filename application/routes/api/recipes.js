@@ -265,7 +265,7 @@ router.post("/comments/edit", passport.authenticate("jwt", { session: false }), 
 // route   post api/recipes/comments/delete
 // desc    Delete a comment
 // access  Private
-router.delete("/comments/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.post("/comments/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
 
   Recipe.findById(req.body.recipe_id)
     .then(recipe => {
