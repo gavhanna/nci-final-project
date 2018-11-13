@@ -24,7 +24,7 @@ class RecipeCard extends React.Component {
         <div className="card-footer d-flex justify-content-between">
           <div className="left">
             <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
-              <span title="View" className="badge badge-pill badge-info p-3 m-1 text-light">
+              <span title="View" className="badge badge-pill badge-info p-3 text-light">
                 <i className="fas fa-expand-arrows-alt"></i>
               </span>
             </Link>
@@ -34,11 +34,11 @@ class RecipeCard extends React.Component {
               (this.props.auth.user.id === this.props.recipe.user_id._id) ?
               <div className="right d-flex">
                 <Link title="Edit" to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
-                  <span className="badge badge-pill badge-success p-3 m-1 text-light">
+                  <span className="badge badge-pill badge-success p-3 mr-1 text-light">
                     <i className="far fa-edit"></i>
                   </span>
                 </Link>
-                <span className="align-self-center">
+                <span>
                   <DeleteRecipeButton recipe_id={this.props.recipe._id} />
                 </span>
               </div>

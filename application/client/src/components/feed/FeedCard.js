@@ -11,8 +11,7 @@ class FeedCard extends React.Component {
           <span className="p-2 ml-2">
             by <Link to={`/profile/${recipe.user_id.username}`}>{recipe.user_id.username}</Link>
           </span>
-          <span
-            className="badge badge-pill badge-info p-2 align-self-center ml-auto">
+          <span className="badge badge-pill badge-secondary text-primary p-2 align-self-center ml-auto">
             {recipe.likes && recipe.likes.length}&nbsp;
                 <i className="fas fa-heart" style={{ color: "salmon" }}></i>
           </span>

@@ -30,7 +30,7 @@ class RecipeBookCard extends React.Component {
         <div className="card-footer d-flex justify-content-between">
           <div className="left">
             <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
-              <span title="View" className="badge badge-pill badge-info p-3 m-1 text-light">
+              <span title="View" className="badge badge-pill badge-info p-3 text-light">
                 <i className="fas fa-expand-arrows-alt"></i>
               </span>
             </Link>
@@ -38,7 +38,7 @@ class RecipeBookCard extends React.Component {
           {
             isUsersRecipeBook ?
               <div className="right d-flex">
-                <span className="align-self-center">
+                <span>
                   <button
                     className="btn btn-pill btn-warning p-3"
                     style={{ maxHeight: "44px" }}
