@@ -11,7 +11,8 @@ import {
   CREATE_COMMENT,
   DELETE_COMMENT,
   LIKE_RECIPE,
-  UNLIKE_RECIPE
+  UNLIKE_RECIPE,
+  EDIT_COMMENT
 }
   from "../actions/types";
 
@@ -105,6 +106,12 @@ export default function (state = initialState, action) {
         loading: false
       }
     case DELETE_COMMENT:
+      return {
+        ...state,
+        selectedRecipe: action.payload,
+        loading: false
+      }
+    case EDIT_COMMENT:
       return {
         ...state,
         selectedRecipe: action.payload,

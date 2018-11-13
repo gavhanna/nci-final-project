@@ -13,6 +13,7 @@ import {
   GET_RECENT_RECIPES,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  EDIT_COMMENT,
   LIKE_RECIPE,
   UNLIKE_RECIPE
 } from "./types";
@@ -201,6 +202,25 @@ export const deleteComment = commentData => dispatch => {
         payload: res.data
       })
     }).catch(err => console.log(err))
+}
+
+// Edit comment
+export const editComment = (comment_id, recipe_id, text) => dispatch => {
+  axios.post("/api/recipes/comments/edit", { text, comment_id, recipe_id })
+    .then(res => {
+      dispatch({
+        type: EDIT_COMMENT,
+        payload: res.data
+      })
+    }).catch(err => {
+      if (err.response) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      }
+    })
+
 }
 
 

@@ -264,9 +264,19 @@ router.post("/comments/delete", passport.authenticate("jwt", { session: false })
 // access  Private
 router.post("/comments/edit", passport.authenticate("jwt", { session: false }), (req, res) => {
 
+  const { errors, isValid } = validateCommentInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
   Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
     .then(recipe => {
       let idx;
+
       recipe.comments.forEach((com, i) => {
         if (com._id == req.body.comment_id) {
           idx = i
@@ -274,7 +284,7 @@ router.post("/comments/edit", passport.authenticate("jwt", { session: false }), 
       })
       if (idx > -1) {
         // check if the logged in user owns this comment
-        if (req.user.id != recipe.comments[idx].user_id) {
+        if (req.user.id != recipe.comments[idx].user._id) {
           res.json({ msg: "Permission denied" })
         } else {
           recipe.comments[idx].text = req.body.text;
@@ -298,6 +308,8 @@ router.post("/comments/edit", passport.authenticate("jwt", { session: false }), 
 router.post("/comments/delete", passport.authenticate("jwt", { session: false }), (req, res) => {
 
   Recipe.findById(req.body.recipe_id)
+    .populate({ path: "user_id", select: "username img_url" })
+    .populate({ path: "comments.user", select: "username img_url" })
     .then(recipe => {
       let idx;
       recipe.comments.forEach((com, i) => {
@@ -307,7 +319,7 @@ router.post("/comments/delete", passport.authenticate("jwt", { session: false })
       })
       if (idx > -1) {
         // check if the logged in user owns this comment
-        if (req.user.id != recipe.comments[idx].user_id) {
+        if (req.user.id != recipe.comments[idx].user._id) {
           res.json({ msg: "Permission denied" })
         } else {
           recipe.comments = recipe.comments.filter(com => com._id != req.body.comment_id);

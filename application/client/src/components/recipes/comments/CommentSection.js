@@ -24,6 +24,11 @@ class CommentSection extends Component {
   }
 }
 
+CommentSection.propTypes = {
+  auth: PropTypes.object.isRequired,
+  selectedRecipe: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
   auth: state.auth,
   selectedRecipe: state.recipes.selectedRecipe,
