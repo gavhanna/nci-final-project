@@ -24,7 +24,13 @@ class Modal extends Component {
                 <ul className="list-group">
                   {this.props.likes && this.props.likes.map(like => (
                     <a href={`/profile/${like.username}`} key={like._id} onClick={this.hideActiveModal}>
-                      <li className="list-group-item">{like.username}</li>
+                      <li className="list-group-item">
+                      <img 
+                      style={{ width: "auto", height: "30px" }} 
+                      className="rounded-circle" 
+                      src={like.img_url ? like.img_url : "https://fillmurray.com/100/100"} 
+                      alt="User" />&nbsp;{like.username}
+                      </li>
                     </a>
                   ))}
                 </ul>
