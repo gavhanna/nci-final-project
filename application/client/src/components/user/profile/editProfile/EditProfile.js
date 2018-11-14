@@ -172,6 +172,12 @@ class editProfile extends Component {
   }
 }
 
+editProfile.propTypes = {
+  auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  editUser: PropTypes.func.isRequired
+}
+
 const mapStateToProps = state => ({
   auth: state.auth,
   user: state.user
