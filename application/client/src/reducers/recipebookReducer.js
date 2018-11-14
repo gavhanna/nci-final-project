@@ -2,12 +2,14 @@ import {
   ADD_TO_RECIPE_BOOK,
   GET_USER_RECIPE_BOOK,
   CREATE_RECIPE_BOOK,
-  REMOVE_RECIPE_FROM_RECIPEBOOK
+  REMOVE_RECIPE_FROM_RECIPEBOOK,
+  GET_CURRENT_USER_RECIPEBOOK
 }
   from "../actions/types";
 
 const initialState = {
   selected: {},
+  currentUser: {},
   loading: false
 }
 
@@ -40,6 +42,13 @@ export default function (state = initialState, action) {
           ...state.selected,
           recipes: [...action.payload.recipes]
         }
+      }
+      case GET_CURRENT_USER_RECIPEBOOK:
+      console.log(action.payload)
+      return {
+        ...state,
+        currentUser: action.payload,
+        loading: false
       }
     default:
       return state;

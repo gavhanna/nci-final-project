@@ -12,7 +12,6 @@ class EditCommentModal extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.setState({
       text: this.props.comment.text
     })

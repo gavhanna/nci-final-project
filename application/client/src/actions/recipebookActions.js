@@ -5,7 +5,8 @@ import {
   SET_RECIPEBOOK_LOADING,
   GET_USER_RECIPE_BOOK,
   CREATE_RECIPE_BOOK,
-  REMOVE_RECIPE_FROM_RECIPEBOOK
+  REMOVE_RECIPE_FROM_RECIPEBOOK,
+  GET_CURRENT_USER_RECIPEBOOK
 } from "./types"
 
 // Create recipe book
@@ -27,6 +28,18 @@ export const getUserRecipeBook = (user_id) => dispatch => {
     .then(res => {
       dispatch({
         type: GET_USER_RECIPE_BOOK,
+        payload: res.data
+      })
+    }).catch(err => console.log(err))
+}
+
+// Get current logged-in user's recipe book
+export const getCurrentUserRecipeBook = (user_id) => dispatch => {
+  dispatch(setRecipebookLoading());
+  axios.get("/api/recipebooks/" + user_id)
+    .then(res => {
+      dispatch({
+        type: GET_CURRENT_USER_RECIPEBOOK,
         payload: res.data
       })
     }).catch(err => console.log(err))

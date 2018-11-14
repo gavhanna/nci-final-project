@@ -2,9 +2,15 @@ import React from 'react'
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions"
+import { logoutUser } from "../../actions/authActions";
+import {getCurrentUserRecipeBook} from "../../actions/recipebookActions";
 
 class Navbar extends React.Component {
+
+  // TODO: find a better place to call this method
+  componentDidMount() {
+    this.props.getCurrentUserRecipeBook(this.props.auth.user.id);
+  }
 
   onLogoutClick = (e) => {
     e.preventDefault();
@@ -77,6 +83,7 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
+  getCurrentUserRecipeBook: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
 
@@ -84,4 +91,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { logoutUser })(Navbar);
+export default connect(mapStateToProps, { logoutUser, getCurrentUserRecipeBook })(Navbar);
