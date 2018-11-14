@@ -2,8 +2,6 @@ import React from 'react';
 import spinner from './spinner.gif';
 
 export default (props) => {
-  console.log(props.color);
-
   const defaultStyle = {
     background: props.color ? props.color : "#3097d1"
   }
