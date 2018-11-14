@@ -27,12 +27,11 @@ export default function (state = initialState, action) {
         loading: false
       }
     case ADD_TO_RECIPE_BOOK:
+    console.log(action.payload)
       return {
         ...state,
-        selected: {
-          ...state.selected,
-          recipes: [...state.selected.recipes, action.payload]
-        },
+        selected:action.payload,
+        currentUser: action.payload,
         loading: false
       }
     case REMOVE_RECIPE_FROM_RECIPEBOOK:
@@ -41,10 +40,10 @@ export default function (state = initialState, action) {
         selected: {
           ...state.selected,
           recipes: [...action.payload.recipes]
-        }
+        },
+        currentUser: action.payload
       }
       case GET_CURRENT_USER_RECIPEBOOK:
-      console.log(action.payload)
       return {
         ...state,
         currentUser: action.payload,

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesActions"
+import { removeRecipeFromRecipebook } from "../../actions/recipebookActions"
 import DeleteRecipeButton from './DeleteRecipeButton';
 import LikeRecipeButton from './LikeRecipeButton';
 import UnlikeRecipeButton from './UnlikeRecipeButton';
@@ -12,12 +13,46 @@ import CommentSection from "./comments/CommentSection";
 import Modal from '../common/Modal';
 
 class Recipe extends Component {
+constructor() {
+  super();
+  this.state = {
+    isSavedToRecipeBook: false
+  }
+}
+
   componentDidMount() {
     this.props.getSpecificRecipe(this.props.match.params.recipe_id);
+    if (this.props.currentUserRecipeBook.recipes) {
+      this.isSavedToUserRecipebook(this.props.currentUserRecipeBook.recipes);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // check if the nextProps will have selected recipe id and current user recipe book id
+    // if so, check if this recipe is already saved to the users recipe book
+    if (nextProps.selectedRecipe._id && nextProps.currentUserRecipeBook._id) {
+      this.isSavedToUserRecipebook(nextProps.currentUserRecipeBook.recipes, nextProps.selectedRecipe._id);
+    }
   }
 
   componentWillUnmount() {
     this.props.clearSelectedRecipe();
+  }
+
+  onRemoveFromRecipebook = () => {
+    if (window.confirm("Remove from Recipe Book?")) {
+      this.props.removeRecipeFromRecipebook(this.props.selectedRecipe._id);
+    }
+  }
+
+  isSavedToUserRecipebook = (recipes, selectedRecipeId) => {
+    let isSaved = false;
+    console.log(selectedRecipeId)
+    const recipeIdArray = recipes.length > 0 && recipes.map(recipe => {
+      if(recipe) return recipe._id
+    })
+    isSaved = recipeIdArray.includes(selectedRecipeId);
+    this.setState({isSavedToRecipeBook: isSaved})
   }
 
   isFavouriteRecipe = (likes) => {
@@ -35,7 +70,6 @@ class Recipe extends Component {
   }
 
   render() {
-
     const recipe = (
       <React.Fragment>
         <div className="row text-white bg-primary text-center d-flex flex-column p-3 mb-4">
@@ -102,11 +136,25 @@ class Recipe extends Component {
                           }
                         </span>
                       </div>
-                      <div className="add-to-faves d-flex flex-column justify-content-center">
-                        <span title="Add to your Recipe Book">
-                          <AddToRecipeBookButton recipe_id={this.props.selectedRecipe._id} />
-                        </span>
-                      </div>
+                      {
+                        this.state.isSavedToRecipeBook ? 
+                        <div className="add-to-faves d-flex flex-column justify-content-center">
+                            <span title="Currently in your Recipe Book">
+                            <button
+                              className="btn btn-pill btn-info p-3"
+                              onClick={this.onRemoveFromRecipebook}>
+                              <i style={{color: "gold"}} className="fas fa-book"></i> 
+                             </button>
+                            </span>
+                          </div>
+                        :
+                          <div className="add-to-faves d-flex flex-column justify-content-center">
+                            <span title="Add to your Recipe Book">
+                              <AddToRecipeBookButton recipe_id={this.props.selectedRecipe._id} />
+                            </span>
+                          </div>
+
+                      }
                     </React.Fragment>
                     : null
 
@@ -182,13 +230,15 @@ Recipe.propTypes = {
   getSpecificRecipe: PropTypes.func.isRequired,
   clearSelectedRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  selectedRecipe: PropTypes.object.isRequired
+  selectedRecipe: PropTypes.object.isRequired,
+  currentUserRecipeBook: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
   selectedRecipe: state.recipes.selectedRecipe,
-  loading: state.recipes.loading
+  loading: state.recipes.loading,
+  currentUserRecipeBook: state.recipebook.currentUser
 })
 
-export default connect(mapStateToProps, { getSpecificRecipe, clearSelectedRecipe })(Recipe);
+export default connect(mapStateToProps, { getSpecificRecipe, clearSelectedRecipe, removeRecipeFromRecipebook })(Recipe);

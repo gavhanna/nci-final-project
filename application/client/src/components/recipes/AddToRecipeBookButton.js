@@ -14,7 +14,7 @@ class AddToRecipeBookButton extends Component {
   render() {
     return (
       <button
-        className="btn btn-pill btn-warning p-3"
+        className="btn btn-pill btn-info p-3"
         style={{ maxHeight: "44px" }}
         title="Add to your Recipe Book"
         onClick={this.onAddRecipeToRecipeBook}>

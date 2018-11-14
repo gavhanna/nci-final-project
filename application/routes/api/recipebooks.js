@@ -65,15 +65,18 @@ router.post("/create", (req, res) => {
 // access  Private
 router.post("/add", passport.authenticate("jwt", { session: false }), (req, res) => {
   RecipeBook.findOne({ user_id: req.user.id })
+  .populate({ path: "recipes", populate: { path: "user_id", select: "username" } })
     .then(recipebook => {
       if (recipebook.recipes.indexOf(req.body.recipe_id) > -1) {
         res.state(500).json({ msg: "Already in Recipe Book" })
       } else {
         recipebook.recipes.push(req.body.recipe_id);
-        recipebook.save()
+        RecipeBook.populate(recipebook, { path: "recipes", populate: { path: "user_id", select: "username" } }, (err, populatedRecipeBook) => {
+        populatedRecipeBook.save()
           .then(recipebook => {
             res.json(recipebook)
           })
+        })
       }
     }).catch(err => res.status(404).json({ msg: err.message }))
 })

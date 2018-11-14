@@ -52,7 +52,7 @@ export const addToRecipeBook = (recipe_id) => dispatch => {
     .then(res => {
       dispatch({
         type: ADD_TO_RECIPE_BOOK,
-        payload: res.response.data
+        payload: res.data
       })
     }).catch(err => console.log(err))
 }
@@ -62,7 +62,6 @@ export const removeRecipeFromRecipebook = recipe_id => dispatch => {
   dispatch(setRecipebookLoading());
   axios.post(window.location.origin + "/api/recipebooks/remove", { recipe_id })
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: REMOVE_RECIPE_FROM_RECIPEBOOK,
         payload: res.data

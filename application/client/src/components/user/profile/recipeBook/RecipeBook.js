@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { getUserRecipeBook } from "../../../../actions/recipebookActions";
+import { getUserRecipeBook, getCurrentUserRecipeBook } from "../../../../actions/recipebookActions";
 import Spinner from "../../../common/Spinner"
 import RecipeBookCard from './RecipeBookCard';
 
 class RecipeBook extends Component {
+
+  componentDidMount() {
+    this.props.getCurrentUserRecipeBook(this.props.auth.user.id);
+  }
 
   render() {
     const loading = (<Spinner />);
@@ -107,4 +111,4 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps, { getUserRecipeBook })(RecipeBook);
+export default connect(mapStateToProps, { getUserRecipeBook, getCurrentUserRecipeBook })(RecipeBook);
