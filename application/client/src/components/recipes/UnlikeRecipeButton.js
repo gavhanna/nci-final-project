@@ -15,7 +15,7 @@ class UnlikeRecipeButton extends Component {
       <button
         className="btn btn-pill btn-info p-3 m-1"
         style={{ maxHeight: "44px", marginTop: "8px" }}
-        title="Like this Recipe"
+        title="Unlike"
         onClick={this.onLikeRecipe}>
         <i className="fas fa-heart" style={{ pointerEvents: "none", color: "salmon" }}></i>
       </button>

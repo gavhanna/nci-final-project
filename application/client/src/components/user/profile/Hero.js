@@ -79,16 +79,18 @@ class Hero extends Component {
           <div className="container-fluid">
             <div className="container-inner">
               <img className="rounded-circle media-object" src={user.img_url ? user.img_url : "https://fillmurray.com/200/200"} alt="Profile" />
-              <h3 className="profile-header-user">{user.name}</h3>
+              <h3 className="profile-header-user" style={{ position: "relative" }}>
+                {user.name}
+                {
+                  user.username !== this.props.auth.user.username ?
+                    isFollowing
+                      ? <button tile="Unfollow" style={{ position: "absolute", marginLeft: "10px" }} className="btn btn-pill btn-info mb-2" onClick={this.onUnfollowClick}><i style={{ color: "gold" }} className="fas fa-user-check"></i></button>
+                      : <button title="Follow" style={{ position: "absolute", marginLeft: "10px" }} className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}><i className="fas fa-user-plus"></i></button>
+                    : <Link style={{ position: "absolute", marginLeft: "10px" }} title="Edit User Info" to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
+                }
+              </h3>
               <p className="small text-white">{user.username && `@${user.username}`}</p>
               <p className="profile-header-bio">{user.blurb && `"${user.blurb}"`}</p>
-              {
-                user.username !== this.props.auth.user.username ?
-                  isFollowing
-                    ? <button className="btn btn-pill btn-warning mb-2" onClick={this.onUnfollowClick}>Unfollow</button>
-                    : <button className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}>Follow</button>
-                  : <Link title="Edit User Info" to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
-              }
             </div>
           </div>
           <nav className="profile-header-nav">
