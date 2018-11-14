@@ -18,15 +18,18 @@ class Hero extends Component {
   componentDidMount() {
     const locationArray = window.location.pathname.split("/");
     const currentSelectedLink = locationArray[locationArray.length - 1];
-    console.log(currentSelectedLink);
-    this.setState({ active: currentSelectedLink })
+    if (currentSelectedLink === "recipebook") {
+      this.setState({ active: "recipebook" });
+    } else if (currentSelectedLink === "following") {
+      this.setState({ active: "following" });
+    } else {
+      this.setState({ active: "recipes" });
+    }
   }
 
   navClick = e => {
     if (e.target.href) {
       const current = e.target.href.split("/").pop();
-      console.log(current);
-
       if (current === "recipebook") {
         this.setState({ active: "recipebook" });
       } else if (current === "following") {
