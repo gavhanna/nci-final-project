@@ -18,6 +18,7 @@ import Recipe from './components/recipes/Recipe';
 import RecipeForm from './components/recipes/RecipeForm';
 import EditRecipe from './components/recipes/EditRecipe';
 import EditProfile from './components/user/profile/editProfile/EditProfile';
+import ShoppingList from './components/shoppinglist/ShoppingList';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -45,6 +46,7 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/shoppinglist" component={ShoppingList} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/feed" component={Feed} />

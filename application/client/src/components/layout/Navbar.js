@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import {getCurrentUserRecipeBook} from "../../actions/recipebookActions";
+import { getCurrentUserRecipeBook } from "../../actions/recipebookActions";
 
 class Navbar extends React.Component {
 
@@ -38,6 +38,11 @@ class Navbar extends React.Component {
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe">
             <i className="fas fa-folder-plus"></i><span className="d-inline d-sm-none"> Create New Recipe</span>
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink activeClassName="active" className="nav-link" to="/shoppinglist" title="Create Recipe">
+            <i className="fas fa-list"></i><span className="d-inline d-sm-none"> Shopping List</span>
           </NavLink>
         </li>
         <li className="nav-item">
