@@ -6,7 +6,7 @@ class ProfileCard extends Component {
     return (
       <Link to={`/profile/${this.props.user.username}/recipes`}>
       <div 
-      className="card mt-5 bg-info text-white d-none d-sm-block" 
+      className="card mt-5 bg-primary text-white d-none d-sm-block" 
       style={{ width: "16%", position: "fixed" }}>
         <img 
           className="card-img-top m-auto pt-2 mb-2"
