@@ -14,7 +14,7 @@
       "purpose": "any"
     }
   ],
-  "start_url": "localhost",
+  "start_url": "https://my-recipebook-site.herokuapp.com",
   "display": "standalone",
   "theme_color": "#3097d1",
   "background_color": "#FFFFFF",
