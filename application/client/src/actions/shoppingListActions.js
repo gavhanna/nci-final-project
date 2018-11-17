@@ -8,6 +8,7 @@ import {
   PUTBACK_ITEM,
   SET_SHOPPING_LIST_LOADING,
   ADD_TO_SHOPPING_LIST,
+  DELETE_SHOPPING_LIST_ITEM,
   GET_ERRORS
 } from "./types"
 
@@ -71,6 +72,17 @@ export const putItemBack = item_id => dispatch => {
     .then(res => {
       dispatch({
         type: PUTBACK_ITEM,
+        payload: res.data.list
+      })
+    }).catch(err => console.log(err))
+}
+
+// Delete item from shopping list
+export const deleteItemFromShoppingList = item_id => dispatch => {
+  axios.delete(`api/shoppinglist/delete/${item_id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_SHOPPING_LIST_ITEM,
         payload: res.data.list
       })
     }).catch(err => console.log(err))

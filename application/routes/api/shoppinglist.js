@@ -115,6 +115,26 @@ router.post("/putBack", passport.authenticate("jwt", { session: false }), (req, 
     }).catch(err => res.json({ msg: err }))
 });
 
+// route   DELETE api/shopplinglist/delete/:item_id
+// desc    Delete item from shopping list
+// access  Private
+router.delete("/delete/:item_id", passport.authenticate("jwt", { session: false }), (req, res) => {
+
+  ShoppingList.findOne({ user: req.user.id })
+    .then(shoppinglist => {
+      const newList = shoppinglist.list.filter(item => {
+        return item._id != req.params.item_id
+      })
+      console.log(newList);
+      shoppinglist.list = newList;
+      shoppinglist.save()
+        .then(shoppinglist => {
+          res.json(shoppinglist)
+
+        })
+    }).catch(err => res.json({ msg: err }))
+});
+
 // route   POST api/shopplinglist/clear
 // desc    Clear entire shopping list
 // access  Private

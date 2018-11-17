@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import ShoppingListItem from './ShoppingListItem';
+import classnames from "classnames";
 import { connect } from "react-redux";
 import {
   getShoppingList,
   addItemToShoppingList,
   pickupItem,
   putItemBack,
+  deleteItemFromShoppingList,
   clearShoppingList
 }
   from "../../actions/shoppingListActions"
@@ -21,14 +23,10 @@ class ShoppingList extends Component {
 
   componentDidMount() {
     this.props.getShoppingList(this.props.auth.user.id);
-    console.log(this.props);
-
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
-      console.log(nextProps.shoppingList);
-
       this.setState({
         list: nextProps.shoppingList.shoppingList
       })
@@ -40,6 +38,10 @@ class ShoppingList extends Component {
       this.props.putItemBack(item._id) :
       this.props.pickupItem(item._id);
 
+  }
+
+  onItemDelete = item_id => {
+    this.props.deleteItemFromShoppingList(item_id);
   }
 
   clearShoppingList = e => {
@@ -59,6 +61,7 @@ class ShoppingList extends Component {
   }
 
   render() {
+    const { errors } = this.props;
     return (
       <div className="row">
         <div className="col-md-6 m-auto">
@@ -67,26 +70,42 @@ class ShoppingList extends Component {
             {
               this.state.list.map((item, i) => {
                 if (!item.pickedUp) {
-                  return <ShoppingListItem pickedUp={item.pickedUp} key={i} index={i} item={item} onItemClick={this.onItemClick} />
+                  return <ShoppingListItem
+                    pickedUp={item.pickedUp}
+                    key={i} index={i}
+                    item={item}
+                    onItemClick={this.onItemClick}
+                    onDelete={this.onItemDelete}
+                  />
                 } else {
                   return null;
                 }
               })
             }
             <li className="list-group-item">
-              <input className="form-control"
+              <input
                 type="text"
+                maxLength="50"
                 value={this.state.newItem}
                 onChange={this.newItemChange}
                 onKeyPress={this.onInputKeyPress}
-                placeholder="What do you need?" />
+                placeholder="What do you need?"
+                className={classnames("form-control form-control-lg", {
+                  "is-invalid": errors.item
+                })} />
             </li>
           </ul>
           <ul className="list-group my-3">
             {
               this.state.list.map((item, i) => {
                 if (item.pickedUp) {
-                  return <ShoppingListItem pickedUp={item.pickedUp} key={i} index={i} item={item} onItemClick={this.onItemClick} />
+                  return <ShoppingListItem
+                    pickedUp={item.pickedUp}
+                    key={i} index={i}
+                    item={item}
+                    onItemClick={this.onItemClick}
+                    onDelete={this.onItemDelete}
+                  />
                 } else {
                   return null;
                 }
@@ -109,7 +128,8 @@ class ShoppingList extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  shoppingList: state.shoppingList
+  shoppingList: state.shoppingList,
+  errors: state.errors
 })
 
-export default connect(mapStateToProps, { getShoppingList, addItemToShoppingList, pickupItem, putItemBack, clearShoppingList })(ShoppingList);
+export default connect(mapStateToProps, { getShoppingList, addItemToShoppingList, pickupItem, putItemBack, deleteItemFromShoppingList, clearShoppingList })(ShoppingList);

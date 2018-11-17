@@ -5,13 +5,23 @@ export default function ShoppingListItem(props) {
     props.onItemClick(props.item);
   }
 
+  const onDeleteClick = e => {
+    props.onDelete(props.item._id)
+  }
+
   return (
-    <li key={props.index} className="list-group-item" onClick={clickHandler}>
-      {
-        props.pickedUp ?
-          <del>{props.item.item}</del> :
-          <span>{props.item.item}	</span>
-      }
-    </li>
+    <React.Fragment>
+      <li key={props.index} className="list-group-item" onClick={clickHandler} style={{ position: "relative" }}>
+        {
+          props.pickedUp ?
+            <del>{props.item.item}</del> :
+            <span>{props.item.item}	</span>
+        }
+        <span
+          className="badge badge-pill badge-warning"
+          style={{ position: "absolute", right: "10px", top: "14px", zIndex: "10" }}
+          onClick={onDeleteClick}>X</span>
+      </li>
+    </React.Fragment>
   )
 }

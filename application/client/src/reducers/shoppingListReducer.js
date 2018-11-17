@@ -5,7 +5,8 @@ import {
   PICKUP_ITEM,
   PUTBACK_ITEM,
   SET_SHOPPING_LIST_LOADING,
-  ADD_TO_SHOPPING_LIST
+  ADD_TO_SHOPPING_LIST,
+  DELETE_SHOPPING_LIST_ITEM
 }
   from "../actions/types";
 
@@ -46,6 +47,12 @@ export default function (state = initialState, action) {
         loading: false
       }
     case GET_SHOPPING_LIST:
+      return {
+        ...state,
+        shoppingList: action.payload,
+        loading: false
+      }
+    case DELETE_SHOPPING_LIST_ITEM:
       return {
         ...state,
         shoppingList: action.payload,
