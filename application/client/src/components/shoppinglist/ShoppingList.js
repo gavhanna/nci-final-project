@@ -1,44 +1,49 @@
 import React, { Component } from 'react'
 import ShoppingListItem from './ShoppingListItem';
+import { connect } from "react-redux";
+import {
+  getShoppingList,
+  addItemToShoppingList,
+  pickupItem,
+  putItemBack,
+  clearShoppingList
+}
+  from "../../actions/shoppingListActions"
 
 class ShoppingList extends Component {
   constructor() {
     super();
     this.state = {
-      list: [
-        {
-          item: "Apple",
-          pickedUp: false
-        },
-        {
-          item: "Soup",
-          pickedUp: false
-        },
-        {
-          item: "Sausages",
-          pickedUp: false
-        }
-      ],
+      list: [],
       newItem: ""
     }
   }
 
-  onItemClick = (item, index) => {
-    this.setState({
-      list: this.state.list.map((item, i) => {
-        if (i === index) {
-          item.pickedUp = !item.pickedUp
-        }
-        return item
+  componentDidMount() {
+    this.props.getShoppingList(this.props.auth.user.id);
+    console.log(this.props);
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      console.log(nextProps.shoppingList);
+
+      this.setState({
+        list: nextProps.shoppingList.shoppingList
       })
-    })
+    }
+  }
+
+  onItemClick = (item) => {
+    item.pickedUp ?
+      this.props.putItemBack(item._id) :
+      this.props.pickupItem(item._id);
+
   }
 
   clearShoppingList = e => {
-    this.setState({
-      list: [],
-      newItem: ""
-    })
+    this.props.clearShoppingList();
   }
 
   newItemChange = e => {
@@ -47,10 +52,8 @@ class ShoppingList extends Component {
 
   onInputKeyPress = e => {
     if (e.key === "Enter") {
-      this.setState({
-        list: [...this.state.list, { item: this.state.newItem, pickedUp: false }],
-        newItem: ""
-      })
+      this.props.addItemToShoppingList(this.state.newItem);
+      this.setState({ newItem: "" })
     }
 
   }
@@ -71,7 +74,12 @@ class ShoppingList extends Component {
               })
             }
             <li className="list-group-item">
-              <input className="form-control" type="text" value={this.state.newItem} onChange={this.newItemChange} onKeyPress={this.onInputKeyPress} />
+              <input className="form-control"
+                type="text"
+                value={this.state.newItem}
+                onChange={this.newItemChange}
+                onKeyPress={this.onInputKeyPress}
+                placeholder="What do you need?" />
             </li>
           </ul>
           <ul className="list-group my-3">
@@ -99,4 +107,9 @@ class ShoppingList extends Component {
   }
 }
 
-export default ShoppingList;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  shoppingList: state.shoppingList
+})
+
+export default connect(mapStateToProps, { getShoppingList, addItemToShoppingList, pickupItem, putItemBack, clearShoppingList })(ShoppingList);

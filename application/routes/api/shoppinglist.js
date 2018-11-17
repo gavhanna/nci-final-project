@@ -20,6 +20,17 @@ router.get("/test", (req, res) => {
   res.json({ msg: "working" })
 })
 
+// route   GET api/shopplinglist/:user
+// desc    Get user's shoppinglist
+// access  Private
+router.get("/:user_id", passport.authenticate("jwt", { session: false }), (req, res) => {
+  ShoppingList.findOne({ user: req.params.user_id })
+    .then(shoppinglist => {
+      res.json(shoppinglist);
+    }).catch(err => res.status(400).json(err))
+})
+
+
 
 // route   POST api/shopplinglist/create
 // desc    Create a recipe book

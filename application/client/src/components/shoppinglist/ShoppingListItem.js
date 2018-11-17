@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ShoppingListItem(props) {
   const clickHandler = e => {
-    props.onItemClick(props.item.item, props.index);
+    props.onItemClick(props.item);
   }
 
   return (
