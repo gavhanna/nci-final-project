@@ -7,6 +7,7 @@ const path = require("path");
 const users = require("./routes/api/users");
 const recipes = require("./routes/api/recipes");
 const recipebooks = require("./routes/api/recipebooks");
+const shoppinglist = require("./routes/api/shoppinglist");
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use("/api/users", users);
 app.use("/api/recipes", recipes);
 // RecipeBook Routes
 app.use("/api/recipebooks", recipebooks);
+// Shopping list Routes
+app.use("/api/shoppinglist", shoppinglist);
 
 
 // Serve static assets if in production
