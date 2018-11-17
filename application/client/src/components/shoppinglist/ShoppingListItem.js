@@ -11,7 +11,7 @@ export default function ShoppingListItem(props) {
 
   return (
     <React.Fragment>
-      <li key={props.index} className="list-group-item" onClick={clickHandler} style={{ position: "relative" }}>
+      <li key={props.index} className="list-group-item" onClick={clickHandler} style={{ position: "relative", cursor: "pointer" }}>
         {
           props.pickedUp ?
             <del>{props.item.item}</del> :

@@ -8,6 +8,7 @@ import {
   PUTBACK_ITEM,
   SET_SHOPPING_LIST_LOADING,
   ADD_TO_SHOPPING_LIST,
+  ADD_MANY_TO_SHOPPING_LIST,
   DELETE_SHOPPING_LIST_ITEM,
   GET_ERRORS
 } from "./types"
@@ -50,6 +51,18 @@ export const addItemToShoppingList = item => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
+    })
+}
+
+export const addManyToShoppingList = (items, routeHistory) => dispatch => {
+  dispatch(setShoppingListLoading());
+  axios.post(window.location.origin + "/api/shoppinglist/addMany", { items })
+    .then(res => {
+      dispatch({
+        type: ADD_MANY_TO_SHOPPING_LIST,
+        payload: res.data.list
+      })
+      routeHistory.push("/shoppinglist")
     })
 }
 

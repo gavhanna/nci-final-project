@@ -75,6 +75,28 @@ router.post("/add", passport.authenticate("jwt", { session: false }), (req, res)
 
 });
 
+// route   POST api/shopplinglist/addMany
+// desc    Add many items to shopping list
+// access  Private
+router.post("/addMany", passport.authenticate("jwt", { session: false }), (req, res) => {
+  console.log(req.body.items);
+  // res.json(req.body.items)
+
+  ShoppingList.findOne({ user: req.user.id })
+    .then(shoppinglist => {
+
+      req.body.items.forEach(item => {
+        shoppinglist.list.push({ item });
+      });
+      shoppinglist.save()
+        .then(shoppinglist => {
+          res.json(shoppinglist)
+        }).catch(err => res.json({ msg: "error on saving" }));
+    }).catch(err => res.json({ msg: err }))
+
+});
+
+
 // route   POST api/shopplinglist/pickedUp
 // desc    Change item to pickedUp = true
 // access  Private

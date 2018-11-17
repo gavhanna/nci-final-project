@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { getSpecificRecipe, clearSelectedRecipe } from "../../actions/recipesActions"
 import { removeRecipeFromRecipebook } from "../../actions/recipebookActions"
+import { addManyToShoppingList } from "../../actions/shoppingListActions"
+import { withRouter } from "react-router-dom";
 import DeleteRecipeButton from './DeleteRecipeButton';
 import LikeRecipeButton from './LikeRecipeButton';
 import UnlikeRecipeButton from './UnlikeRecipeButton';
@@ -13,12 +15,12 @@ import CommentSection from "./comments/CommentSection";
 import Modal from '../common/Modal';
 
 class Recipe extends Component {
-constructor() {
-  super();
-  this.state = {
-    isSavedToRecipeBook: false
+  constructor() {
+    super();
+    this.state = {
+      isSavedToRecipeBook: false
+    }
   }
-}
 
   componentDidMount() {
     this.props.getSpecificRecipe(this.props.match.params.recipe_id);
@@ -49,10 +51,10 @@ constructor() {
     let isSaved = false;
     console.log(selectedRecipeId)
     const recipeIdArray = recipes.length > 0 && recipes.map(recipe => {
-      if(recipe) return recipe._id
+      if (recipe) return recipe._id
     })
     isSaved = recipeIdArray.includes(selectedRecipeId);
-    this.setState({isSavedToRecipeBook: isSaved})
+    this.setState({ isSavedToRecipeBook: isSaved })
   }
 
   isFavouriteRecipe = (likes) => {
@@ -67,6 +69,11 @@ constructor() {
     } else {
       return false;
     }
+  }
+
+  addIngredientsToShoppingList = e => {
+    console.log(this.props.selectedRecipe.ingredients);
+    this.props.addManyToShoppingList(this.props.selectedRecipe.ingredients, this.props.history);
   }
 
   render() {
@@ -137,17 +144,17 @@ constructor() {
                         </span>
                       </div>
                       {
-                        this.state.isSavedToRecipeBook ? 
-                        <div className="add-to-faves d-flex flex-column justify-content-center">
+                        this.state.isSavedToRecipeBook ?
+                          <div className="add-to-faves d-flex flex-column justify-content-center">
                             <span title="Currently in your Recipe Book">
-                            <button
-                              className="btn btn-pill btn-info p-3"
-                              onClick={this.onRemoveFromRecipebook}>
-                              <i style={{color: "gold"}} className="fas fa-book"></i> 
-                             </button>
+                              <button
+                                className="btn btn-pill btn-info p-3"
+                                onClick={this.onRemoveFromRecipebook}>
+                                <i style={{ color: "gold" }} className="fas fa-book"></i>
+                              </button>
                             </span>
                           </div>
-                        :
+                          :
                           <div className="add-to-faves d-flex flex-column justify-content-center">
                             <span title="Add to your Recipe Book">
                               <AddToRecipeBookButton recipe_id={this.props.selectedRecipe._id} />
@@ -197,8 +204,19 @@ constructor() {
                     {i}
                   </li>
                 )}
+                {
+                  this.props.auth.isAuthenticated ?
+                    <li
+                      className="list-group-item"
+                      style={{ cursor: "pointer" }}
+                      onClick={this.addIngredientsToShoppingList}
+                    >
+                      <small>+ Click here to add these ingredients to your shopping list</small>
+                    </li> : null
 
+                }
               </ul>
+
             </div>
             <div className="col-sm-12 col-md-6 mt-5">
               <h3>Method</h3>
@@ -241,4 +259,4 @@ const mapStateToProps = state => ({
   currentUserRecipeBook: state.recipebook.currentUser
 })
 
-export default connect(mapStateToProps, { getSpecificRecipe, clearSelectedRecipe, removeRecipeFromRecipebook })(Recipe);
+export default connect(mapStateToProps, { addManyToShoppingList, getSpecificRecipe, clearSelectedRecipe, removeRecipeFromRecipebook })(withRouter(Recipe));
