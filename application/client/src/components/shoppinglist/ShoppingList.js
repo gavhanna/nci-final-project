@@ -66,7 +66,7 @@ class ShoppingList extends Component {
       <div className="row">
         <div className="col-md-6 m-auto">
           <h2 className="text-center title-font my-5">My Shopping List</h2>
-          <ul className="list-group my-3">
+          <ul className="list-group my-3" title="Click to move to 'alread have' list">
             {
               this.state.list.map((item, i) => {
                 if (!item.pickedUp) {
@@ -95,7 +95,7 @@ class ShoppingList extends Component {
                 })} />
             </li>
           </ul>
-          <ul className="list-group my-3">
+          <ul className="list-group my-3" title="Click to move to 'must get' list">
             {
               this.state.list.map((item, i) => {
                 if (item.pickedUp) {

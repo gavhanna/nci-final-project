@@ -18,6 +18,7 @@ export default function ShoppingListItem(props) {
             <span>{props.item.item}	</span>
         }
         <span
+          title="Delete item"
           className="badge badge-pill badge-warning"
           style={{ position: "absolute", right: "10px", top: "14px", zIndex: "10", cursor: "pointer" }}
           onClick={onDeleteClick}>X</span>
