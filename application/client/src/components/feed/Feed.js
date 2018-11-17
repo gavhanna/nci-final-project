@@ -30,7 +30,7 @@ class Feed extends Component {
           <div className="col-sm-2 col-12">
             <ProfileCard user={this.props.auth.user} recipes={this.props.recipes} />
           </div>
-          <div className="col-sm-8 col-12">
+          <div className="col-sm-8 col-12 mx-auto">
             {this.props.loading ? <Spinner /> : recipes}
           </div>
         </div>
