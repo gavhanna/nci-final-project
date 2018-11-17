@@ -26,27 +26,27 @@ class Navbar extends React.Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto" data-toggle="collapse" data-target="#navbarResponsive">
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/feed" title="Feed">
+          <NavLink activeClassName="active" className="nav-link my-3 my-sm-0" to="/feed" title="Feed">
             <i className="fas fa-globe-africa"></i><span className="d-inline d-sm-none"> Recipes Feed</span>
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/" title="Profile">
+          <NavLink activeClassName="active" className="nav-link  my-3 my-sm-0" to="/" title="Profile">
             <i className="far fa-user"></i><span className="d-inline d-sm-none py-5"> Profile</span>
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/recipe/create" title="Create Recipe">
+          <NavLink activeClassName="active" className="nav-link  my-3 my-sm-0" to="/recipe/create" title="Create Recipe">
             <i className="fas fa-folder-plus"></i><span className="d-inline d-sm-none"> Create New Recipe</span>
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/shoppinglist" title="My Shopping List">
+          <NavLink activeClassName="active" className="nav-link  my-3 my-sm-0" to="/shoppinglist" title="My Shopping List">
             <i className="fas fa-list"></i><span className="d-inline d-sm-none"> Shopping List</span>
           </NavLink>
         </li>
         <li className="nav-item">
-          <button className="nav-link btn btn-pill btn-primary" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}>
+          <button className="nav-link btn btn-pill btn-primary  my-3 my-sm-0" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}>
             <i className="fas fa-sign-out-alt"></i><span className="d-inline d-sm-none"> Logout</span>
           </button>
         </li>
