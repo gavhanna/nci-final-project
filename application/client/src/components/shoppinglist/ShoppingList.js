@@ -1,37 +1,43 @@
 import React, { Component } from 'react'
+import ShoppingListItem from './ShoppingListItem';
 
 class ShoppingList extends Component {
   constructor() {
     super();
     this.state = {
-      get: [
-        "Apples",
-        "Oranges",
-        "So many pizzas"
+      list: [
+        {
+          item: "Apple",
+          pickedUp: false
+        },
+        {
+          item: "Soup",
+          pickedUp: false
+        },
+        {
+          item: "Sausages",
+          pickedUp: false
+        }
       ],
-      got: [],
       newItem: ""
     }
   }
 
-  onGetClick = e => {
+  onItemClick = (item, index) => {
     this.setState({
-      get: this.state.get.filter(item => item !== e.target.innerText),
-      got: [e.target.innerText, ...this.state.got]
-    })
-  }
-
-  onGotClick = e => {
-    this.setState({
-      got: this.state.got.filter(item => item !== e.target.innerText),
-      get: [e.target.innerText, ...this.state.get]
+      list: this.state.list.map((item, i) => {
+        if (i === index) {
+          item.pickedUp = !item.pickedUp
+        }
+        return item
+      })
     })
   }
 
   clearShoppingList = e => {
     this.setState({
-      get: [],
-      got: []
+      list: [],
+      newItem: ""
     })
   }
 
@@ -42,7 +48,7 @@ class ShoppingList extends Component {
   onInputKeyPress = e => {
     if (e.key === "Enter") {
       this.setState({
-        get: [...this.state.get, this.state.newItem],
+        list: [...this.state.list, { item: this.state.newItem, pickedUp: false }],
         newItem: ""
       })
     }
@@ -56,28 +62,31 @@ class ShoppingList extends Component {
           <h2 className="text-center">ShoppingList</h2>
           <ul className="list-group my-3">
             {
-              this.state.get.map((item, i) => (
-                <li key={i} className="list-group-item" onClick={this.onGetClick} >
-                  {item}
-                </li>
-              ))
+              this.state.list.map((item, i) => {
+                if (!item.pickedUp) {
+                  return <ShoppingListItem pickedUp={item.pickedUp} key={i} index={i} item={item} onItemClick={this.onItemClick} />
+                } else {
+                  return null;
+                }
+              })
             }
             <li className="list-group-item">
-
               <input className="form-control" type="text" value={this.state.newItem} onChange={this.newItemChange} onKeyPress={this.onInputKeyPress} />
             </li>
           </ul>
           <ul className="list-group my-3">
             {
-              this.state.got.map((item, i) => (
-                <li key={i} className="list-group-item" onClick={this.onGotClick}>
-                  <del>{item}</del>
-                </li>
-              ))
+              this.state.list.map((item, i) => {
+                if (item.pickedUp) {
+                  return <ShoppingListItem pickedUp={item.pickedUp} key={i} index={i} item={item} onItemClick={this.onItemClick} />
+                } else {
+                  return null;
+                }
+              })
             }
           </ul>
           {
-            this.state.get.length === 0 && this.state.got.length > 0 ?
+            this.state.list.filter(item => !item.pickedUp).length === 0 && this.state.list.length > 0 ?
               <button
                 className="btn btn-pill btn-info"
                 onClick={this.clearShoppingList}
