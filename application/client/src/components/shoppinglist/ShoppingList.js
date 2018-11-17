@@ -65,7 +65,7 @@ class ShoppingList extends Component {
     return (
       <div className="row">
         <div className="col-md-6 m-auto">
-          <h2 className="text-center">ShoppingList</h2>
+          <h2 className="text-center title-font my-5">My Shopping List</h2>
           <ul className="list-group my-3">
             {
               this.state.list.map((item, i) => {
