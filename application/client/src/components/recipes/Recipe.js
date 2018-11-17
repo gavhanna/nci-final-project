@@ -128,7 +128,7 @@ class Recipe extends Component {
                   <span className="ml-1"> by {this.props.selectedRecipe.user_id && <Link to={`/profile/${this.props.selectedRecipe.user_id.username}`}>{this.props.selectedRecipe.user_id.username}</Link>}</span>
                 </div>
               </div>
-              <div className="d-flex">
+              <div className="d-flex flex-wrap">
                 {
                   this.props.auth.isAuthenticated ?
                     <React.Fragment>
