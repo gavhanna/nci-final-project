@@ -41,7 +41,7 @@ class Navbar extends React.Component {
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink activeClassName="active" className="nav-link" to="/shoppinglist" title="Create Recipe">
+          <NavLink activeClassName="active" className="nav-link" to="/shoppinglist" title="My Shopping List">
             <i className="fas fa-list"></i><span className="d-inline d-sm-none"> Shopping List</span>
           </NavLink>
         </li>
