@@ -78,7 +78,7 @@ class Hero extends Component {
         <div className="profile-header text-center" style={{ background: "#3097d1" }}>
           <div className="container-fluid">
             <div className="container-inner">
-              <img className="rounded-circle media-object" src={user.img_url ? user.img_url : "https://fillmurray.com/200/200"} alt="Profile" />
+              <img className="rounded-circle media-object" src={user.img_url ? user.img_url : "https://firebasestorage.googleapis.com/v0/b/recipebook-617e4.appspot.com/o/placeholder.png?alt=media&token=07c609bd-01f2-4938-98cd-cdcd0f0a592f"} alt="Profile" />
               <h3 className="profile-header-user" style={{ position: "relative" }}>
                 {user.name}
                 {

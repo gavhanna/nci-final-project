@@ -28,7 +28,7 @@ class Modal extends Component {
                         <img
                           style={{ width: "auto", height: "30px" }}
                           className="rounded-circle"
-                          src={like.img_url ? like.img_url : "https://fillmurray.com/100/100"}
+                          src={like.img_url ? like.img_url : "https://firebasestorage.googleapis.com/v0/b/recipebook-617e4.appspot.com/o/placeholder.png?alt=media&token=07c609bd-01f2-4938-98cd-cdcd0f0a592f"}
                           alt="User" />&nbsp;{like.username}
                       </li>
                     </a>

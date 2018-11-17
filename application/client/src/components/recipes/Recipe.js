@@ -122,7 +122,7 @@ class Recipe extends Component {
             <div className="col-md-6 col-sm-12 d-flex justify-content-between">
               <div className="creator ml-3 d-flex flex-row">
                 <div className="d-flex flex-column justify-content-around">
-                  <img style={{ width: "auto", height: "30px" }} className="rounded-circle" src={this.props.selectedRecipe.user_id ? this.props.selectedRecipe.user_id.img_url ? this.props.selectedRecipe.user_id.img_url : "https://fillmurray.com/100/100" : null} alt="Creator Profile Pic" />
+                  <img style={{ width: "auto", height: "30px" }} className="rounded-circle" src={this.props.selectedRecipe.user_id ? this.props.selectedRecipe.user_id.img_url ? this.props.selectedRecipe.user_id.img_url : "https://firebasestorage.googleapis.com/v0/b/recipebook-617e4.appspot.com/o/placeholder.png?alt=media&token=07c609bd-01f2-4938-98cd-cdcd0f0a592f" : null} alt="Creator Profile Pic" />
                 </div>
                 <div className="d-flex flex-column justify-content-around">
                   <span className="ml-1"> by {this.props.selectedRecipe.user_id && <Link to={`/profile/${this.props.selectedRecipe.user_id.username}`}>{this.props.selectedRecipe.user_id.username}</Link>}</span>

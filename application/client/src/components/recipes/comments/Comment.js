@@ -28,7 +28,7 @@ class Comment extends Component {
       <div className="card text-left">
         <div className="card-header d-flex flex-row justify-content-between">
           <span>
-            <img className="rounded-circle" width="30" src={comment.user.img_url ? comment.user.img_url : "https://www.fillmurray.com/100/100"} alt="User" />
+            <img className="rounded-circle" width="30" src={comment.user.img_url ? comment.user.img_url : "https://firebasestorage.googleapis.com/v0/b/recipebook-617e4.appspot.com/o/placeholder.png?alt=media&token=07c609bd-01f2-4938-98cd-cdcd0f0a592f"} alt="User" />
             <Link to={`/profile/${comment.user.username}`}><span> {comment.user.username}</span></Link>
           </span>
           <span className="p-1 small">
