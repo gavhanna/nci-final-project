@@ -32,7 +32,7 @@ class Navbar extends React.Component {
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link" to="/" title="Profile">
-            <i className="far fa-user"></i><span className="d-inline d-sm-none"> Profile</span>
+            <i className="far fa-user"></i><span className="d-inline d-sm-none py-5"> Profile</span>
           </NavLink>
         </li>
         <li className="nav-item">
