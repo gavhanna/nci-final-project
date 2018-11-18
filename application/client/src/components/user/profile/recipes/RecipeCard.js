@@ -8,33 +8,29 @@ class RecipeCard extends React.Component {
   render() {
 
     return (
-
       <div className="card mt-3 justify-content-between" style={{ maxWidth: "300px" }}>
-        <div className="card-body p-2 d-flex flex-column justify-content-between h-100">
-          <div>
-            <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
-          </div>
-          <div>
+        <Link title={`View ${this.props.recipe.title}`} to={"/recipe/show/" + this.props.recipe._id} style={{ color: "#333", textDecoration: "none" }}>
+          <div className="card-body p-2 d-flex flex-column justify-content-between h-100">
+            <div>
+              <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
+            </div>
+            <div>
 
-            <h5 className="card-title">{this.props.recipe.title}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
-            <p className="card-text">{this.props.recipe.desc}</p>
+              <h5 className="card-title">{this.props.recipe.title}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
+              <p className="card-text text-dark">{this.props.recipe.desc}</p>
+            </div>
           </div>
-        </div>
+        </Link>
         <div className="card-footer d-flex justify-content-between">
           <div className="left">
-            <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
-              <span title="View" className="badge badge-pill badge-info p-3 text-light">
-                <i className="fas fa-expand-arrows-alt"></i>
-              </span>
-            </Link>
           </div>
           {
             (this.props.auth.user.id === this.props.recipe.user_id) ||
               (this.props.auth.user.id === this.props.recipe.user_id._id) ?
               <div className="right d-flex">
-                <Link title="Edit" to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
-                  <span className="badge badge-pill badge-success p-3 mr-1 text-light">
+                <Link title={`Edit ${this.props.recipe.title}`} to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
+                  <span className="badge badge-pill badge-info p-3 mr-1 text-light">
                     <i className="far fa-edit"></i>
                   </span>
                 </Link>
@@ -46,7 +42,6 @@ class RecipeCard extends React.Component {
           }
         </div>
       </div>
-
     )
   }
 }

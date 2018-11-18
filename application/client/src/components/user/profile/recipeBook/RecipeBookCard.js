@@ -15,34 +15,30 @@ class RecipeBookCard extends React.Component {
   render() {
     const isUsersRecipeBook = this.props.auth.user.id === this.props.recipebook.selected.user_id;
     return (
-
       <div className="card mt-3 ml-auto mr-auto justify-content-between" style={{ maxWidth: "300px" }}>
-        <div className="card-body d-flex flex-column justify-content-between h-100">
-          <div>
-            <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
+        <Link title={`View ${this.props.recipe.title}`} to={"/recipe/show/" + this.props.recipe._id} style={{ color: "#333", textDecoration: "none" }}>
+          <div className="card-body d-flex flex-column justify-content-between h-100">
+            <div>
+              <img className="card-img-top" src={this.props.recipe.img_url} style={{ width: "100%", height: "auto" }} alt="Card cap" />
+            </div>
+            <div className="p-3">
+              <h5 className="card-title">{this.props.recipe.title}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
+              <p className="card-text">{this.props.recipe.desc}</p>
+            </div>
           </div>
-          <div className="p-3">
-            <h5 className="card-title">{this.props.recipe.title}</h5>
-            <h6 className="card-subtitle mb-2 text-muted">{this.props.recipe.meal}</h6>
-            <p className="card-text">{this.props.recipe.desc}</p>
-          </div>
-        </div>
+        </Link>
         <div className="card-footer d-flex justify-content-between">
           <div className="left">
-            <Link title="View" to={"/recipe/show/" + this.props.recipe._id} className="card-link">
-              <span title="View" className="badge badge-pill badge-info p-3 text-light">
-                <i className="fas fa-expand-arrows-alt"></i>
-              </span>
-            </Link>
           </div>
           {
             isUsersRecipeBook ?
               <div className="right d-flex">
                 <span>
                   <button
+                    title={`Remove ${this.props.recipe.title} from Recipe Book`}
                     className="btn btn-pill btn-warning p-3"
                     style={{ maxHeight: "44px" }}
-                    title="Remove"
                     onClick={this.onRemoveFromRecipebook}>
                     <i className="far fa-trash-alt" style={{ pointerEvents: "none" }}></i>
                   </button>
@@ -67,7 +63,6 @@ class RecipeBookCard extends React.Component {
           } */}
         </div>
       </div>
-
     )
   }
 }
