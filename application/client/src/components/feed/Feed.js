@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getRecentRecipes } from "../../actions/recipesActions"
-import { getRecipesByUsername } from "../../actions/recipesActions"
+import { getRecentRecipes, getRecipesByUsername } from "../../actions/recipesActions"
+import { getUserInfo } from "../../actions/userActions"
 import Spinner from "../common/Spinner"
 import FeedCard from './FeedCard';
 import ProfileCard from './ProfileCard';
@@ -12,6 +12,7 @@ class Feed extends Component {
   componentDidMount() {
     this.props.getRecentRecipes();
     this.props.getRecipesByUsername(this.props.auth.user.username);
+    this.props.getUserInfo(this.props.auth.user.username);
   }
 
   render() {
@@ -28,7 +29,10 @@ class Feed extends Component {
         </div>
         <div className="row">
           <div className="col-sm-2 col-12">
-            <ProfileCard user={this.props.auth.user} recipes={this.props.recipes} />
+            {
+              this.props.user.name &&
+              <ProfileCard user={this.props.user} recipes={this.props.recipes} />
+            }
           </div>
           <div className="col-sm-8 col-12 mx-auto">
             {this.props.loading ? <Spinner /> : recipes}
@@ -49,7 +53,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   loading: state.recipes.loading,
   recentRecipes: state.recipes.recentRecipes,
-  recipes: state.recipes.recipes
+  recipes: state.recipes.recipes,
+  user: state.user.info
 })
 
-export default connect(mapStateToProps, { getRecentRecipes, getRecipesByUsername })(Feed);
+export default connect(mapStateToProps, { getRecentRecipes, getRecipesByUsername, getUserInfo })(Feed);

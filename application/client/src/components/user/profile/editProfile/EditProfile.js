@@ -20,15 +20,15 @@ class editProfile extends Component {
   }
   onFileSelected = (e) => {
     if (e.target.files[0]) {
-      this.setState({ 
+      this.setState({
         image: e.target.files[0],
         file: URL.createObjectURL(e.target.files[0])
-       })
+      })
     }
   }
 
   componentDidMount() {
-    const  user  = this.props.user.info;
+    const user = this.props.user.info;
     this.setState({
       name: user.name,
       username: user.username,
@@ -72,6 +72,7 @@ class editProfile extends Component {
             // console.log(url);
             // this.setState({ url })
             userData.img_url = url;
+
             this.props.editUser(userData, this.props.history);
           })
         });
@@ -95,31 +96,31 @@ class editProfile extends Component {
               <div className="col-sm-8 col-md-3 col-xs-10 m-auto">
                 <form noValidate onSubmit={this.onSubmit}>
                   <div className="form-group">
-                  <div className="form-group">
-                    {
-                      this.props.user.info.img_url ?
-                        <div>
+                    <div className="form-group">
+                      {
+                        this.props.user.info.img_url ?
                           <div>
-                            <h4 className="text-center">Preview</h4>
+                            <div>
+                              <h4 className="text-center">Preview</h4>
+                            </div>
+                            <img src={this.state.file ? this.state.file : this.props.user.info.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
                           </div>
-                          <img src={this.state.file ? this.state.file : this.props.user.info.img_url} alt="Preview" className="m-3" style={{ width: "100px", height: "auto", borderRadius: "50%" }} />
-                        </div>
-                        : null
-                    }
-                    <label
-                      htmlFor="fileinput"
-                      className={classnames("btn btn-pill btn-info p-2", {
-                        "btn-primary": this.state.file
-                      })}
-                    ><i className="fas fa-upload"></i> {this.state.file ? "Change Profile Pic" : "Profile Pic"}</label>
-                    <input
-                      type="file"
-                      id="fileinput"
-                      className="form-control-file inputfile"
-                      accept="image/*"
-                      onChange={this.onFileSelected}
-                    />
-                  </div>
+                          : null
+                      }
+                      <label
+                        htmlFor="fileinput"
+                        className={classnames("btn btn-pill btn-info p-2", {
+                          "btn-primary": this.state.file
+                        })}
+                      ><i className="fas fa-upload"></i> {this.state.file ? "Change Profile Pic" : "Profile Pic"}</label>
+                      <input
+                        type="file"
+                        id="fileinput"
+                        className="form-control-file inputfile"
+                        accept="image/*"
+                        onChange={this.onFileSelected}
+                      />
+                    </div>
                     <label>Name</label>
                     <input
                       name="name"
