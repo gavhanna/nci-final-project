@@ -27,10 +27,9 @@ export default function (state = initialState, action) {
         loading: false
       }
     case ADD_TO_RECIPE_BOOK:
-    console.log(action.payload)
       return {
         ...state,
-        selected:action.payload,
+        selected: action.payload,
         currentUser: action.payload,
         loading: false
       }
@@ -43,7 +42,7 @@ export default function (state = initialState, action) {
         },
         currentUser: action.payload
       }
-      case GET_CURRENT_USER_RECIPEBOOK:
+    case GET_CURRENT_USER_RECIPEBOOK:
       return {
         ...state,
         currentUser: action.payload,

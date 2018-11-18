@@ -49,11 +49,20 @@ class Recipe extends Component {
 
   isSavedToUserRecipebook = (recipes, selectedRecipeId) => {
     let isSaved = false;
-    console.log(selectedRecipeId)
     const recipeIdArray = recipes.length > 0 && recipes.map(recipe => {
       if (recipe) return recipe._id
     })
-    isSaved = recipeIdArray.includes(selectedRecipeId);
+    // check if the selected recipe is in the list of favourites
+    recipeIdArray.forEach(id => {
+      if (id === selectedRecipeId) {
+        console.log(id, selectedRecipeId);
+        isSaved = true;
+      }
+
+    })
+    // changed this method for the above method, because
+    // sometimes ".includes()" just seems to fail in the browser 
+    // isSaved = recipeIdArray.includes(selectedRecipeId);
     this.setState({ isSavedToRecipeBook: isSaved })
   }
 
