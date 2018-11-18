@@ -82,7 +82,7 @@ class Search extends Component {
             <ul className="list-group w-100">
               {
                 this.state.users.length > 0 ? this.state.users.map(user =>
-                  <Link style={{textDecoration: "none"}} to={`/profile/${user.username}/recipes`}>
+                  <Link key={user._id} style={{textDecoration: "none"}} to={`/profile/${user.username}/recipes`}>
                     <li key={user._id} className="text-dark list-group-item mx-auto">
                       <span style={{width: "33%"}}>
                         <img className="rounded-circle" src={user.img_url ? user.img_url : "https://firebasestorage.googleapis.com/v0/b/recipebook-617e4.appspot.com/o/placeholder.png?alt=media&token=07c609bd-01f2-4938-98cd-cdcd0f0a592f"} alt="Profile" style={{ width: "50px", height: "auto" }} />
