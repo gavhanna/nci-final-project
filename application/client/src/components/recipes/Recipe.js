@@ -85,7 +85,7 @@ class Recipe extends Component {
           </div>
         </div>
         <div className="container text-center mb-5">
-          <p className="mt-3">"{this.props.selectedRecipe.desc}"</p>
+          <h3 className="mt-3">"{this.props.selectedRecipe.desc}"</h3>
           <div className="row">
             <div className="col-md-6 col-sm-12">
               <div className="img p-3">
