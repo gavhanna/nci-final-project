@@ -47,6 +47,11 @@ class Navbar extends React.Component {
             <i className="fas fa-list"></i><span className="d-inline d-sm-none"> Shopping List</span>
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink activeClassName="active" className="nav-link  my-3 my-sm-0" to="/search" title="Search">
+          <i className="fas fa-search"></i><span className="d-inline d-sm-none"> Search</span>
+          </NavLink>
+        </li>
         <li className="nav-item d-flex justify-content-center">
           <button className="nav-link btn btn-pill btn-primary  my-3 my-sm-0" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}>
             <i className="fas fa-sign-out-alt"></i><span className="d-inline d-sm-none"> Logout</span>

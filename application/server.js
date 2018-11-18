@@ -8,6 +8,7 @@ const users = require("./routes/api/users");
 const recipes = require("./routes/api/recipes");
 const recipebooks = require("./routes/api/recipebooks");
 const shoppinglist = require("./routes/api/shoppinglist");
+const search = require("./routes/api/search");
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use("/api/recipes", recipes);
 app.use("/api/recipebooks", recipebooks);
 // Shopping list Routes
 app.use("/api/shoppinglist", shoppinglist);
+// Search Routes
+app.use("/api/search", search);
 
 
 // Serve static assets if in production

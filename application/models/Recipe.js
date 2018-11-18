@@ -71,4 +71,13 @@ const RecipeSchema = new Schema({
   }
 });
 
+RecipeSchema.index({
+  title: 'text',
+  desc: "text",
+  ingredients: "text",
+  method: "text",
+  meal: "text",
+  dietary: "text"
+});
+
 module.exports = Recipe = mongoose.model("recipes", RecipeSchema);
