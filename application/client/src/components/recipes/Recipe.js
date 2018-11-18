@@ -49,9 +49,12 @@ class Recipe extends Component {
 
   isSavedToUserRecipebook = (recipes, selectedRecipeId) => {
     let isSaved = false;
-    const recipeIdArray = recipes.length > 0 && recipes.map(recipe => {
-      if (recipe) return recipe._id
-    })
+    let recipeIdArray;
+    if (recipes.length > 0) {
+      recipeIdArray = recipes.map(recipe => {
+        return recipe._id
+      })
+    }
     // check if the selected recipe is in the list of favourites
     recipeIdArray.forEach(id => {
       if (id === selectedRecipeId) {
