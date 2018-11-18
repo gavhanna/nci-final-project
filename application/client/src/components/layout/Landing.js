@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
+import logo from "../common/logo.svg";
 
 
 class Landing extends Component {
@@ -17,6 +18,7 @@ class Landing extends Component {
       <React.Fragment>
         <div className="container-fill-height landing-page">
           <div className="container-content-middle text-center">
+            <img src={logo} alt="Logo" style={{ width: "150px", height: "auto", marginBottom: "-20px" }} />
             <h1 className="title-font" style={{ fontSize: "5rem" }}>Recipe Book</h1>
             <p>Create and share your favourite recipes!</p>
             <hr />

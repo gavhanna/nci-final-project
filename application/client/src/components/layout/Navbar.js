@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { getCurrentUserRecipeBook } from "../../actions/recipebookActions";
+import logo from "../common/logo.svg";
 
 class Navbar extends React.Component {
 
@@ -27,7 +28,8 @@ class Navbar extends React.Component {
       <ul className="navbar-nav ml-auto" data-toggle="collapse" data-target="#navbarResponsive">
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link my-3 my-sm-0" to="/feed" title="Feed">
-            <i className="fas fa-globe-africa"></i><span className="d-inline d-sm-none"> Recipes Feed</span>
+            <i className="fas fa-globe-africa"></i>
+            <span className="d-inline d-sm-none"> Recipes Feed</span>
           </NavLink>
         </li>
         <li className="nav-item">
@@ -74,7 +76,10 @@ class Navbar extends React.Component {
           </button>
 
           <NavLink className="navbar-brand" exact to="/">
-            <span className="title-font">Recipe Book <i className="fas fa-book-open"></i></span>
+            <span className="title-font">Recipe Book
+            {/* <i className="fas fa-book-open"></i> */}
+              <img src={logo} style={{ width: "30px", height: "auto", marginTop: "-5px" }} alt="" />
+            </span>
           </NavLink>
 
           <div className="collapse navbar-collapse" id="navbarResponsive">
