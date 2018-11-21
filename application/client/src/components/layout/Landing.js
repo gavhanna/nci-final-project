@@ -31,30 +31,38 @@ class Landing extends Component {
             <Link to="/login" className="btn btn-lg btn-pill btn-info m-1">Login</Link>
           </div>
         </div>
-        <div className="container-fill-height bg-light landing-page-inverted">
-          <div className="container-content-middle text-center">
-            <div className="row pl-0 pr-0 m-0">
+        <div style={{ minHeight: "50vh" }} className="bg-light landing-page-inverted d-flex justify-content-center text-center">
+          <div className="text-center">
+            <div style={{ minWidth: "90vw" }} className="row pl-0 pr-0 m-0 my-sm-5">
               <div className="col-12 col-md-12 col-lg-6 m-auto">
-                <h3 className="title-font">Upload</h3>
+                <h3 style={{ fontSize: "3rem" }} className="title-font">Upload</h3>
                 <img src={create} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Create Recipes" />
                 <p>Create and upload your own recipes to share with others</p>
-                <h3 className="title-font">Curate</h3>
-                <img src={recipebook} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Curate a Recipe Book" />
-                <p>Add any recipes to your own personal Recipe Book</p>
               </div>
               <div className="col-12 col-md-5 m-auto">
-                <h3 className="title-font">Follow</h3>
+                <h3 style={{ fontSize: "3rem" }} className="title-font">Follow</h3>
                 <img src={follow} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Follow others" />
                 <p>Follow your favourite creators and try out their latest recipes</p>
-                <h3 className="title-font">Discuss</h3>
-                <img src={comment} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Follow others" />
-                <p>Talk about each recipe in the comment section</p>
               </div>
             </div>
           </div>
-        </div>
+        </div >
+        <div style={{ minHeight: "50vh" }} className="bg-light landing-page d-flex justify-content-center text-center">
+          <div style={{ minWidth: "90vw" }} className="row pl-0 pr-0 m-0 my-sm-5">
+            <div className="col-12 col-md-12 col-lg-6 m-auto">
+              <h3 style={{ fontSize: "3rem" }} className="title-font">Curate</h3>
+              <img src={recipebook} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Curate a Recipe Book" />
+              <p>Add any recipes to your own personal Recipe Book</p>
+            </div>
+            <div className="col-12 col-md-5 m-auto">
+              <h3 style={{ fontSize: "3rem" }} className="title-font">Discuss</h3>
+              <img src={comment} style={{ width: "350px", maxWidth: "95vw", height: "auto" }} alt="Follow others" />
+              <p>Talk about each recipe in the comment section</p>
+            </div>
+          </div>
+        </div >
         <Footer />
-      </React.Fragment>
+      </React.Fragment >
     )
   }
 }
