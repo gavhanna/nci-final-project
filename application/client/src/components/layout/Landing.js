@@ -7,6 +7,7 @@ import create from "./landingGifs/create-recipe.gif";
 import recipebook from "./landingGifs/rb-opt.gif";
 import follow from "./landingGifs/follow.gif";
 import comment from "./landingGifs/comment.gif";
+import Footer from './Footer';
 
 
 class Landing extends Component {
@@ -52,6 +53,7 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </React.Fragment>
     )
   }
