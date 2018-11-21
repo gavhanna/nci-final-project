@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="row text-white d-flex p-5 bg-primary border-top border-dark">
+    <div style={{ background: "#205788" }} className="row text-white d-flex p-5 border-top border-dark">
       <div className="col-12 col-md-6">
         <div className="container">
           <p><i className="fas fa-terminal"></i> Created by <Link className="text-white" to="https://gavhanna.github.io">Gav Hanna</Link></p>
