@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken"
@@ -20,6 +20,7 @@ import EditRecipe from './components/recipes/EditRecipe';
 import EditProfile from './components/user/profile/editProfile/EditProfile';
 import ShoppingList from './components/shoppinglist/ShoppingList';
 import Search from './components/search/Search';
+import NotFound from './components/layout/NotFound';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -46,17 +47,21 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/shoppinglist" component={ShoppingList} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/feed" component={Feed} />
-            <Route exact path="/search" component={Search} />
-            <Route path="/profile/:username" component={Profile} />
-            <Route exact path="/edit/:username" component={EditProfile} />
-            <Route exact path="/recipe/create" component={RecipeForm} />
-            <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
-            <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />
+            <Switch>
+
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/shoppinglist" component={ShoppingList} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/feed" component={Feed} />
+              <Route exact path="/search" component={Search} />
+              <Route path="/profile/:username" component={Profile} />
+              <Route exact path="/edit/:username" component={EditProfile} />
+              <Route exact path="/recipe/create" component={RecipeForm} />
+              <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
+              <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />
+              <Route component={NotFound} />
+            </Switch>
           </div>
         </Router>
       </Provider>
