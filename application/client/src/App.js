@@ -21,6 +21,7 @@ import EditProfile from './components/user/profile/editProfile/EditProfile';
 import ShoppingList from './components/shoppinglist/ShoppingList';
 import Search from './components/search/Search';
 import NotFound from './components/layout/NotFound';
+import AdminPanel from './components/admin/AdminPanel';
 
 // check for token
 if (localStorage.jwtToken) {
@@ -60,6 +61,7 @@ class App extends Component {
               <Route exact path="/recipe/create" component={RecipeForm} />
               <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
               <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />
+              <Route path="/admin" component={AdminPanel} />
               <Route component={NotFound} />
             </Switch>
           </div>

@@ -27,7 +27,8 @@ class RecipeCard extends React.Component {
           </div>
           {
             (this.props.auth.user.id === this.props.recipe.user_id) ||
-              (this.props.auth.user.id === this.props.recipe.user_id._id) ?
+              (this.props.auth.user.id === this.props.recipe.user_id._id) ||
+              this.props.auth.user.admin ?
               <div className="right d-flex">
                 <Link title={`Edit ${this.props.recipe.title}`} to={"/recipe/edit/" + this.props.recipe._id} style={{ color: "white" }}>
                   <span className="badge badge-pill badge-info p-3 mr-1 text-light">

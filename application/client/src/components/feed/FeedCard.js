@@ -1,9 +1,12 @@
 import React from 'react'
 import Link from 'react-router-dom/Link';
+import Modal from "../../components/common/Modal"
 
 class FeedCard extends React.Component {
   render() {
     const { recipe } = this.props;
+    console.log(recipe);
+
     return (
       <div className="card my-5 mx-1">
         <div className="card-header bg-primary text-white d-flex justify-content-center flex-wrap pb-2">
@@ -11,7 +14,7 @@ class FeedCard extends React.Component {
           <span className="p-2 ml-2">
             by <Link to={`/profile/${recipe.user_id.username}`} className="text-white">{recipe.user_id.username}</Link>
           </span>
-          <span className="badge badge-pill badge-secondary text-white p-2 align-self-center ml-auto">
+          <span style={{ cursor: "pointer" }} className="badge badge-pill badge-secondary text-white p-2 align-self-center ml-auto" data-toggle="modal" data-target={`#modal-${recipe._id}`}>
             {recipe.likes && recipe.likes.length}&nbsp;
                 <i className="fas fa-heart" style={{ color: "salmon" }}></i>
           </span>
@@ -63,7 +66,7 @@ class FeedCard extends React.Component {
         </div>
         <div className="card-footer justify-content-center bg-primary d-flex">
           <Link to={`/recipe/show/${recipe._id}`} className="btn btn-pill btn-info">View</Link>
-
+          <Modal title="Liked by" likes={recipe.likes} id={recipe._id} />
         </div>
       </div>
     )

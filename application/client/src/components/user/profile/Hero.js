@@ -88,6 +88,11 @@ class Hero extends Component {
                       : <button title="Follow" style={{ position: "absolute", marginLeft: "10px" }} className="btn btn-pill btn-info mb-2" onClick={this.onFollowClick}><i className="fas fa-user-plus"></i></button>
                     : <Link style={{ position: "absolute", marginLeft: "10px" }} title="Edit User Info" to={`/edit/${this.props.auth.user.username}`} className="btn btn-pill btn-info mb-2"><i className="fas fa-cog"></i></Link>
                 }
+                {
+                  user.admin ?
+                    <Link style={{ position: "absolute", marginLeft: "40px" }} title="Admin Panel" to={`/admin/`} className="btn btn-pill btn-info mb-2"><i className="fas fa-unlock"></i></Link>
+                    : null
+                }
               </h3>
               <p className="small text-white">{user.username && `@${user.username}`}</p>
               <p className="profile-header-bio">{user.blurb && `"${user.blurb}"`}</p>

@@ -1,9 +1,18 @@
-import { SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING, EDIT_USER } from "../actions/types";
+import {
+  SET_CURRENT_USER,
+  ADD_FOLLOWING,
+  REMOVE_FOLLOWING,
+  EDIT_USER,
+  GET_ADMIN_DATA,
+  SET_ADMIN_STATUS,
+  REVOKE_ADMIN_STATUS
+} from "../actions/types";
 import isEmpty from "../validation/isEmpty"
 
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: {},
+  admin: {}
 }
 
 export default function (state = initialState, action) {
@@ -23,7 +32,6 @@ export default function (state = initialState, action) {
         }
       }
     case REMOVE_FOLLOWING:
-      console.log(action.payload);
       const followingList = state.user.following.filter(item => {
         return item._id !== action.payload._id
       })
@@ -39,6 +47,42 @@ export default function (state = initialState, action) {
         ...state,
         user: action.payload
       }
+    case GET_ADMIN_DATA:
+      return {
+        ...state,
+        admin: action.payload
+      }
+    case SET_ADMIN_STATUS:
+    const updatedSetList = state.admin.users.map(user => {
+      if (user.username === action.payload.username) {
+        return action.payload
+      } else {
+        return user
+      }
+    })
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: updatedSetList
+        }
+      }
+      case REVOKE_ADMIN_STATUS:
+      const updatedRevokeList = state.admin.users.map(user => {
+        if (user.username === action.payload.username) {
+          return action.payload
+        } else {
+          return user
+        }
+      })
+        return {
+          ...state,
+          admin: {
+            ...state.admin,
+            users: updatedRevokeList
+          }
+        }
+
 
     default:
       return state;

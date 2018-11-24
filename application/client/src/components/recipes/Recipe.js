@@ -180,7 +180,8 @@ class Recipe extends Component {
 
                 }
                 {
-                  this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id ?
+                  (this.props.selectedRecipe.user_id && this.props.auth.user.id === this.props.selectedRecipe.user_id._id)
+                    || this.props.auth.user.admin ?
                     <React.Fragment>
 
                       <div className="add-to-faves d-flex flex-column justify-content-center">
@@ -201,7 +202,7 @@ class Recipe extends Component {
               </div>
             </div>
             <div className="col-md-6 col-sm-12 text-right">
-              <span className="mr-2 mt-5 badge badge-pill badge-info p-2" data-toggle="modal" data-target="#modal" style={{ cursor: "pointer" }}>
+              <span className="mr-2 mt-5 badge badge-pill badge-info p-2" data-toggle="modal" data-target={`#modal-${this.props.selectedRecipe._id}`} style={{ cursor: "pointer" }}>
                 {this.props.selectedRecipe.likes && this.props.selectedRecipe.likes.length}&nbsp;
                 <i className="fas fa-heart" style={{ color: "salmon" }}></i>
               </span>
@@ -245,7 +246,7 @@ class Recipe extends Component {
           <hr />
           <CommentSection comments={this.props.selectedRecipe.comments} recipe_id={this.props.selectedRecipe._id} />
         </div>
-        <Modal title="Liked by" likes={this.props.selectedRecipe.likes} />
+        <Modal title="Liked by" likes={this.props.selectedRecipe.likes} id={this.props.selectedRecipe._id} />
       </React.Fragment>
     )
     return (

@@ -45,7 +45,7 @@ class Comment extends Component {
             </div> : null
           }
           {
-            this.props.auth.user.id === comment.user._id ?
+            this.props.auth.user.id === comment.user._id || this.props.auth.user.admin ?
               <div className="d-flex flex-row justify-content-end">
                 <button
                   className="btn btn-pill btn-info mx-2 mb-2"

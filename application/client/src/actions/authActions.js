@@ -2,7 +2,16 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken"
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, ADD_FOLLOWING, REMOVE_FOLLOWING, EDIT_USER } from "./types";
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  ADD_FOLLOWING,
+  REMOVE_FOLLOWING,
+  EDIT_USER,
+  GET_ADMIN_DATA,
+  SET_ADMIN_STATUS,
+  REVOKE_ADMIN_STATUS
+} from "./types";
 import { createRecipeBook } from "./recipebookActions";
 
 
@@ -91,6 +100,56 @@ export const setCurrentUser = decoded => {
     payload: decoded
   }
 }
+
+// Get admin data
+export const getAdminData = (username) => dispatch => {
+  axios.post("/api/users/admin/data")
+    .then(res => {
+      dispatch({
+        type: GET_ADMIN_DATA,
+        payload: res.data
+      })
+    }).catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+// Set Admin Status
+export const setAdminStatus = (username) => dispatch => {
+  axios.post("/api/users/admin/add", { username })
+    .then(res => {
+      dispatch({
+        type: SET_ADMIN_STATUS,
+        payload: res.data
+      })
+    }).catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+// Revoke Admin Status
+export const revokeAdminStatus = (username) => dispatch => {
+  axios.post("/api/users/admin/remove", { username })
+    .then(res => {
+      dispatch({
+        type: REVOKE_ADMIN_STATUS,
+        payload: res.data
+      })
+    }).catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+
 
 // Log user out
 export const logoutUser = () => dispatch => {

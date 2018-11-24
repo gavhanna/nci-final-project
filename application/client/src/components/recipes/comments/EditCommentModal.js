@@ -51,7 +51,7 @@ class EditCommentModal extends Component {
               <div className="modal-body">
                 <form onSubmit={this.onSubmit}>
                   <div className="form-group">
-                    <input
+                    <textarea
                       name="text"
                       id="text"
                       className="form-control form-control-lg"
@@ -59,7 +59,7 @@ class EditCommentModal extends Component {
                       value={this.state.text}
                       placeholder="Say something :D"
                       onChange={this.onTextEdit}
-                    />
+                    ></textarea>
                   </div>
                   <button type="submit" className="btn btn-primary float-right"><i className="fas fa-share-square"></i> Submit</button>
                   <button type="button" className="btn btn-secondary mr-1 float-right" data-dismiss="modal">Cancel</button>

@@ -10,8 +10,11 @@ const validateRegisterInput = require("../../validation/register")
 const validateLoginInput = require("../../validation/login")
 const validateEditUserInput = require("../../validation/editUser")
 
-// Load user model
+// Load Models
 const User = require("../../models/User");
+const Recipe = require("../../models/Recipe");
+const RecipeBook = require("../../models/RecipeBook");
+const ShoppingList = require("../../models/ShoppingList");
 
 // route   GET api/users/test
 // desc    Test users route
@@ -95,7 +98,7 @@ router.post("/edit", passport.authenticate("jwt", { session: false }), (req, res
         user.username = req.body.username;
         user.blurb = req.body.blurb;
         user.img_url = req.body.img_url;
-        
+
         user.save()
           .then(user => {
             res.json(user)
@@ -143,7 +146,8 @@ router.post("/login", (req, res) => {
               followers: user.followers,
               following: user.following,
               img_url: user.img_url,
-              blurb: user.blurb
+              blurb: user.blurb,
+              admin: user.admin
             }
 
             // Sign Token
@@ -228,7 +232,8 @@ router.get("/username/:username", (req, res) => {
         followers: user.followers,
         following: user.following,
         img_url: user.img_url,
-        blurb: user.blurb
+        blurb: user.blurb,
+        admin: user.admin
       }
       res.json(userData)
     }).catch(err => res.status(400).json(err));
@@ -255,11 +260,95 @@ router.get("/current", passport.authenticate("jwt", { session: false }), (req, r
         username: user.username,
         follower: user.followers,
         following: user.following,
-        blurb: user.blurb
+        blurb: user.blurb,
+        admin: user.admin
       }
       res.json(userData);
     }).catch(err => res.status(400).json(err));
 });
+
+// route    GET api/users/admin/add 
+// desc     Give user admin status
+// acccess  Private
+router.post("/admin/add", passport.authenticate("jwt", { session: false }), (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (!user) {
+        res.status(404).json({ errors: { admin: "User not found" } })
+      }
+      if (user.admin) {
+        res.json({ errors: { admin: "User is already an Admin" } })
+      } else {
+        user.admin = true;
+        user.save()
+          .then(user => {
+            res.json(user);
+          })
+      }
+    })
+});
+
+// route    GET api/users/admin/remove 
+// desc     Give user admin status
+// acccess  Private
+router.post("/admin/remove", passport.authenticate("jwt", { session: false }), (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (!user) {
+        res.status(404).json({ errors: { admin: "User not found" } })
+      }
+      if (!user.admin) {
+        res.json({ errors: { admin: "User is not an admin" } })
+      } else {
+        user.admin = false;
+        user.save()
+          .then(user => {
+            res.json(user);
+          })
+      }
+    })
+});
+
+// route    GET api/users/admin/data 
+// desc     Get data for admin panel
+// acccess  Private
+router.post("/admin/data", passport.authenticate("jwt", { session: false }), (req, res) => {
+  User.findOne({ username: req.user.username })
+    .then(user => {
+      if (!user.admin) {
+        res.json({ msg: "You are NOT an admin" })
+      } else {
+        const users = User.find((err, users) => {
+          return users
+        })
+          .populate({ path: "followers", select: "username img_url" })
+          .populate({ path: "following", select: "username img_url" });
+        const recipes = Recipe.find((err, recipes) => {
+          return recipes
+        })
+          .populate({ path: "user_id", select: "username img_url" })
+          .populate({ path: "comments.user", select: "username img_url" })
+          .populate({ path: "likes", select: "username img_url" });
+        const recipebooks = RecipeBook.find((err, recipebooks) => {
+          return recipebooks
+        });
+        const shoppinglists = ShoppingList.find((err, shoppinglists) => {
+          return shoppinglists
+        });
+
+        Promise.all([users, recipes, recipebooks, shoppinglists])
+          .then(data => {
+            const returnData = {
+              users: data[0],
+              recipes: data[1],
+              recipebooks: data[2],
+              shoppinglists: data[3],
+            }
+            res.json(returnData)
+          })
+      }
+    })
+})
 
 
 module.exports = router;

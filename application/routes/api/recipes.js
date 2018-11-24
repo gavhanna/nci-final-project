@@ -192,7 +192,7 @@ router.get("/", (req, res) => {
     .limit(50)
     .sort([["created_at", -1]])
     .populate({ path: "user_id", select: "username img_url" })
-    .populate({ path: "likes", select: "username" })
+    .populate({ path: "likes", select: "username img_url" })
     //.populate({ path: "comments", select: "username" })
     .then(recipes => {
       res.json(recipes);
