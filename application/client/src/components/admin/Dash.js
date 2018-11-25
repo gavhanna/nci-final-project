@@ -23,11 +23,7 @@ class Dash extends Component {
   }
 
   navClick = e => {
-    console.log(e.target);
-
-    // const current = e.target.href.split("/").pop();
     const current = e.target.innerText.toLowerCase();
-    console.log(current);
 
     if (current === "overview") {
       this.setState({ navLocation: "overview" });
@@ -36,7 +32,6 @@ class Dash extends Component {
     } else if (current === "recipes") {
       this.setState({ navLocation: "recipes" });
     }
-
   }
 
   render() {

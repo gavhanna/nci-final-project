@@ -19,7 +19,7 @@ class AdminPanel extends Component {
   render() {
 
     const isAdmin = (
-      <div className="container m-0 p-0">
+      <div className="p-0">
         <div className="row">
           <div className="col-12 bg-primary text-white"
           // style={{ minHeight: "100vh" }}
@@ -27,10 +27,10 @@ class AdminPanel extends Component {
             <h1 className="title-font text-center m-5">Admin Panel</h1>
             <Dash />
           </div>
-          <div className="col-12 mt-5">
+          <div className="col-10 mx-auto mt-5">
             <Route exact path="/admin/" component={Overview} />
-            <Route path="/admin/users" component={UserSection} />
-            <Route path="/admin/recipes" component={RecipeSection} />
+            <Route path="/admin/users" render={() => <UserSection auth={this.props.auth} />} />
+            <Route path="/admin/recipes" component={() => <RecipeSection auth={this.props.auth} />} />
           </div>
         </div>
       </div>
