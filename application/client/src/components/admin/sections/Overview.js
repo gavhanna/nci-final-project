@@ -7,7 +7,7 @@ class Overview extends Component {
   render() {
     return (
       <div className="col">
-        <h2>Overview</h2>
+        <h2 className="title-font text-center">Overview</h2>
         <ul className="list-group">
           <Link to="/admin/users">
             <li className="list-group-item">
@@ -19,12 +19,6 @@ class Overview extends Component {
               <p>Recipes: {this.props.auth.admin.recipes && this.props.auth.admin.recipes.length}</p>
             </li>
           </Link>
-          <li className="list-group-item">
-            <p>RecipeBooks: {this.props.auth.admin.recipebooks && this.props.auth.admin.recipebooks.length}</p>
-          </li>
-          <li className="list-group-item">
-            <p>ShoppingLists: {this.props.auth.admin.shoppinglists && this.props.auth.admin.shoppinglists.length}</p>
-          </li>
         </ul>
       </div>
     )

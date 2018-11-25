@@ -11,8 +11,6 @@ class Dash extends Component {
   }
 
   componentDidMount() {
-    console.log(this);
-
     const locationArray = window.location.pathname.split("/");
     const currentSelectedLink = locationArray[locationArray.length - 1];
     if (currentSelectedLink === "admin") {
@@ -44,8 +42,7 @@ class Dash extends Component {
   render() {
     return (
       <div>
-        <h2 className="title-font text-center mt-5">Dash</h2>
-        <ul className="list-group">
+        <ul className="list-group d-flex flex-row justify-content-center">
           <Link
             style={{ textDecoration: "none" }}
             to="/admin/">
@@ -58,8 +55,6 @@ class Dash extends Component {
               Overview
             </li>
           </Link>
-        </ul>
-        <ul className="list-group">
           <Link
             style={{ textDecoration: "none" }}
             to="/admin/users">
@@ -71,8 +66,6 @@ class Dash extends Component {
               Users
             </li>
           </Link>
-        </ul>
-        <ul className="list-group">
           <Link
             style={{ textDecoration: "none" }}
             to="/admin/recipes">

@@ -5,8 +5,6 @@ import Modal from "../../components/common/Modal"
 class FeedCard extends React.Component {
   render() {
     const { recipe } = this.props;
-    console.log(recipe);
-
     return (
       <div className="card my-5 mx-1">
         <div className="card-header bg-primary text-white d-flex justify-content-center flex-wrap pb-2">

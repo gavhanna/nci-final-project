@@ -21,11 +21,13 @@ class AdminPanel extends Component {
     const isAdmin = (
       <div className="container m-0 p-0">
         <div className="row">
-          <div className="col-3 bg-primary text-white" style={{ minHeight: "100vh" }}>
+          <div className="col-12 bg-primary text-white"
+          // style={{ minHeight: "100vh" }}
+          >
+            <h1 className="title-font text-center m-5">Admin Panel</h1>
             <Dash />
           </div>
-          <div className="col-9">
-            <h1 className="title-font text-center m-5">Admin Panel</h1>
+          <div className="col-12 mt-5">
             <Route exact path="/admin/" component={Overview} />
             <Route path="/admin/users" component={UserSection} />
             <Route path="/admin/recipes" component={RecipeSection} />
