@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import RecipeSectionTableRow from './RecipeSectionTableRow';
-import BarChart from "../charts/BarChart";
 import Spinner from "../../common/Spinner";
 import DonutChart from '../charts/DonutChart';
 
