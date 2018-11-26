@@ -11210,3 +11210,7 @@ i {
     transform: translate(19px, 0);
   }
 }
+
+.with-top-navbar {
+  padding-top: 49px;
+}
