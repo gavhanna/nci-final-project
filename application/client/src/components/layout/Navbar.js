@@ -93,7 +93,7 @@ class Navbar extends React.Component {
           <NavLink className="navbar-brand" exact to="/">
             <span className="title-font">Recipe Book
             {/* <i className="fas fa-book-open"></i> */}
-              <img src={logo} style={{ width: "30px", height: "auto", marginTop: "-5px" }} alt="" />
+              <img src={logo} style={{ width: "25px", height: "auto", marginTop: "-5px" }} alt="" />
             </span>
           </NavLink>
 
