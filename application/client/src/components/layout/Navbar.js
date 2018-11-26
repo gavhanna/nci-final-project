@@ -26,6 +26,7 @@ class Navbar extends React.Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto" data-toggle="collapse" data-target="#navbarResponsive">
+
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link my-3 my-sm-0" to="/feed" title="Feed">
             <i className="fas fa-globe-africa"></i>
@@ -49,9 +50,18 @@ class Navbar extends React.Component {
         </li>
         <li className="nav-item">
           <NavLink activeClassName="active" className="nav-link  my-3 my-sm-0" to="/search" title="Search">
-          <i className="fas fa-search"></i><span className="d-inline d-sm-none"> Search</span>
+            <i className="fas fa-search"></i><span className="d-inline d-sm-none"> Search</span>
           </NavLink>
         </li>
+        {
+          this.props.auth.user.admin ?
+            <li className="nav-item">
+              <NavLink activeClassName="active" className="nav-link my-3 my-sm-0" to="/admin" title="Admin Panel">
+                <i className="fas fa-unlock"></i>
+                <span className="d-inline d-sm-none"> Admin Panel</span>
+              </NavLink>
+            </li> : null
+        }
         <li className="nav-item d-flex justify-content-center">
           <button className="nav-link btn btn-pill btn-primary  my-3 my-sm-0" style={{ cursor: "pointer" }} title="Logout" onClick={this.onLogoutClick}>
             <i className="fas fa-sign-out-alt"></i><span className="d-inline d-sm-none"> Logout</span>
