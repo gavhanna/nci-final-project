@@ -41,8 +41,7 @@ export const getRecipesByUsername = (username) => dispatch => {
         type: GET_USER_RECIPES,
         payload: res.data
       })
-    }
-    )
+    })
 }
 
 // Get recent recipes (50)
@@ -87,8 +86,7 @@ export const createNewRecipe = (recipeData, history) => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
-    }
-    )
+    })
 }
 
 // Delete Recipe

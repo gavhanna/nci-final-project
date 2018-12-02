@@ -21,17 +21,17 @@ const RecipeSchema = new Schema({
   },
   preptime: {
     type: Number,
-    required: false
+    required: true
   },
   serves: {
     type: Number,
-    required: false
+    required: true
   },
   ingredients: [{ type: String }],
   method: [{ type: String }],
   img_url: {
     type: String,
-    required: false
+    required: true
   },
   meal: {
     type: String,
