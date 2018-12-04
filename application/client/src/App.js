@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken"
 import { setCurrentUser, logoutUser } from "./actions/authActions"
 import store from "./store"
+import { Offline, Online } from "react-detect-offline";
 
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -12,6 +13,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Feed from "./components/feed/Feed";
 import Profile from "./components/user/profile/Profile";
+import OfflineComponent from "./components/common/OfflineComponent";
 
 import './App.css';
 import Recipe from './components/recipes/Recipe';
@@ -47,23 +49,28 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar />
-            <Switch>
+            <Online>
 
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/shoppinglist" component={ShoppingList} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/feed" component={Feed} />
-              <Route exact path="/search" component={Search} />
-              <Route path="/profile/:username" component={Profile} />
-              <Route exact path="/edit/:username" component={EditProfile} />
-              <Route exact path="/recipe/create" component={RecipeForm} />
-              <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
-              <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />
-              <Route path="/admin" component={AdminPanel} />
-              <Route component={NotFound} />
-            </Switch>
+              <Navbar />
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/shoppinglist" component={ShoppingList} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/feed" component={Feed} />
+                <Route exact path="/search" component={Search} />
+                <Route path="/profile/:username" component={Profile} />
+                <Route exact path="/edit/:username" component={EditProfile} />
+                <Route exact path="/recipe/create" component={RecipeForm} />
+                <Route exact path="/recipe/show/:recipe_id" component={Recipe} />
+                <Route exact path="/recipe/edit/:recipe_id" component={EditRecipe} />
+                <Route path="/admin" component={AdminPanel} />
+                <Route component={NotFound} />
+              </Switch>
+            </Online>
+            <Offline>
+              <OfflineComponent />
+            </Offline>
           </div>
         </Router>
       </Provider>

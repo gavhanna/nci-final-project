@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { getCurrentUserRecipeBook } from "../../actions/recipebookActions";
 import logo from "../common/logo.svg";
+import { Offline, Online } from "react-detect-offline";
 
 class Navbar extends React.Component {
 
@@ -96,10 +97,11 @@ class Navbar extends React.Component {
               <img src={logo} style={{ width: "25px", height: "auto", marginTop: "-5px" }} alt="" />
             </span>
           </NavLink>
-
-          <div className="collapse navbar-collapse" id="navbarResponsive">
-            {isAuthenticated ? authLinks : guestLinks}
-          </div>
+          <Online>
+            <div className="collapse navbar-collapse" id="navbarResponsive">
+              {isAuthenticated ? authLinks : guestLinks}
+            </div>
+          </Online>
         </nav>
       </React.Fragment>
     )
